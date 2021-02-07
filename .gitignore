@@ -1,0 +1,24 @@
+# OS generated file
+
+.DS_Store
+.DS_Store?
+._*
+.Sportlight-V100
+.Trashes
+ethumbs.db
+Thumbs.db
+
+# Debug file
+*.log
+*.sql
+
+# Wordpress file
+uploads
+upgrade
+
+# Wordpress plugin
+plugins/current-template-file
+plugins/gutenberg
+
+# src file
+node_modules
