@@ -88,6 +88,85 @@ if ( ! function_exists( 'sport_setup' ) ) :
 				'flex-height' => true,
 			)
 		);
+		/**
+		 * Add support for default block styles
+		 */
+		add_theme_support('wp-block-styles');
+
+		/**
+		 * Add support for wide alignment
+		 */
+		add_theme_support('align-wide');
+
+		/**
+		 * Add support for color palette
+		 */
+		add_theme_support( 'sport-color-palette', array(
+			array(
+				'name' => esc_attr__( 'Magenta', 'sporttheme' ),
+				'slug' => 'strong-magenta',
+				'color' => '#a156b4',
+			),
+			array(
+				'name' => esc_attr__( 'Grayish magenta', 'sporttheme' ),
+				'slug' => 'grayish-magenta',
+				'color' => '#d0a5db',
+			),
+			array(
+				'name' => esc_attr__( 'Light gray', 'sporttheme' ),
+				'slug' => 'light-gray',
+				'color' => '#eee',
+			),
+			array(
+				'name' => esc_attr__( 'Dark gray', 'sporttheme' ),
+				'slug' => 'dark-gray',
+				'color' => '#444',
+			),
+		) );
+
+		/**
+		 * Add support for font size
+		 */
+		add_theme_support( 'editor-font-sizes', array(
+			array(
+				'name' => esc_attr__( 'Small', 'themeLangDomain' ),
+				'size' => 12,
+				'slug' => 'small'
+			),
+			array(
+				'name' => esc_attr__( 'Regular', 'themeLangDomain' ),
+				'size' => 16,
+				'slug' => 'regular'
+			),
+			array(
+				'name' => esc_attr__( 'Large', 'themeLangDomain' ),
+				'size' => 36,
+				'slug' => 'large'
+			),
+			array(
+				'name' => esc_attr__( 'Huge', 'themeLangDomain' ),
+				'size' => 50,
+				'slug' => 'huge'
+			)
+		) );
+
+		/**
+		 * Disable theme support
+		 */
+		add_theme_support( 'disable-custom-font-sizes' );
+		add_theme_support( 'disable-custom-colors' );
+		add_theme_support( 'disable-custom-gradients' );
+
+		/**
+		 * Remove core block patterns
+		 */
+		remove_theme_support( 'core-block-patterns' );
+
+		/**
+		 * Add support for responsive
+		 */
+		add_theme_support( 'responsive-embeds' );
+
 	}
 endif;
 add_action( 'after_setup_theme', 'sport_setup' );

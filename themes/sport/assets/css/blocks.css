@@ -4,3 +4,24 @@
 .wp-block-buttons.is-style-fill .wp-block-button .wp-block-button__link{
     background-color: black;
 }
+
+/* Alignment */
+
+.alignwide{
+    width: 75%;
+    margin: 0 auto;
+}
+
+.alignfull{
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Color */
+.has-strong-magenta-background-color {
+    background-color: #313131;
+}
+ 
+.has-strong-magenta-color {
+    color: #f78da7;
+}
