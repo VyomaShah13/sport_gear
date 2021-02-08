@@ -1,0 +1,6 @@
+/* Button */
+
+.wp-block-buttons .wp-block-button .wp-block-button__link,
+.wp-block-buttons.is-style-fill .wp-block-button .wp-block-button__link{
+    background-color: black;
+}

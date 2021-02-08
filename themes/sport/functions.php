@@ -162,3 +162,14 @@ function sport_enqueue_block_editor_assets(){
     );
 }
 add_action('enqueue_block_editor_assets', 'sport_enqueue_block_editor_assets');
+
+/**
+ * Enqueuing block assets
+ */
+function sport_enqueue_block_assets() {
+    wp_enqueue_style( 
+		'block-style', 
+		get_template_directory_uri() . '/assets/css/blocks.css' 
+	);
+}
+add_action( 'enqueue_block_assets', 'sport_enqueue_block_assets' );
