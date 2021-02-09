@@ -1,20 +1,37 @@
 /* Button */
 
-.wp-block-buttons .wp-block-button .wp-block-button__link,
-.wp-block-buttons.is-style-fill .wp-block-button .wp-block-button__link{
-    background-color: black;
+.wp-block-buttons .wp-block-button.btn-primary .wp-block-button__link,
+.wp-block-buttons.is-style-fill .wp-block-button.btn-primary .wp-block-button__link{
+    background-color: #f9ba48;
+    color: #333333;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border: 1px solid #f9ba48;
 }
 
-/* Alignment */
-
-.alignwide{
-    width: 75%;
-    margin: 0 auto;
+.wp-block-buttons .wp-block-button.btn-primary .wp-block-button__link:hover,
+.wp-block-buttons.is-style-fill .wp-block-button.btn-primary .wp-block-button__link:hover{
+    background-color: #ffffff;
+    color: #333;
 }
 
-.alignfull{
-    width: 90%;
-    margin: 0 auto;
+.wp-block-buttons .wp-block-button.btn-secondary .wp-block-button__link,
+.wp-block-buttons.is-style-fill .wp-block-button.btn-secondary .wp-block-button__link{
+    border-color: #000;
+    background-color: #ffffff;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.wp-block-buttons .wp-block-button.btn-secondary .wp-block-button__link:hover,
+.wp-block-buttons.is-style-fill .wp-block-button.btn-secondary .wp-block-button__link:hover{
+    background-color: #000;
+    color: #ffffff;
 }
 
 /* Color */
@@ -105,4 +122,62 @@
     text-transform: uppercase;
     cursor: pointer;
     letter-spacing: 1px;
+}
+
+/* Heading */
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+    font-weight: 700 !important;
+}
+
+.main-title{
+    position: relative;
+    display: inline-block;
+    margin: 30px 0;
+}
+
+.main-title::after{
+    position: absolute;
+    content: '';
+    height: 5px;
+    bottom: -10px; 
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 50%;
+    background: #f9ba48;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+
+/* feature title */
+.feature-title {
+    background-color: #ffffff;
+    color: #333;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+/* Post title */
+
+.wp-block-latest-posts a {
+    margin-top: 20px;
+    display: block;
+    color: #333;
+    font-weight: 700;
+    overflow: hidden;
+    height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
