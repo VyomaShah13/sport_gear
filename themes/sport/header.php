@@ -16,7 +16,7 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-
+	<link rel="stylesheet" href="https://use.typekit.net/smy7xiw.css">
 	<?php wp_head(); ?>
 </head>
 
@@ -58,42 +58,55 @@
 				</div>	
 			</div>	
 		</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-4">
-				<div class="site-branding">
-					<?php
-					the_custom_logo();
-					if ( is_front_page() && is_home() ) :
-						?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-						<?php
-					else :
-						?>
-						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-						<?php
-					endif;
-					$sport_description = get_bloginfo( 'description', 'display' );
-					if ( $sport_description || is_customize_preview() ) :
-						?>
-						<p class="site-description"><?php echo $sport_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-					<?php endif; ?>
-				</div><!-- .site-branding -->
-			</div>
-			<div class="col-8">
-				<nav id="site-navigation" class="main-navigation">
-					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'sport' ); ?></button>
-					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'menu-primary',
-							'menu_id'        => 'primary-menu',
-						)
-					);
-					?>
-				</nav><!-- #site-navigation -->
-			</div>
-  		</div>
-
-		
+		<div class="main-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-4">
+						<div class="site-branding">
+							<?php
+							the_custom_logo();
+							if ( is_front_page() && is_home() ) :
+								?>
+								<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+								<?php
+							else :
+								?>
+								<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+								<?php
+							endif;
+							$sport_description = get_bloginfo( 'description', 'display' );
+							if ( $sport_description || is_customize_preview() ) :
+								?>
+								<p class="site-description"><?php echo $sport_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+							<?php endif; ?>
+						</div><!-- .site-branding -->
+					</div>
+					<div class="col-6">
+						<nav id="site-navigation" class="main-navigation">
+							<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'sport' ); ?></button>
+							<?php
+							wp_nav_menu(
+								array(
+									'theme_location' => 'menu-primary',
+									'menu_id'        => 'primary-menu',
+								)
+							);
+							?>
+						</nav><!-- #site-navigation -->
+					</div>
+					<div class="col-2">
+					<ul class="navbar-user">
+						<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+						<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+						<li class="cart">
+							<a href="#">
+								<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+								<span id="cart-items" class="cart-items">2</span>
+							</a>
+						</li>
+					</ul>
+					</div>			
+				</div>
+			</div>			
+		</div>
 	</header><!-- #masthead -->

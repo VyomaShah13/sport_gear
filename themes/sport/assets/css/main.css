@@ -6,15 +6,21 @@
 *, ::after, ::before {
     box-sizing: border-box;
 }
-
+body {
+    font-family: proxima-nova,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
 ul {
     list-style: none;
     margin-bottom: 0px;
     padding: 0;
+    margin: 0;
 }
 a, a:hover, a:visited, a:active, a:link {
     text-decoration: none;
 }
+
 /* Header */
 .site-header{
     background: #FFFFFF;
@@ -28,6 +34,7 @@ a, a:hover, a:visited, a:active, a:link {
     height: 50px;
     color: #fff;
     line-height: 50px;
+    font-size: 13px;
 }
 
 .top-nav a{
@@ -41,8 +48,6 @@ a, a:hover, a:visited, a:active, a:link {
 }
 .account > a {
     display: block;
-    line-height: 50px;
-    font-size: 13px;
 }
 .account:hover .account-selection
 {
@@ -86,4 +91,87 @@ a, a:hover, a:visited, a:active, a:link {
 
 .account-selection li a i {
     margin-right: 10px;
+}
+
+/* main nav */
+.main-nav {
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
+    padding: 18px 0;
+}
+
+.main-nav li {
+    display: block;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 20px 25px;
+}
+
+.main-navigation a{
+    color: #666;
+    font-weight: 400;
+}
+
+.main-navigation .current-menu-item a, .main-navigation .menu-primary-menu-container a:hover{
+    position: relative;
+    color: #000000;
+}
+
+.main-navigation .current-menu-item a:after, .main-navigation .menu-primary-menu-container a:hover::after {
+    position: absolute;
+    content: '';
+    height: 5px;
+    bottom: -10px; 
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 75%;
+    background: #f9ba48;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+
+.navbar-user li{
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+}
+
+.navbar-user li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    color: #000;
+    transition: color 0.3s ease;
+}
+
+.cart a {
+    background: #eceff6;
+    border-radius: 50%;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -9px;
+    left: 22px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f9ba48;
+    font-size: 12px;
+    color: #333;
 }
