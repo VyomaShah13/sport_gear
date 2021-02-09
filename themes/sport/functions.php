@@ -224,6 +224,22 @@ function sport_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+	/**
+	* Font-awesome icons
+	*/
+	wp_enqueue_style( 
+		'font-awesome', 
+		get_template_directory_uri() . '/assets/css/vendor/font-awesome.min.css' 
+	);
+	/**
+	* custom style
+	*/
+	wp_enqueue_style( 
+		'main-style', 
+		get_template_directory_uri() . '/assets/css/main.css' 
+	);
+
+
 }
 add_action( 'wp_enqueue_scripts', 'sport_scripts' );
 
