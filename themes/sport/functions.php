@@ -93,6 +93,10 @@ if ( ! function_exists( 'sport_setup' ) ) :
 		 */
 		add_theme_support('wp-block-styles');
 
+		/**
+		 * Add support for wide alignment
+		 */
+		add_theme_support('align-wide');
 
 		/**
 		 * Add support for color palette
