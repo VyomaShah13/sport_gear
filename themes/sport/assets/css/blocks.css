@@ -82,3 +82,27 @@
 }
 
 /* Input */
+.input-control{
+    min-width: 300px;
+    height: 46px;
+    border: 1px solid #333333;
+    font-size: 14px;
+}
+
+.input-control:focus {
+    outline: none;
+    border-color: #f9ba48;
+  }
+
+/* Button */
+
+.primary-btn {
+    min-width: 160px;
+    height: 46px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
