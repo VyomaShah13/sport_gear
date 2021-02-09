@@ -23,18 +23,14 @@ a, a:hover, a:visited, a:active, a:link {
 
 /* Header */
 .site-header{
-    background: #FFFFFF;
     z-index: 10;
     transition: all 300ms ease;
 }
 
 .top-nav{
-    background-color: #000000;
     width: 100%;
     height: 50px;
-    color: #fff;
     line-height: 50px;
-    font-size: 13px;
 }
 
 .top-nav a{
@@ -62,7 +58,6 @@ a, a:hover, a:visited, a:active, a:link {
     top: 120%;
     margin: 0;
     width: 100%;
-    background: #FFFFFF;
     visibility: hidden;
     opacity: 0;
     z-index: 1;
@@ -156,7 +151,7 @@ a, a:hover, a:visited, a:active, a:link {
 }
 
 .cart a {
-    background: #eceff6;
+    background: #f2f2f2;
     border-radius: 50%;
 }
 
@@ -168,10 +163,30 @@ a, a:hover, a:visited, a:active, a:link {
     position: absolute;
     top: -9px;
     left: 22px;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: #f9ba48;
     font-size: 12px;
     color: #333;
+}
+
+/* newsletter */
+
+.newsletter{
+    background: #f2f2f2;
+    margin-top: 60px;
+    padding: 50px 0;
+}
+
+.newsletter h4{
+    margin-bottom: 0px;
+    line-height: 24px;
+    font-weight: 700;
+}
+
+.newsletter p{
+    color: #717171;
+    margin-bottom: 0px;
+    line-height: 1.7;
 }

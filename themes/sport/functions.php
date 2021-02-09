@@ -103,24 +103,34 @@ if ( ! function_exists( 'sport_setup' ) ) :
 		 */
 		add_theme_support( 'sport-color-palette', array(
 			array(
-				'name' => esc_attr__( 'Magenta', 'sporttheme' ),
-				'slug' => 'strong-magenta',
-				'color' => '#a156b4',
+				'name' => esc_attr__( 'Primary', 'sporttheme' ),
+				'slug' => 'primary',
+				'color' => '#f9ba48',
 			),
 			array(
-				'name' => esc_attr__( 'Grayish magenta', 'sporttheme' ),
-				'slug' => 'grayish-magenta',
-				'color' => '#d0a5db',
+				'name' => esc_attr__( 'Secondary', 'sporttheme' ),
+				'slug' => 'secondary',
+				'color' => '#000000',
 			),
 			array(
-				'name' => esc_attr__( 'Light gray', 'sporttheme' ),
+				'name' => esc_attr__( 'Grayish black', 'sporttheme' ),
+				'slug' => 'grayish-black',
+				'color' => '#333333',
+			),
+			array(
+				'name' => esc_attr__( 'Gray', 'sporttheme' ),
+				'slug' => 'gray',
+				'color' => '#717171',
+			),
+			array(
+				'name' => esc_attr__( 'White', 'sporttheme' ),
+				'slug' => 'white',
+				'color' => '#fff',
+			),
+			array(
+				'name' => esc_attr__( 'Light Gray', 'sporttheme' ),
 				'slug' => 'light-gray',
-				'color' => '#eee',
-			),
-			array(
-				'name' => esc_attr__( 'Dark gray', 'sporttheme' ),
-				'slug' => 'dark-gray',
-				'color' => '#444',
+				'color' => '#f2f2f2',
 			),
 		) );
 
@@ -130,7 +140,7 @@ if ( ! function_exists( 'sport_setup' ) ) :
 		add_theme_support( 'editor-font-sizes', array(
 			array(
 				'name' => esc_attr__( 'Small', 'themeLangDomain' ),
-				'size' => 12,
+				'size' => 13,
 				'slug' => 'small'
 			),
 			array(

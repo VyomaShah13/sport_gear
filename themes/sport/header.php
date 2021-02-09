@@ -25,8 +25,8 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'sport' ); ?></a>
 
-	<header id="masthead" class="site-header">
-		<div class="top-nav">
+	<header id="masthead" class="site-header has-white-background-color">
+		<div class="top-nav has-secondary-background-color has-white-color has-small-font-size">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-2">
@@ -46,7 +46,7 @@
 									<a href="#">
 									My Account <i class="fa fa-angle-down"></i>
 									</a>
-									<ul class="account-selection">
+									<ul class="account-selection has-white-background-color">
 										<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
 										<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
 										<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i>My Favourite</a></li>
