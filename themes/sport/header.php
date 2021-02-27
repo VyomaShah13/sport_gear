@@ -99,9 +99,10 @@
 						<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
 						<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 						<li class="cart">
-						<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
-							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-							<span id="cart-items" class="cart-items"><?php echo sprintf ( _n( '%d', '%d', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?></span>
+							<a class="cart-container" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
+								<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+								<span id="cart-items" class="cart-items"><?php echo sprintf ( _n( '%d', '%d', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?> </span>
+							</a>
 						</li>
 					</ul>
 					</div>			
