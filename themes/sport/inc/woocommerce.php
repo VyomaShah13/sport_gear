@@ -12,7 +12,9 @@
 
         ?>
         <a class="cart-container" href="<?php echo esc_url(wc_get_cart_url()); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
-        <?php echo sprintf(_n('%d', '%d', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?> </a>
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span id="cart-items" class="cart-items"><?php echo sprintf(_n('%d', '%d', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></span>
+        </a>
         <?php
         $fragments['a.cart-container'] = ob_get_clean();
         return $fragments;
