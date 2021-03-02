@@ -102,17 +102,20 @@ a, a:hover, a:visited, a:active, a:link {
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
-    padding: 20px 25px;
+    padding: 20px;
 }
 
 .main-navigation a{
-    color: #666;
+    color: #000;
     font-weight: 400;
+    min-width: 60px;
+    text-align: center;
 }
 
 .main-navigation .current-menu-item a, .main-navigation .menu-primary-menu-container a:hover{
     position: relative;
     color: #000000;
+    font-weight: 800;
 }
 
 .main-navigation .current-menu-item a:after, .main-navigation .menu-primary-menu-container a:hover::after {
@@ -135,7 +138,7 @@ a, a:hover, a:visited, a:active, a:link {
 .navbar-user li{
     display: inline-block;
     text-align: center;
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 .navbar-user li a {
@@ -169,6 +172,10 @@ a, a:hover, a:visited, a:active, a:link {
     background: #f9ba48;
     font-size: 12px;
     color: #333;
+}
+
+.navbar-user {
+    text-align: right;
 }
 
 /* Banner */
