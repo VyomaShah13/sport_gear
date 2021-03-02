@@ -267,7 +267,12 @@ mark, ins{
 }
 
 /* Product */
-
+.wc-block-grid__products{
+    margin-bottom: 0;
+}
+.wc-block-grid__product{
+    text-align: left;
+}
 .wc-block-grid__products .wc-block-grid__product-image img {
     border: 1px solid #c5c3c5;
     border-radius: 2px;
@@ -275,7 +280,6 @@ mark, ins{
 
 .wc-block-grid__product .wc-block-grid__product-title{
     color: #333;
-    text-align: left;
     font-size: 18px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -301,5 +305,24 @@ mark, ins{
     font-size: 16px;
     font-weight: 700;
     color: #333;
-    text-align: left;
+}
+
+.wc-block-grid__product .wc-block-grid__product-add-to-cart{
+    margin-bottom: 0;
+}
+
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link{
+    background-color: #f9ba48;
+    color: #000000;
+    border-radius:0;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 7px 15px;
+    letter-spacing: 1px;
+}
+
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover{
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
 }
