@@ -443,3 +443,47 @@ mark, ins{
 .product_meta a:hover{
     color: #000;
 }
+.comments-area{
+    display: none;
+}
+
+/* product desciption tab style */
+
+.woocommerce-page div.product .woocommerce-tabs {
+    border: 1px solid #c5c3c5;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs{
+    padding: 0;
+    background-color: #000;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active{
+    border-radius: 0;
+    border: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a{
+    padding: 10px;
+    color: #fff;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li{
+    background-color: transparent;
+    border: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li::before, .woocommerce div.product .woocommerce-tabs ul.tabs li::after{
+    box-shadow: none;
+    border: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:focus{
+    outline: none;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover{
+    color: #f9ba48;
+}
+
+.woocommerce div.product .woocommerce-tabs .panel{
+    padding: 0 25px;
+}
