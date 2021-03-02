@@ -278,6 +278,8 @@ a, a:hover, a:visited, a:active, a:link {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 .wc-block-grid__product .wc-block-grid__product-title:hover{
