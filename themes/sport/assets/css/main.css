@@ -277,12 +277,12 @@ mark, ins{
 .wc-block-grid__product{
     text-align: left;
 }
-.wc-block-grid__products .wc-block-grid__product-image img {
+.wc-block-grid__products .wc-block-grid__product-image img, .woocommerce ul.products li.product a img {
     border: 1px solid #c5c3c5;
     border-radius: 2px;
 }
 
-.wc-block-grid__product .wc-block-grid__product-title{
+.wc-block-grid__product .wc-block-grid__product-title, .woocommerce ul.products li.product .woocommerce-loop-product__title{
     color: #333;
     font-size: 18px;
     text-overflow: ellipsis;
@@ -293,7 +293,7 @@ mark, ins{
     margin-bottom: 8px;
 }
 
-.wc-block-grid__product .wc-block-grid__product-title:hover{
+.wc-block-grid__product .wc-block-grid__product-title:hover, .woocommerce ul.products li.product .woocommerce-loop-product__title:hover{
     cursor: pointer;
     color: #f9ba48;
 }
@@ -341,4 +341,8 @@ mark, ins{
 
 .woocommerce .products ul, .woocommerce ul.products{
     margin-top: 20px;
+}
+
+.woocommerce ul.products li.product a img{
+    margin-bottom: 10px;
 }
