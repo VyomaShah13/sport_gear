@@ -286,3 +286,7 @@ a, a:hover, a:visited, a:active, a:link {
     cursor: pointer;
     color: #f9ba48;
 }
+
+.home .wc-block-grid__product-onsale{
+    display: none;
+}
