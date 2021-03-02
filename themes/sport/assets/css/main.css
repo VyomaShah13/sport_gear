@@ -317,7 +317,7 @@ mark, ins{
     margin-bottom: 0;
 }
 
-.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link{
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link, .woocommerce ul.products li.product .button{
     background-color: #f9ba48;
     color: #000000;
     border-radius:0;
@@ -325,9 +325,11 @@ mark, ins{
     font-size: 14px;
     padding: 7px 15px;
     letter-spacing: 1px;
+    font-weight: normal;
+    line-height: 1.5;
 }
 
-.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover{
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover, .woocommerce ul.products li.product .button:hover{
     background-color: #000000;
     color: #FFFFFF;
     cursor: pointer;
