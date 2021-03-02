@@ -178,15 +178,22 @@
     color: #333;
     font-weight: 700;
     overflow: hidden;
-    height: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 24px;
 }
-
+.wp-block-latest-posts a:hover{
+    color: #f9ba48;
+    cursor: pointer;
+} 
 .entry-header{
     background-image: url(http://sportgear.local/wp-content/uploads/2021/02/hero-banner.jpg);
     background-repeat: no-repeat;
     padding: 50px;
     color: #fff;
     text-align: center;
+}
+.wp-block-latest-posts__post-excerpt{
+    color: #717171;
+    text-align: justify;
 }
