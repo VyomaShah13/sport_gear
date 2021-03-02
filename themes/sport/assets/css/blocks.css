@@ -210,7 +210,7 @@ p#breadcrumbs {
     right: 0;
     text-align: center;
     color: #fff;
-    bottom: 38%;
+    top: 34%;
 }
 
 p#breadcrumbs a{
