@@ -30,6 +30,51 @@ function sport_customize_register( $wp_customize ) {
 			)
 		);
 	}
+
+	$wp_customize->add_section(
+		'social_media', 
+		array(
+			'title' => 'Social Media',
+		)
+	);
+	$wp_customize->add_setting(
+		'facebook_url',
+	);
+
+	$wp_customize->add_control(
+		'facebook_url',
+		array(
+			'label' => 'Facebook URL',
+			'section' => 'social_media',
+			'setting' => 'facebook_url',
+ 		)
+	);
+
+	$wp_customize->add_setting(
+		'twitter_url',
+	);
+
+	$wp_customize->add_control(
+		'twitter_url',
+		array(
+			'label' => 'Twitter URL',
+			'section' => 'social_media',
+			'setting' => 'twitter_url',
+ 		)
+	);
+
+	$wp_customize->add_setting(
+		'insta_url',
+	);
+
+	$wp_customize->add_control(
+		'insta_url',
+		array(
+			'label' => 'Instagram URL',
+			'section' => 'social_media',
+			'setting' => 'insta_url',
+ 		)
+	);
 }
 add_action( 'customize_register', 'sport_customize_register' );
 
