@@ -41,10 +41,11 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="social-links">
+						
 						<ul class="text-right">
-							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+							<li><a href="<?php echo esc_url(get_theme_mod('facebook_url')); ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="<?php echo esc_url(get_theme_mod('twitter_url')); ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a href="<?php echo esc_url(get_theme_mod('insta_url')); ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 						</ul>
 					</div><!-- .site-info -->
 				</div>
