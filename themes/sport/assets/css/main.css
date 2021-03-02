@@ -263,3 +263,24 @@ a, a:hover, a:visited, a:active, a:link {
 .social-links ul li a:hover {
     color: #717171;
 }
+
+/* Product */
+
+.wc-block-grid__products .wc-block-grid__product-image img {
+    border: 1px solid #c5c3c5;
+    border-radius: 2px;
+}
+
+.wc-block-grid__product .wc-block-grid__product-title{
+    color: #333;
+    text-align: left;
+    font-size: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.wc-block-grid__product .wc-block-grid__product-title:hover{
+    cursor: pointer;
+    color: #f9ba48;
+}
