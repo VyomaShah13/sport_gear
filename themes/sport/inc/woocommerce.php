@@ -1,6 +1,7 @@
 <?php
     add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title', 0 );
-
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 5 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
     /**
      * Show cart contents / total Ajax
      */

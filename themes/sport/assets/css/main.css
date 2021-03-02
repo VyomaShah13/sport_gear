@@ -301,12 +301,12 @@ mark, ins{
 .home .wc-block-grid__product-onsale{
     display: none;
 }
-.wc-block-grid__product .wc-block-grid__product-price del, .woocommerce ul.products li.product .price del{
+.wc-block-grid__product .wc-block-grid__product-price del, .woocommerce ul.products li.product .price del, .woocommerce div.product p.price del{
     color: #c5c3c5;
     font-weight: 400;
     opacity: 1;
 }
-.wc-block-grid__product-price, .woocommerce ul.products li.product .price{
+.wc-block-grid__product-price, .woocommerce ul.products li.product .price, .woocommerce div.product p.price{
     font-size: 16px;
     font-weight: 700;
     color: #333;
@@ -317,7 +317,7 @@ mark, ins{
     margin-bottom: 0;
 }
 
-.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link, .woocommerce ul.products li.product .button{
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link, .woocommerce ul.products li.product .button, .woocommerce div.product form.cart .button{
     background-color: #f9ba48;
     color: #000000;
     border-radius:0;
@@ -329,7 +329,7 @@ mark, ins{
     line-height: 1.5;
 }
 
-.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover, .woocommerce ul.products li.product .button:hover{
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover, .woocommerce ul.products li.product .button:hover, .woocommerce div.product form.cart .button:hover{
     background-color: #000000;
     color: #FFFFFF;
     cursor: pointer;
@@ -395,4 +395,51 @@ mark, ins{
 
 .woocommerce div.product .product_title{
     font-size: 32px;
+    margin-bottom: 0;
+}
+
+.woocommerce div.product p.price{
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.woocommerce-product-details__short-description {
+    color: #717171;
+    letter-spacing: 0.5px;
+    text-align: justify;
+}
+
+.woocommerce-product-details__short-description ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.woocommerce .quantity .qty {
+    border-radius: 0;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.product_meta {
+    font-size: 14px;
+    color: #717171;
+    margin-bottom: 12px;
+}
+
+.product_meta .sku_wrapper{
+    padding-right: 10px;
+    border-right: 1px solid #c5c3c5;
+    margin-right: 8px;
+}
+
+.product_meta a{
+    color: #7d7d7d;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.product_meta a:hover{
+    color: #000;
 }
