@@ -140,7 +140,7 @@ if ( ! function_exists( 'sport_setup' ) ) :
 		add_theme_support( 'editor-font-sizes', array(
 			array(
 				'name' => esc_attr__( 'Small', 'themeLangDomain' ),
-				'size' => 13,
+				'size' => 14,
 				'slug' => 'small'
 			),
 			array(

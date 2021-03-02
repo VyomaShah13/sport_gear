@@ -37,6 +37,10 @@ a, a:hover, a:visited, a:active, a:link {
     color: #fff;
 }
 
+.top-nav-left a i{
+    margin-right: 5px;
+}
+
 .account{
     position: relative;
     text-align: right;
@@ -44,6 +48,10 @@ a, a:hover, a:visited, a:active, a:link {
 }
 .account > a {
     display: block;
+}
+
+.account i{
+    margin-left: 5px;
 }
 .account:hover .account-selection
 {

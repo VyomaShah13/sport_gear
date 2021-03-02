@@ -32,7 +32,7 @@
 					<div class="col-md-2">
 						<div class="top-nav-left">
 							<a href="#">
-								<i class="fa fa-envelope"></i> info@sportgear.com
+								<i class="fa fa-envelope-o"></i> info@sportgear.com
 							</a>
 						</div>
 					</div>
