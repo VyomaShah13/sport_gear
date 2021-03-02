@@ -330,3 +330,15 @@ mark, ins{
     color: #FFFFFF;
     cursor: pointer;
 }
+
+/* Product page */
+.woocommerce .woocommerce-result-count{
+    margin: 10px 0;
+}
+.woocommerce .woocommerce-ordering select{
+    padding: 8px;
+}
+
+.woocommerce .products ul, .woocommerce ul.products{
+    margin-top: 20px;
+}
