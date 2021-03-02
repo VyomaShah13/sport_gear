@@ -20,7 +20,9 @@ ul {
 a, a:hover, a:visited, a:active, a:link {
     text-decoration: none;
 }
-
+mark, ins{
+    background-color: transparent;
+}
 /* Header */
 .site-header{
     z-index: 10;
@@ -280,6 +282,7 @@ a, a:hover, a:visited, a:active, a:link {
     white-space: nowrap;
     font-weight: 400;
     letter-spacing: 0.5px;
+    margin-bottom: 8px;
 }
 
 .wc-block-grid__product .wc-block-grid__product-title:hover{
@@ -289,4 +292,14 @@ a, a:hover, a:visited, a:active, a:link {
 
 .home .wc-block-grid__product-onsale{
     display: none;
+}
+.wc-block-grid__product .wc-block-grid__product-price del{
+    color: #c5c3c5;
+    font-weight: 400;
+}
+.wc-block-grid__product-price{
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    text-align: left;
 }
