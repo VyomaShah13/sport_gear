@@ -353,3 +353,19 @@ mark, ins{
 .woocommerce ul.products li.product .woocommerce-loop-product__title{
     margin-bottom: 0;
 }
+
+.woocommerce ul.products li.product .onsale {
+    top: 10px;
+    right: 10px;
+    min-height: 20px;
+    min-width: 60px;
+    padding: 10px;
+    line-height: 1;
+    border-radius: 5px;
+    background-color: #7d7d7d;
+    margin: 0;
+}
+
+.woocommerce ul.products li.product, .woocommerce-page ul.products li.product{
+    margin-bottom: 0;
+}
