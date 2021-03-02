@@ -140,7 +140,7 @@
 .main-title::after{
     position: absolute;
     content: '';
-    height: 5px;
+    height: 7px;
     bottom: -15px; 
     margin: 0 auto;
     left: 0;

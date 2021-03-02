@@ -101,7 +101,7 @@ a, a:hover, a:visited, a:active, a:link {
     width: 100%;
     background: #FFFFFF;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
-    padding: 18px 0;
+    padding: 20px 0;
 }
 
 .main-nav li {
@@ -186,7 +186,13 @@ a, a:hover, a:visited, a:active, a:link {
     text-align: right;
 }
 
-/* Banner */
+/* Slider */
+
+.home div#n2-ss-2 .n2-ss-button-container a div{
+    font-size: 14px;
+}
+
+/* Home */
 .home .entry-header{
     display: none;
 }
