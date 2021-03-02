@@ -187,6 +187,7 @@
     cursor: pointer;
 } 
 .entry-header{
+    background-image: url(http://sportgear.local/wp-content/uploads/2021/02/hero-banner.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     padding: 40px 50px 60px;

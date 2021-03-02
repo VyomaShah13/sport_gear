@@ -369,3 +369,9 @@ mark, ins{
 .woocommerce ul.products li.product, .woocommerce-page ul.products li.product{
     margin-bottom: 0;
 }
+
+.woocommerce a.added_to_cart{
+    margin-left: 20px;
+    color: #333;
+    font-weight: 700;
+}
