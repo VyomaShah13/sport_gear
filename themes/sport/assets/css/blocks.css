@@ -130,14 +130,15 @@
     font-weight: 700 !important;
 }
 
-.main-title{
+.main-title, .related.products > h2{
     position: relative;
     display: block;
     margin: 50px 0 70px;
     text-align: center;
+    text-transform: capitalize;
 }
 
-.main-title::after{
+.main-title::after, .related.products > h2::after{
     position: absolute;
     content: '';
     height: 7px;

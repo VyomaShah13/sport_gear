@@ -318,8 +318,8 @@ mark, ins{
 }
 
 .wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link, .woocommerce ul.products li.product .button, .woocommerce div.product form.cart .button{
-    background-color: #f9ba48;
-    color: #000000;
+    background-color: #000000;
+    color: #FFFFFF;
     border-radius:0;
     text-transform: uppercase;
     font-size: 14px;
@@ -330,8 +330,8 @@ mark, ins{
 }
 
 .wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover, .woocommerce ul.products li.product .button:hover, .woocommerce div.product form.cart .button:hover{
-    background-color: #000000;
-    color: #FFFFFF;
+    background-color: #f9ba48;
+    color: #000000;
     cursor: pointer;
 }
 
@@ -451,6 +451,7 @@ mark, ins{
 
 .woocommerce-page div.product .woocommerce-tabs {
     border: 1px solid #c5c3c5;
+    margin-bottom: 30px;
 }
 
 .woocommerce div.product .woocommerce-tabs ul.tabs{
@@ -486,4 +487,25 @@ mark, ins{
 
 .woocommerce div.product .woocommerce-tabs .panel{
     padding: 0 25px;
+}
+
+/* next product link */
+
+
+.site-main .post-navigation {
+    max-width: 1320px;
+    margin: 50px auto 0;
+    padding: 10px;
+}
+
+.site-main .post-navigation a{
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.site-main .post-navigation a:hover{
+    color: #333;
+    cursor: pointer;
+    text-decoration: underline;
 }
