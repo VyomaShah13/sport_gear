@@ -388,3 +388,11 @@ mark, ins{
 .woocommerce div.product div.images .flex-control-thumbs li{
     margin-right: 10px;
 }
+
+.woocommerce div.product div.summary{
+    margin-top: 0;
+}
+
+.woocommerce div.product .product_title{
+    font-size: 32px;
+}
