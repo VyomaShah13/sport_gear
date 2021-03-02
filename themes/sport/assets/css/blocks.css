@@ -197,3 +197,25 @@
     color: #717171;
     text-align: justify;
 }
+
+/* Breadcrumb */
+p#breadcrumbs {
+    margin-bottom: 0;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #fff;
+    bottom: 36%;
+}
+
+p#breadcrumbs a{
+    font-weight: 700;
+    color: #ffffff;
+}
+
+p#breadcrumbs a:hover{
+    color: #000;
+    cursor: pointer;
+}
