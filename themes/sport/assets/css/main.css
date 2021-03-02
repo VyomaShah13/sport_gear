@@ -171,6 +171,16 @@ a, a:hover, a:visited, a:active, a:link {
     color: #333;
 }
 
+/* Banner */
+.home .entry-header{
+    display: none;
+}
+
+.home .entry-content{
+    margin: 0;
+}
+
+
 /* newsletter */
 
 .newsletter{
