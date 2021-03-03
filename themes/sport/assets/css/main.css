@@ -700,3 +700,7 @@ em {
     max-width: 60%;
     margin: 0 auto 20px;
 }
+
+aside.widget-area {
+    display: none;
+}
