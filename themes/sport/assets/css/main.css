@@ -324,7 +324,7 @@ li.cart a {
 }
 
 .wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link, .woocommerce ul.products li.product .button, .woocommerce div.product form.cart .button, .woocommerce-cart .wc-proceed-to-checkout a.checkout-button, .woocommerce button.button.alt, 
-.woocommerce a.button, .woocommerce .woocommerce-MyAccount-content  button.button, .woocommerce .woocommerce-form-login .woocommerce-form-login__submit, .wpcf7-form-control.wpcf7-submit{
+.woocommerce a.button, .woocommerce .woocommerce-MyAccount-content  button.button, .woocommerce .woocommerce-form-login .woocommerce-form-login__submit, .wsf-button{
     background-color: #000000;
     color: #FFFFFF;
     border-radius:0;
@@ -338,7 +338,7 @@ li.cart a {
 
 .wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link:hover, .woocommerce ul.products li.product .button:hover, 
 .woocommerce div.product form.cart .button:hover, .woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover, .woocommerce button.button.alt:hover, .woocommerce a.button:hover, 
-.woocommerce .woocommerce-MyAccount-content  button.button:hover, .woocommerce .woocommerce-form-login .woocommerce-form-login__submit:hover, .wpcf7-form-control.wpcf7-submit:hover{
+.woocommerce .woocommerce-MyAccount-content  button.button:hover, .woocommerce .woocommerce-form-login .woocommerce-form-login__submit:hover, .wsf-button:hover{
     background-color: #f9ba48;
     color: #000000;
     cursor: pointer;
@@ -677,20 +677,35 @@ em {
     background-color: #000;
 }
 
-.wpcf7-form .input-text{
+.wsf-form {
+    margin-top: 20px;
+}
+
+label.wsf-label{
+    color: #212529;
+    font-size: 16px;
+}
+input[type=email].wsf-field, input[type=number].wsf-field, input[type=tel].wsf-field, input[type=text].wsf-field, input[type=url].wsf-field, select.wsf-field, textarea.wsf-field{
+    border-radius: 0;
     width: 100%;
+    padding: 8px 10px;
+    margin: 5px 0 15px; 
+    color: #212529;
 }
-.wp-block-contact-form-7-contact-form-selector {
-    margin-top: 30px;
+.wsf-field:focus{
+    border: 1px solid #212529;
 }
-.wp-block-contact-form-7-contact-form-selector label{
-    width: 80%;
+.wsf-help{
+    display: none;
 }
 .contact-container {
-    margin-top: 40px;
+    margin-top: 60px;
 }
 .contact-container p {
     max-width: 400px;
+}
+button:focus, input:focus, textarea:focus{
+    outline: none;
 }
 /* About */
 .about-title {
@@ -701,6 +716,6 @@ em {
     margin: 0 auto 20px;
 }
 
-aside.widget-area {
+.home .widget-area {
     display: none;
 }
