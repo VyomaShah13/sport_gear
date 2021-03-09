@@ -106,7 +106,9 @@ a:visited, a:hover{
 .account-selection li a i {
     margin-right: 10px;
 }
-
+.main-navigation ul{
+    justify-content: center;
+}
 /* main nav */
 .main-nav {
     width: 100%;
@@ -718,4 +720,56 @@ button:focus, input:focus, textarea:focus{
 
 .home .widget-area {
     display: none;
+}
+
+/* Search box */
+
+.search-container {
+    position: relative;
+}
+
+.search-container .search {
+    transition: all 1s;
+    z-index: 4;
+    position: relative;
+}
+
+.search-container .search:hover {
+    cursor: pointer;
+}
+
+.search-container input {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    width: 25px;
+    min-height: 25px;
+    outline: none;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 0px;
+    transition: all 1s;
+    opacity: 0;
+    z-index: 5;
+    border: 1px solid;
+}
+
+.search-container input:hover {
+    cursor: pointer;
+}
+
+.search-container input:focus {
+    width: 220px;
+    right: -10px;
+    opacity: 1;
+    cursor: text;
+}
+
+.search-container input:focus ~ .search {
+    right: 0px;
+    z-index: 6;
+}
+.search-container input::placeholder {
+    color: #212529;
+    opacity: 0.5;
 }

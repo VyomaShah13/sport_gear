@@ -61,7 +61,7 @@
 		<div class="main-nav">
 			<div class="container">
 				<div class="row">
-					<div class="col-4">
+					<div class="col-3">
 						<div class="site-branding">
 							<?php
 							the_custom_logo();
@@ -94,9 +94,14 @@
 							?>
 						</nav><!-- #site-navigation -->
 					</div>
-					<div class="col-2">
+					<div class="col-3">
 					<ul class="navbar-user">
-						<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+						<li>
+							<div class="search-container">
+								<input type="text" placeholder="Search...">
+								<div class="search"><i class="fa fa-search" aria-hidden="true"></i></div>
+							</div>
+						</li>
 						<li><a href="/my-account"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 						<li class="cart">
 							<a class="cart-container" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
