@@ -97,10 +97,7 @@
 					<div class="col-3">
 					<ul class="navbar-user">
 						<li>
-							<div class="search-container">
-								<input type="text" placeholder="Search...">
-								<div class="search"><i class="fa fa-search" aria-hidden="true"></i></div>
-							</div>
+							<?php get_search_form(); ?>
 						</li>
 						<li><a href="/my-account"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 						<li class="cart">
