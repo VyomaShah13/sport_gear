@@ -204,21 +204,20 @@
 /* Breadcrumb */
 p#breadcrumbs {
     margin-bottom: 0;
-    position: absolute;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    text-align: center;
     color: #fff;
-    top: 34%;
 }
 
 p#breadcrumbs a{
     font-weight: 700;
     color: #ffffff;
+    border-bottom: 1px solid;
 }
 
 p#breadcrumbs a:hover{
     color: #000;
     cursor: pointer;
+}
+
+aside{
+    display: none;
 }
