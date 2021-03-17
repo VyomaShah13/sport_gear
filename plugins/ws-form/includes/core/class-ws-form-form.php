@@ -11,7 +11,7 @@
 		public $table_name;
 
 		const DB_INSERT = 'label,user_id,date_added,date_updated,version';
-		const DB_UPDATE = 'label,user_id,date_updated';
+		const DB_UPDATE = 'label,date_updated';
 		const DB_SELECT = 'label,status,checksum,published_checksum,count_stat_view,count_stat_save,count_stat_submit,count_submit,count_submit_unread,id';
 
  		const FILE_ACCEPTED_MIME_TYPES = 'application/json';

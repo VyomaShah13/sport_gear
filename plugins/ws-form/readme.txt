@@ -1,9 +1,9 @@
-=== Contact Form by WS Form - Drag & Drop WordPress Form Builder ===
+=== WS Form LITE - Drag & Drop Contact Form Builder for WordPress ===
 Contributors: westguard
 Tags: form, contact form, form builder, forms, custom form, accessible form, wsform, wsforms, ws form, ws forms, responsive form, gutenberg form, contact button, contact me, custom contact form, form manager, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, dotmailer, dotmailer form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, salesforce, stripe, stripe form, drip, drip form, slack, slack form, getresponse, getresponse form, constant contact, constant contact form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, data encryption
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 1.8.11
+Stable tag: 1.8.17
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,13 @@ The ultimate drag and drop form builder for WordPress. Create professional, mobi
 
 == Description ==
 
-= Build Better WordPress Forms =
+= WordPress Contact Form Builder Plugin =
 
-WS Form is a powerful contact form builder plugin for WordPress. Use WS Form to build any type of web form from a simple contact us form to complex, integrated, multi-step application web forms. [Learn More](https://wsform.com/?utm_source=wp_plugins&utm_medium=readme)
+WS Form is a powerful contact form builder plugin for WordPress. Create professional, mobile friendly, accessible contact forms.
 
 https://vimeo.com/475187549
+
+This plugin is the free LITE edition of [WS Form PRO](https://wsform.com/?utm_source=wp_plugins&utm_medium=readme).
 
 Choose from single click templates or build your own WordPress form using the unique drag and drop form editor on your desktop or mobile device.
 
@@ -37,16 +39,20 @@ Add contact forms to your pages or posts using the Gutenberg block or simply cli
 * [Mobile Friendly](https://wsform.com/knowledgebase/responsive-forms/?utm_source=wp_plugins&utm_medium=readme)
 * [Multiple Tab Forms](https://wsform.com/knowledgebase/tabs/?utm_source=wp_plugins&utm_medium=readme)
 * [Page Builder Support](https://wsform.com/knowledgebase_category/publishing-forms/?utm_source=wp_plugins&utm_medium=readme) (Beaver Builder, Divi and Elementor)
+* [Responsive Forms](https://wsform.com/knowledgebase/responsive-forms/?utm_source=wp_plugins&utm_medium=readme)
+* [Section Library](https://wsform.com/knowledgebase/section-library/?utm_source=wp_plugins&utm_medium=readme)
 * [Send Unlimited Emails](https://wsform.com/knowledgebase/send-email/?utm_source=wp_plugins&utm_medium=readme)
 * [Single Click Templates](https://wsform.com/knowledgebase/building-your-first-form/?utm_source=wp_plugins&utm_medium=readme)
 * [Variables](https://wsform.com/knowledgebase/variables/?utm_source=wp_plugins&utm_medium=readme)
 
 = Upgrade to PRO =
 
-This plugin is the free edition of [WS Form PRO](https://wsform.com/?utm_source=wp_plugins&utm_medium=readme). The PRO edition comes with unrivaled features:
+The PRO edition comes with unrivaled features:
 
 * [ACF Integration](https://wsform.com/knowledgebase/acf-integration-with-ws-form-pro/?utm_source=wp_plugins&utm_medium=readme)
 * [All 55+ Field Types](https://wsform.com/knowledgebase_category/field-types/?utm_source=wp_plugins&utm_medium=readme)
+* [Calculated Fields](https://wsform.com/knowledgebase/calculated-fields/?utm_source=wp_plugins&utm_medium=readme)
+* [Cascading Select, Checkbox and Radio Fields](https://wsform.com/knowledgebase/cascade-select-and-radio-fields/utm_source=wp_plugins&utm_medium=readme)
 * [Conditional Logic](https://wsform.com/knowledgebase/conditional-logic/?utm_source=wp_plugins&utm_medium=readme)
 * [E-Commerce](https://wsform.com/knowledgebase_category/e-commerce/?utm_source=wp_plugins&utm_medium=readme)
 * [Data Encryption](https://wsform.com/knowledgebase/data-encryption/?utm_source=wp_plugins&utm_medium=readme)
@@ -54,7 +60,6 @@ This plugin is the free edition of [WS Form PRO](https://wsform.com/?utm_source=
 * [E-Commerce](https://wsform.com/knowledgebase_category/e-commerce/?utm_source=wp_plugins&utm_medium=readme)
 * [Expand And Integrate With Add-Ons](https://wsform.com/add-ons/?utm_source=wp_plugins&utm_medium=readme) (Google Sheets, Salesforce, Slack, Zapier, MailChimp, Constant Contact, HubSpot, Stripe, PayPal and more!)
 * [Repeatable Sections](https://wsform.com/knowledgebase/repeatable-sections/?utm_source=wp_plugins&utm_medium=readme)
-* [Responsive Forms](https://wsform.com/knowledgebase/responsive-forms/?utm_source=wp_plugins&utm_medium=readme)
 * [Save Progress](https://wsform.com/knowledgebase/save/?utm_source=wp_plugins&utm_medium=readme)
 * [Signatures](https://wsform.com/knowledgebase/signature/?utm_source=wp_plugins&utm_medium=readme)
 * [Statistics](https://wsform.com/knowledgebase/statistics/?utm_source=wp_plugins&utm_medium=readme)
@@ -63,10 +68,6 @@ This plugin is the free edition of [WS Form PRO](https://wsform.com/?utm_source=
 ... [and more](https://wsform.com/knowledgebase/?utm_source=wp_plugins&utm_medium=readme)!
 
 [Upgrade to WS Form PRO](https://wsform.com/?utm_source=wp_plugins&utm_medium=readme).
-
-= Mobile Friendly =
-
-WS Form forms are mobile friendly and scale to fit different device sizes. By upgrading to [WS Form PRO](https://wsform.com/?utm_source=wp_plugins&utm_medium=readme) you can take advantage of the responsive feature that enables you to create different form layouts for different device sizes (breakpoints).
 
 = Performance =
 
@@ -83,6 +84,7 @@ WS Form comes loaded with all the field types you need to build a form. Upgrade 
 * [Color Picker](https://wsform.com/knowledgebase/color/?utm_source=wp_plugins&utm_medium=readme)
 * [Date / Time](https://wsform.com/knowledgebase/datetime/?utm_source=wp_plugins&utm_medium=readme)
 * [File Upload](https://wsform.com/knowledgebase/file/?utm_source=wp_plugins&utm_medium=readme)
+* [Google Map](https://wsform.com/knowledgebase/google-map/?utm_source=wp_plugins&utm_medium=readme)
 * [HTML](https://wsform.com/knowledgebase/html/?utm_source=wp_plugins&utm_medium=readme)
 * [Legal](https://wsform.com/knowledgebase/legal/?utm_source=wp_plugins&utm_medium=readme)
 * [Message](https://wsform.com/knowledgebase/message/?utm_source=wp_plugins&utm_medium=readme)
@@ -122,6 +124,34 @@ WS Form references the following third party components:
 For help installing WS Form, please see our [Installation](https://wsform.com/knowledgebase/installation?utm_source=wp_plugins&utm_medium=readme) knowledge base article.
 
 == Changelog ==
+
+= 1.8.17 =
+* Added: Custom Email HTML template
+* Added: Email Validation template
+* Added: Spam level set to 0 on validated submissions
+
+= 1.8.16 =
+* Added: #section_rows_start(section_id) / #sections_row_end for email templates
+* Added: Public config script optimizations
+* Bug Fix: Media library uploads
+
+= 1.8.15 =
+* Bug Fix: Fixed hidden field validation for conditional logic validation
+
+= 1.8.14 =
+* Added: Improved checks on conditional logic object integrity
+* Added: Implemented workaround for select2 not behaving properly with dynamically disabled options
+
+= 1.8.13 =
+* Bug Fix: Conditional logic icons if condition deleted
+
+= 1.8.12 =
+* Added: Improved signature validation
+* Added: Server side #ecommerce_price function
+* Added: Signature 'Clear' link text setting
+* Added: Google Map 'Reset' link text setting
+* Added: Password strength and visibility toggle text settings
+* Added: Various Bootstrap and Foundation CSS improvements
 
 = 1.8.11 =
 * Added: WordPress 5.7 testing

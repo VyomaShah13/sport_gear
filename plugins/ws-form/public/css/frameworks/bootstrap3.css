@@ -5,8 +5,8 @@
 	float: left;
 }
 
-.input-group > label {
-	width: 100%;
+.wsf-form .input-group > label {
+	flex-basis: 100%;
 }
 
 .wsf-form [data-type='textarea'] .wp-editor-tabs {
@@ -20,35 +20,35 @@
 	color: #000;
 }
 
-.wsf-form .dropzone {
+.wsf-form input[type=text] ~ .dropzone {
 	background-color: #fff;
 	border: 1px dashed #ccc;
 	border-radius: 4px;
+	cursor: pointer;
 	padding: 15px 15px 0;
 	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-	cursor: pointer;
 }
 
-.wsf-form .dropzone .dz-message {
+.wsf-form input[type=text] ~ .dropzone .dz-message {
 	color: #999;
 	margin-bottom: 15px;
 	text-align: center;
 }
 
-.wsf-form .dropzone.dz-started .dz-message {
+.wsf-form input[type=text] ~ .dropzone.dz-started .dz-message {
 	display: none;
 }
 
-.wsf-form .dropzone .wsf-dropzonejs-previews {
+.wsf-form input[type=text] ~ .dropzone .wsf-dropzonejs-previews {
 	pointer-events: none;
 }
 
-.wsf-form .dropzone .wsf-dropzonejs-preview {
+.wsf-form input[type=text] ~ .dropzone .wsf-dropzonejs-preview {
 	cursor: move;
 	pointer-events: all;
 }
 
-.wsf-form .dropzone .wsf-progress {
+.wsf-form input[type=text] ~ .dropzone .wsf-progress {
 	background-color: #f5f5f5;
 	box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 	border-radius: 4px;
@@ -57,16 +57,16 @@
 	overflow: hidden;
 }
 
-.wsf-form .dropzone .wsf-progress .wsf-upload {
+.wsf-form input[type=text] ~ .dropzone .wsf-progress .wsf-upload {
 	background-color: #337ab7;
 	height: 100%;
 }
 
-.wsf-form .dropzone .wsf-progress.wsf-progress-success .wsf-upload {
+.wsf-form input[type=text] ~ .dropzone .wsf-progress.wsf-progress-success .wsf-upload {
 	background-color: #5cb85c;
 }
 
-.wsf-form .dropzone .dz-complete .wsf-progress {
+.wsf-form input[type=text] ~ .dropzone .dz-complete .wsf-progress {
 	display: none;
 }
 
@@ -76,7 +76,6 @@
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 }
 
-.wsf-disabled,
 .wsf-form input[type=text]:disabled ~ .dropzone {
 	background-color: #eee;
 	cursor: not-allowed;
@@ -94,8 +93,41 @@
 	border-color: #a94442;
 }
 
-.wsf-form .dropzone .wsf-invalid-feedback {
+.wsf-form input[type=text] ~ .dropzone .wsf-invalid-feedback {
 	display: block;
+}
+
+.wsf-form input[type=text] ~ canvas {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	cursor: crosshair;
+	padding: 15px 15px 0;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.wsf-form input[type=text] ~ canvas:focus {
+	border-color: #66afe9;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+	outline: 0;
+}
+
+.wsf-form input[type=text]:disabled ~ canvas {
+	background-color: #eee;
+	cursor: not-allowed;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	pointer-events: none;
+	user-select: none;
+}
+
+.wsf-form input[type=text]:disabled ~ .help-block > [data-action='wsf-signature-clear'] {
+	display: none;
+}
+
+.wsf-form.wsf-validated input[type=text]:invalid ~ canvas {
+	border-color: #a94442;
 }
 
 .wsf-form .alert > *:last-child {
@@ -134,11 +166,18 @@
 }
 
 .wsf-form .input-group > .form-control,
-.wsf-form .input-group > .select2-container {
+.wsf-form .input-group > .form-control ~ .select2-container,
+.wsf-form .input-group > input[type=text] ~ .dropzone,
+.wsf-form .input-group > input[type=text] ~ canvas {
+	display: table-cell;
 	flex: 1 1 auto;
+	float: left;
+	margin-bottom: 0;
 	min-width: 0;
 	position: relative;
+	width: 100%;
 	width: 1% !important;
+	z-index: 2;
 }
 
 .wsf-form .wsf-input-group-has-prepend > .form-control,

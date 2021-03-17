@@ -930,6 +930,15 @@ body.ws-form_page_ws-form-settings #poststuff #post-body.columns-2 {
   margin-right: 6px;
 }
 
+#wsf-slider label {
+  margin-left: 0;
+  margin-right: -14px;
+}
+
+.wsf-breakpoint-actions {
+  margin: 0 6px 6px 0;
+}
+
 #wsf-header h1 {
   margin-left: 12px;
   margin-right: 0;
@@ -966,6 +975,16 @@ body.ws-form_page_ws-form-settings #poststuff #post-body.columns-2 {
 .wsf-section-selector-group-options,
 .wsf-meta-key-options {
   float: left;
+}
+
+.wsf-breakpoint-sizes > div > label.wsf-label svg {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+.wsf-orientation-breakpoint-sizes > div > label.wsf-label svg {
+  margin-left: 6px;
+  margin-right: 0;
 }
 
 input[type=email].wsf-field,

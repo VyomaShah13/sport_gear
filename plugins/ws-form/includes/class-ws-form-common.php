@@ -5,7 +5,7 @@
 	 */
 	class WS_Form_Common {
 
-		// Encryption key, we recommend changing this
+		// Cookie prefix
 		const WS_FORM_COOKIE_PREFIX = 'ws_form_';
 
 		// Admin messages
@@ -19,6 +19,12 @@
 
 		// NONCE verified
 		public static $nonce_verified = false;
+
+		// Groups cache
+		public static $groups = false;
+
+		// Sections cache
+		public static $sections = false;
 
 		// Fields cache
 		public static $fields = false;
@@ -706,13 +712,13 @@
 		public static function get_fields_from_form($form_object, $no_cache = false, $filter_group_ids = false, $filter_section_ids = false) {
 
 			// Retrieve from cache
-			if(!$no_cache && isset(self::$fields[$form_object->id])) { return self::$fields[$form_object->id]; }
+			if(!$no_cache && (self::$fields !== false)) { return self::$fields; }
 
 			// Get fields
 			$fields = self::get_fields_from_form_group($form_object->groups, $filter_group_ids, $filter_section_ids);
 
 			// Add to cache
-			self::$fields[$form_object->id] = $fields;
+			self::$fields = $fields;
 
 			return $fields;
 		}
@@ -791,9 +797,16 @@
 		}
 
 		// Get all sections from form
-		public static function get_sections_from_form($form_object, $get_fields = true, $get_meta = true) {
+		public static function get_sections_from_form($form_object, $no_cache = false, $get_fields = true, $get_meta = true) {
 
+			// Retrieve from cache
+			if(!$no_cache && (self::$sections !== false)) { return self::$sections; }
+
+			// Get sections
 			$sections = self::get_sections_from_form_group($form_object->groups, $get_fields, $get_meta);
+
+			// Add to cache
+			self::$sections = $sections;
 
 			return $sections;
 		}
@@ -827,6 +840,7 @@
 				$section_id = $section->id;
 
 				$sections_return[$section_id] = new stdClass();
+				$sections_return[$section_id]->label = $section->label;
 				$sections_return[$section_id]->fields = array();
 				$sections_return[$section_id]->meta = new stdClass();
 
@@ -852,6 +866,27 @@
 			}
 
 			return $sections_return;
+		}
+
+		// Get all groups from form
+		public static function get_groups_from_form($form_object, $no_cache = false) {
+
+			// Retrieve from cache
+			if(!$no_cache && (self::$groups !== false)) { return self::$groups; }
+
+			// Get groups
+			$groups = array();
+
+			foreach($form_object->groups as $key => $group) {
+
+				$groups[$group->id] = new stdClass();
+				$groups[$group->id]->label = $group->label;
+			}
+
+			// Add to cache
+			self::$groups = $groups;
+
+			return $groups;
 		}
 
 		// Mask parse
@@ -1474,12 +1509,15 @@
 		} 
 
 		// Parse WS Form variables
-		public static function parse_variables_process($parse_string, $form = false, $submit = false, $content_type = 'text/html', $scope = false, $depth = 1) {
+		public static function parse_variables_process($parse_string, $form = false, $submit = false, $content_type = 'text/html', $scope = false, $section_repeatable_index = false, $section_row_number = 1, $exclude_secure = false, $depth = 1) {
 
 			if(!is_string($parse_string)) { return $parse_string; }
 
 			// Checks to speed up this function
 			if(strpos($parse_string, '#') === false) { return $parse_string; }
+
+			// Exclude secure on nested parses?
+			$exclude_secure_nested_parse = true;
 
 			// Get post
 			$post = self::get_post_root();
@@ -1695,9 +1733,84 @@
 
 											$value = self::parse_variables_fields_all((object) $form, $submit, $content_type, $render_group_labels, $render_section_labels, $render_field_labels, $render_blank_fields, $render_static_fields, $hidden_array);
 
-											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $depth + 1);
+											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
 
 											break;
+										case 'tab_label' :
+
+											if(!is_numeric($variable_attribute_array[0])) { break; }
+
+											// Get group_id
+											$group_id = intval($variable_attribute_array[0]);
+											if($group_id <= 0) { break; }
+
+											// Get groups
+											$groups = self::get_groups_from_form($form);
+
+											if(
+												isset($groups[$group_id]) &&
+												isset($groups[$group_id]->label)
+											) {
+
+												$parsed_variable = self::parse_variables_process($groups[$group_id]->label, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
+
+											} else {
+
+												self::throw_error(sprintf(__('Syntax error, invalid group ID in #group_label(%u)', 'ws-form'), $group_id));
+											}
+
+											break;
+
+										case 'section_label' :
+
+											if(!is_numeric($variable_attribute_array[0])) { break; }
+
+											// Get section_id
+											$section_id = intval($variable_attribute_array[0]);
+											if($section_id <= 0) { break; }
+
+											// Get sections
+											$sections = self::get_sections_from_form($form);
+
+											if(
+												isset($sections[$section_id]) &&
+												isset($sections[$section_id]->label)
+											) {
+
+												$parsed_variable = self::parse_variables_process($sections[$section_id]->label, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
+
+											} else {
+
+												self::throw_error(sprintf(__('Syntax error, invalid section ID in #section_label(%u)', 'ws-form'), $section_id));
+											}
+
+											break;
+
+										case 'field_label' :
+
+											if(!is_numeric($variable_attribute_array[0])) { break; }
+
+											// Get field_id
+											$field_id = intval($variable_attribute_array[0]);
+											if($field_id <= 0) { break; }
+
+											// Get fields
+											$fields = self::get_fields_from_form($form);
+
+											if(
+												isset($fields[$field_id]) &&
+												isset($fields[$field_id]->label)
+											) {
+
+												$parsed_variable = self::parse_variables_process($fields[$field_id]->label, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
+
+											} else {
+
+												self::throw_error(sprintf(__('Syntax error, invalid field ID in #field_label(%u)', 'ws-form'), $field_id));
+											}
+
+											break;
+
 										case 'field' :
 										case 'field_float' :
 
@@ -1707,10 +1820,16 @@
 
 											$field_id = $variable_attribute_array[0];
 
-											if(isset($submit->meta[WS_FORM_FIELD_PREFIX . $field_id])) {
+											$meta_key = WS_FORM_FIELD_PREFIX . $field_id;
+											if($section_repeatable_index !== false) {
+
+												$meta_key .= '_' . $section_repeatable_index;
+											}
+
+											if(isset($submit->meta[$meta_key])) {
 
 												// Get value
-												$meta = $submit->meta[WS_FORM_FIELD_PREFIX . $field_id];
+												$meta = $submit->meta[$meta_key];
 												$value = self::parse_variables_meta_value($form, $meta, $content_type);
 
 											} else {
@@ -1754,11 +1873,16 @@
 												}
 											}
 
-											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $depth + 1);
+											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
 
 											if($parse_variable == 'field_float') {
 
 												$parsed_variable = self::get_number($parsed_variable, 0, true);
+											}
+
+											if($parse_variable == 'ecommerce_field_price') {
+
+												$parsed_variable = self::get_price(self::get_number($parsed_variable, 0, true));
 											}
 
 											break;
@@ -1791,6 +1915,16 @@
 
 											break;
 
+										case 'ecommerce_price' :
+
+											$value = $variable_attribute_array[0];
+
+											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
+
+											$parsed_variable = self::get_price(self::get_number($parsed_variable, 0, true));
+
+											break;
+
 										case 'radio_label' :
 										case 'checkbox_label' :
 										case 'select_option_text' :
@@ -1808,7 +1942,7 @@
 											$meta = $submit->meta[WS_FORM_FIELD_PREFIX . $field_id];
 											$value = self::parse_variables_meta_value($form, $meta, $content_type, 'label', 0, $datagrid_delimiter);
 
-											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $depth + 1);
+											$parsed_variable = self::parse_variables_process($value, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
 
 											break;
 
@@ -1833,7 +1967,7 @@
 										case 'post_date_custom' :
 										case 'server_date_custom' :
 
-											$seconds_offset = intval(isset($variable_attribute_array[1]) ? self::parse_variables_process($variable_attribute_array[1], $form, $submit, $content_type, $scope, $depth + 1) : 0);
+											$seconds_offset = intval(isset($variable_attribute_array[1]) ? self::parse_variables_process($variable_attribute_array[1], $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1) : 0);
 
 											$parsed_variable = date($variable_attribute_array[0], strtotime($parse_variable_value) + $seconds_offset);
 
@@ -1862,7 +1996,7 @@
 										// Date
 										case 'blog_date_custom' :
 
-											$seconds_offset = intval(isset($variable_attribute_array[1]) ? self::parse_variables_process($variable_attribute_array[1], $form, $submit, $content_type, $scope, $depth + 1) : 0);
+											$seconds_offset = intval(isset($variable_attribute_array[1]) ? self::parse_variables_process($variable_attribute_array[1], $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1) : 0);
 
 											$parsed_variable = date($variable_attribute_array[0], strtotime($parse_variable_value) + $seconds_offset);
 
@@ -1915,6 +2049,9 @@
 
 								} while ($variable_index_of !== false);
 
+								// Secure variables
+								if($exclude_secure) { $variables = self::parse_variables_exclude_secure($variables); }
+
 								// Parse function
 								$parse_string = self::mask_parse($parse_string, $variables);
 							}
@@ -1944,6 +2081,13 @@
 					$variables['form_obj_id'] = '';
 					$variables['form_framework'] = '';
 					$variables['form_instance_id'] = 0;
+				}
+
+				// Section
+				if(strpos($parse_string, 'section') !== false) {
+
+					$variables['section_row_index'] = $section_repeatable_index;
+					$variables['section_row_number'] = $section_row_number;
 				}
 
 				// Post
@@ -2050,6 +2194,9 @@
 			// Variables filter
 			$variables = apply_filters('wsf_parse_variables', $variables, $parse_string, $form, $submit, $content_type);
 
+			// Secure variables
+			if($exclude_secure) { $variables = self::parse_variables_exclude_secure($variables); }
+
 			// Parse until no more changes made
 			$parse_string_before = $parse_string;
 			$parse_string = self::mask_parse($parse_string, $variables);
@@ -2061,10 +2208,26 @@
 				(strpos($parse_string, '#') !== false)
 			) {
 
-				$parse_string = self::parse_variables_process($parse_string, $form, $submit, $content_type, $scope, $depth + 1);
+				$parse_string = self::parse_variables_process($parse_string, $form, $submit, $content_type, $scope, $section_repeatable_index, $section_row_number, $exclude_secure_nested_parse, $depth + 1);
 			}
 
 			return $parse_string;
+		}
+
+		// Blank secure parse variables
+		public static function parse_variables_exclude_secure($variables) {
+
+			$parse_variables_secure = WS_Form_Config::get_parse_variables_secure();
+
+			foreach($parse_variables_secure as $parse_variable_key) {
+
+				if(isset($variables[$parse_variable_key])) {
+
+					$variables[$parse_variable_key] = '&num;' . $parse_variable_key;
+				}
+			}
+
+			return $variables;
 		}
 
 		// Find closing string

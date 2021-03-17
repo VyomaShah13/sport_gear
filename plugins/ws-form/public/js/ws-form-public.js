@@ -1491,8 +1491,8 @@
 
 		var valid = true;
 
-		// Get required fields
-		$('[data-required]:not([data-required-bypass],[data-required-bypass-section],[data-required-bypass-group])', obj).each(function() {
+		// Get fields
+		$('input,select,textarea', obj).filter(':not([data-hidden],[data-hidden-section],[data-hidden-group],[disabled],[type="hidden"])').each(function() {
 
 			// Get data ID
 			var field_id = $(this).closest('[data-id]').attr('data-id');
@@ -1526,11 +1526,6 @@
 					}
 					break;
 
-				case 'signature' :
-
-					validity = ws_this.signature_get_response_by_name(field_name);
-					break;
-
 				case 'email' :
 
 					var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -1544,7 +1539,7 @@
 
 			radio_field_processed[field_name] = true;
 
-			if(!validity) { valid = false; }
+			if(!validity) { valid = false; return false; }
 		});
 
 		return valid;
@@ -2039,7 +2034,14 @@
 			case 'value_row_disabled' :
 			case 'value_row_not_disabled' :
 
-				obj.attr('disabled',(action == 'value_row_disabled'));
+				obj.attr('disabled', (action == 'value_row_disabled'));
+
+				// Re-render select2 (Fixes select2 bug where disable attribute is not updated)
+				if(typeof(obj.parent().attr('data-wsf-select2')) !== 'undefined') {
+
+					this.form_select_ajax(obj.parent());
+				}
+
 				debug_action_language_id = 'debug_action_' + ((action == 'value_row_disabled') ? 'disabled' : 'enabled');
 				break;
 
@@ -2482,9 +2484,6 @@
 					// Set ARIA not required
 					obj.removeAttr('data-required').removeAttr('aria-required').attr('data-conditional-logic-bypass', '');
 				}
-
-				var signature = (typeof(this.signatures_by_name[field_name]) !== 'undefined') ? this.signatures_by_name[field_name] : false;
-				if(signature !== false) { signature.required = (value == 'on'); }
 
 				debug_action_language_id = 'debug_action_' + ((value == 'on') ? 'required' : 'not_required');
 
@@ -3003,40 +3002,40 @@
 	// Check integrity of a condition
 	$.WS_Form.prototype.conditional_condition_check = function(condition) {
 
-		// Check condition structure
-		if(typeof(condition.id) === 'undefined') { return false; }
-		if(typeof(condition.object) === 'undefined') { return false; }
-		if(typeof(condition.object_id) === 'undefined') { return false; }
-		if(typeof(condition.object_row_id) === 'undefined') { return false; }
-		if(typeof(condition.logic) === 'undefined') { return false; }
-		if(typeof(condition.value) === 'undefined') { return false; }
-		if(typeof(condition.case_sensitive) === 'undefined') { return false; }
-		if(typeof(condition.logic_previous) === 'undefined') { return false; }
+		return !(
 
-		// Check condition variables
-		if(condition.id == '') { return false; }
-		if(condition.id == 0) { return false; }
-		if(condition.object == '') { return false; }
-		if(condition.object_id == '') { return false; }
-		if(condition.logic == '') { return false; }
-
-		return true;
+			(condition === null) ||
+			(typeof(condition) !== 'object') ||
+			(typeof(condition.id) === 'undefined') ||
+			(typeof(condition.object) === 'undefined') ||
+			(typeof(condition.object_id) === 'undefined') ||
+			(typeof(condition.object_row_id) === 'undefined') ||
+			(typeof(condition.logic) === 'undefined') ||
+			(typeof(condition.value) === 'undefined') ||
+			(typeof(condition.case_sensitive) === 'undefined') ||
+			(typeof(condition.logic_previous) === 'undefined') ||
+			(condition.id == '') ||
+			(condition.id == 0) ||
+			(condition.object == '') ||
+			(condition.object_id == '') ||
+			(condition.logic == '')
+		);
 	}
 
 	// Check integrity of an action
 	$.WS_Form.prototype.conditional_action_check = function(action) {
 
-		// Check action structure
-		if(typeof(action.object) === 'undefined') { return false; }
-		if(typeof(action.object_id) === 'undefined') { return false; }
-		if(typeof(action.action) === 'undefined') { return false; }
+		return !(
 
-		// Check action variables
-		if(action.object == '') { return false; }
-		if(action.object_id == '') { return false; }
-		if(action.action == '') { return false; }
-
-		return true;
+			(action === null) ||
+			(typeof(action) !== 'object') ||
+			(typeof(action.object) === 'undefined') ||
+			(typeof(action.object_id) === 'undefined') ||
+			(typeof(action.action) === 'undefined') ||
+			(action.object == '') ||
+			(action.object_id == '') ||
+			(action.action == '')
+		);
 	}
 
 	// Group - Tabs - Init
@@ -3169,7 +3168,7 @@
 		var tab_validated_previous = true;
 
 		// Get tabs
-		var tabs = $('[href^="#' + this.form_id_prefix + 'group-"]', this.form_canvas_obj);
+		var tabs = $('.wsf-group-tabs > :not([data-wsf-group-hidden]) > a', this.form_canvas_obj);
 
 		// Get tab count
 		var tab_count = tabs.length;

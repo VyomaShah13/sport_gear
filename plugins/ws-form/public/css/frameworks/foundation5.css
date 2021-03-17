@@ -20,7 +20,7 @@
 
 .wsf-form .wp-editor-wrap.tmce-active,
 .wsf-form .CodeMirror-wrap {
-	margin: 0 0 1rem;
+	margin: 0 0 1rem 0;
 }
 
 .wsf-form select[multiple] {
@@ -37,70 +37,71 @@
 }
 
 .wsf-form .wsf-rating {
-	margin: 0 0 1rem !important;
+	margin: 0 0 1rem 0 !important;
 }
 
-.wsf-form .dropzone {
+.wsf-form input[type=text] ~ .dropzone {
 	background-color: #fff;
 	border: 1px dashed #ccc;
-	color: #4d4d4d;
-	margin: 0 0 1rem;
-	padding: 1rem 1rem 0;
+	box-shadow: inset 0 1px 2px rgb(0, 0, 0, 0.1);
 	cursor: pointer;
+	margin: 0 0 1rem 0;
+	padding: 0.5rem;
+	transition: background-color .15s linear, border-color .15s linear;
 }
 
-.wsf-form .dropzone .dz-message {
+.wsf-form input[type=text] ~ .dropzone .dz-message {
 	color: #666;
 	margin-bottom: 1rem;
 	text-align: center;
 }
 
-.wsf-form .dropzone.dz-started .dz-message {
+.wsf-form input[type=text] ~ .dropzone.dz-started .dz-message {
 	display: none;
 }
 
-.wsf-form .dropzone .wsf-dropzonejs-previews {
+.wsf-form input[type=text] ~ .dropzone .wsf-dropzonejs-previews {
 	pointer-events: none;
 }
 
-.wsf-form .dropzone .wsf-dropzonejs-preview {
+.wsf-form input[type=text] ~ .dropzone .wsf-dropzonejs-preview {
 	cursor: move;
 	pointer-events: all;
 }
 
-.wsf-form .dropzone .wsf-dropzonejs-preview img {
+.wsf-form input[type=text] ~ .dropzone .wsf-dropzonejs-preview img {
 	margin-bottom: 1rem;
 }
 
-.wsf-form .dropzone .wsf-progress {
+.wsf-form input[type=text] ~ .dropzone .wsf-progress {
 	background-color: #f6f6f6;
 	height: .5rem;
 	margin-bottom: 1rem;
+	margin-top: -.5rem;
 	overflow: hidden;
 }
 
-.wsf-form .dropzone .wsf-progress .wsf-upload {
+.wsf-form input[type=text] ~ .dropzone .wsf-progress .wsf-upload {
 	background-color: #008cba;
 	height: 100%;
 }
 
-.wsf-form .dropzone .wsf-progress.wsf-progress-success .wsf-upload {
-	background-color: #43ac6a;
+.wsf-form input[type=text] ~ .dropzone .wsf-progress.wsf-progress-success .wsf-upload {
+	background-color: #43aC6a;
 }
 
-.wsf-form .dropzone .dz-complete .wsf-progress {
+.wsf-form input[type=text] ~ .dropzone .dz-complete .wsf-progress {
 	display: none;
 }
 
 .wsf-form input[type=text]:enabled ~ .dropzone.dz-drag-hover {
 	background-color: #fafafa;
 	border-color: #999;
-	border-style: solid;
 }
 
-.wsf-disabled,
 .wsf-form input[type=text]:disabled ~ .dropzone {
-	background-color: #ddd;
+ 	background-color: #ddd;
+ 	cursor: default;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -111,16 +112,55 @@
 	opacity: .5;
 }
 
-.wsf-form .dropzone .error {
+.wsf-form input[type=text] ~ .dropzone .error {
 	display: block;
+}
+
+.error input[type=text] ~ .dropzone {
+    margin-bottom: 0;
 }
 
 .wsf-form [data-type='recaptcha'] [data-recaptcha-type] {
 	margin: 0 0 1rem 0;
 }
 
+.wsf-form input[type=text] ~ canvas {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: inset 0 1px 2px rgb(0, 0, 0, 0.1);
+	cursor: crosshair;
+	display: block;
+	margin: 0 0 1rem 0;
+	padding: 0.5rem;
+	transition: background-color .15s linear, border-color .15s linear;
+}
+
+.wsf-form input[type=text] ~ canvas:focus {
+	background-color: #fafafa;
+	border-color: #999;
+	outline: 0;
+}
+
+.wsf-form input[type=text]:disabled ~ canvas {
+ 	background-color: #ddd;
+ 	cursor: default;
+ 	pointer-events: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.wsf-form input[type=text]:disabled ~ p > [data-action='wsf-signature-clear'] {
+	display: none;
+}
+
+.error input[type=text] ~ canvas {
+    margin-bottom: 0;
+}
+
 .wsf-form .wsf-section-icon {
-	margin: 0 0 1rem !important;
+	margin: 0 0 1rem 0 !important;
 }
 
 .wsf-form .wsf-hidden {

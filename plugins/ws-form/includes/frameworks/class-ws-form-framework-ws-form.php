@@ -37,6 +37,32 @@
 						'column_size_default'	=>	'column_count'
 					),
 
+					50	=>	array(
+						'id'				=>	'small',
+						'name'				=>	__('Small', 'ws-form'),
+						'min_width'			=>	576,
+						'admin_max_width'	=>	767
+					),
+
+					75	=>	array(
+						'id'				=>	'medium',
+						'name'				=>	__('Medium', 'ws-form'),
+						'min_width'			=>	768,
+						'admin_max_width'	=>	991
+					),
+
+					100	=>	array(
+						'id'				=>	'large',
+						'name'				=>	__('Large', 'ws-form'),
+						'min_width'			=>	992,
+						'admin_max_width'	=>	1199
+					),
+
+					150	=>	array(
+						'id'				=>	'extra-large',
+						'name'				=>	__('Extra Large', 'ws-form'),
+						'min_width'			=>	1200
+					)
 				),
 
 				'form' => array(

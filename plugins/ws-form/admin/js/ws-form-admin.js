@@ -343,6 +343,8 @@
 			$.WS_Form.this.group_render($(this));
 		});
 
+		// Breakpoint buttons
+		this.breakpoint_buttons();
 
 		// Initialize draggable
 		this.init_ui();
@@ -2413,12 +2415,28 @@
 					this.section_data_cache[object_id].label = this.object_data_scratch.label;
 					this.section_data_cache[object_id].meta = this.object_data_scratch.meta;
 
+					// Optimize breakpoints
+					this.breakpoint_optimize(this.section_data_cache[object_id]);
+
 					break;
 
 				case 'field' :
 
 					this.field_data_cache[object_id].label = this.object_data_scratch.label;
 					this.field_data_cache[object_id].meta = this.object_data_scratch.meta;
+
+					// Optimize breakpoints
+					this.breakpoint_optimize(this.field_data_cache[object_id]);
+
+					// Optimize orientation breakpoints
+					var field_type = (typeof(this.object_data_scratch.type) !== 'undefined') ? this.object_data_scratch.type : false;
+					switch(field_type) {
+
+						case 'checkbox' :
+						case 'radio' :
+
+							this.orientation_breakpoint_optimize(this.field_data_cache[object_id]);
+					}
 
 					break;
 			}
@@ -3393,8 +3411,8 @@
 
 					if(select2) {
 
-						// Add data-select2-wsf to field attributes
-						field_attributes += ' data-select2-wsf';
+						// Add data-wsf-select2 to field attributes
+						field_attributes += ' data-wsf-select2';
 
 						var select_ajax_method_search = (typeof(meta_key_config['select_ajax_method_search']) !== 'undefined') ? meta_key_config['select_ajax_method_search'] : false;
 						var select_ajax_method_cache = (typeof(meta_key_config['select_ajax_method_cache']) !== 'undefined') ? meta_key_config['select_ajax_method_cache'] : false;
@@ -3702,6 +3720,19 @@
 							var sidebar_html_field = meta_key_options_html + sidebar_html_label + '<input type="color"' + field_attributes + ' value="' + this.html_encode(meta_value) + '"' + ' />' + sidebar_html_help;
 							break;
 
+						// Breakpoint sizes
+						case 'breakpoint_sizes' :
+
+							var sidebar_html_field = '<div class="wsf-breakpoint-sizes" data-object="' + object + '" data-id="' + object_id + '" data-meta-key="' + meta_key + '"></div>';
+							inits.push('breakpoint-sizes');
+							break;
+
+						// Orientation Breakpoint sizes
+						case 'orientation_breakpoint_sizes' :
+
+							var sidebar_html_field = '<div class="wsf-orientation-breakpoint-sizes" data-object="' + object + '" data-id="' + object_id + '" data-meta-key="' + meta_key + '"></div>';
+							inits.push('orientation-breakpoint-sizes');
+							break;
 
 						// Data grid
 						case 'data_grid' :
@@ -4017,6 +4048,19 @@
 
 			this.sidebar_form_history_init();
 		}
+
+		// Initialize breakpoint sizes
+		if(inits.indexOf('breakpoint-sizes') != -1) {
+
+			this.sidebar_breakpoint_sizes(obj_sidebar_outer);
+		}
+
+		// Initialize orientation breakpoint sizes
+		if(inits.indexOf('orientation-breakpoint-sizes') != -1) {
+
+			this.sidebar_orientation_breakpoint_sizes(obj_sidebar_outer);
+		}
+
 		// Initialize select2
 		if(inits.indexOf('select2') != -1) {
 
@@ -6844,8 +6888,951 @@
 		var form_breakpoint_class = framework_breakpoints[breakpoint]['id'];
 		$('#' + this.form_obj_id).attr('data-breakpoint', form_breakpoint_class);
 
+		// Inject breakpoint framework
+		obj_breakpoints.html('<div id="wsf-slider"></div>');
+
+		// Breakpoint buttons
+		obj_breakpoints.append('<ul class="wsf-breakpoint-actions"><li><button class="wsf-button wsf-button-full wsf-button-small" data-action="wsf-reset">' + this.svg('undo') + ' ' + this.language('breakpoint_reset') + '</button></li></ul>')
+
+		// Now work on the UL
+		var obj_slider = $('#wsf-slider');
+
+		// Render each breakpoint
+		var breakpoint_index = 0;
+
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint icon (SVG from config)
+			if(typeof(framework_icons[breakpoint_key]) === 'undefined') {
+
+				var breakpoint_icon = '';
+
+			} else {
+
+				var breakpoint_icon = framework_icons[breakpoint_key];
+			}
+
+			// Build help text
+			var breakpoint_help_text_array = [];
+			if(typeof(breakpoint.name) !== 'undefined') { breakpoint_help_text_array.push(breakpoint.name); }
+			if(typeof(breakpoint.min_width) !== 'undefined') { breakpoint_help_text_array.push('>= ' + breakpoint.min_width + 'px'); } else { breakpoint_help_text_array.push('> 0 px'); }
+			if(typeof(breakpoint.max_width) !== 'undefined') { breakpoint_help_text_array.push('<= ' + breakpoint.max_width + 'px'); }
+			var breakpoint_help_text = breakpoint_help_text_array.join("\n");
+
+			// Add breakpoint to ul
+			var tooltip_attribute = 'top-' + ((breakpoint_index === 0) ? 'left' : 'center');
+			obj_slider.append('<label' + this.tooltip(breakpoint_help_text, tooltip_attribute) + ' style="' + (ws_form_settings.rtl ? 'right' : 'left') + ':' + (breakpoint_index / (breakpoint_slider_max - 1) * 100) + '%;">' + breakpoint_icon + '</label>');
+
+			breakpoint_index++;
+		}
+
+		// Breakpoints - Slider
+		$('#wsf-slider').slider({
+
+			range: 'max',
+			min: 1,
+			max: breakpoint_slider_max,
+			value: ws_form_settings.rtl ? (breakpoint_slider_max - (breakpoint_slider_value - 1)) : breakpoint_slider_value,
+
+			start: function() {
+
+				if($.WS_Form.settings_plugin.helper_columns != 'off') { $('.wsf-group:visible').addClass('wsf-column-helper'); }
+
+				// Set dragging
+				$.WS_Form.this.dragging = true;
+			},
+
+			stop: function() {
+
+				if($.WS_Form.settings_plugin.helper_columns != 'on') { $('.wsf-group:visible').removeClass('wsf-column-helper'); }
+
+				// Push breakpoint to API (Disable history)
+				$.WS_Form.this.form_put(false, false, true, false);
+
+				// Set dragging
+				$.WS_Form.this.dragging = false;
+			},
+
+			slide: function(e, ui) {
+
+				// Read breakpoint
+				var key = $.WS_Form.breakpoints[ws_form_settings.rtl ? (breakpoint_slider_max - ui.value) : (ui.value - 1)];
+
+				// Set breakpoint
+				$.WS_Form.this.breakpoint_set(key);
+			}
+		});
+
+		// Button - Reset
+		$('#wsf-breakpoints [data-action="wsf-reset"]').on('click', function() {
+
+			var buttons = [
+
+				{label:$.WS_Form.this.language('cancel'), action:'wsf-cancel'},
+				{label:$.WS_Form.this.language('reset'), action:'wsf-confirm', class:'wsf-button-danger'}
+			];
+
+			$.WS_Form.this.popover($.WS_Form.this.language('confirm_breakpoint_reset'), buttons, $(this), function() {
+
+				$.WS_Form.this.breakpoint_reset();
+			});
+		});
 	}
 
+	// Breakpoints - Optimize
+	$.WS_Form.prototype.breakpoint_optimize = function(object) {
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get current framework column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Go through breakpoints
+		var column_size_value_old = 0;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint default column size
+			if(breakpoint_index == 0) {
+
+				var column_size_value_old = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_value_old;
+				var offset_value_old;
+			}
+
+			// Get meta keys
+			var column_size_value_key = 'breakpoint_size_' + breakpoint_key;
+			var offset_value_key = 'breakpoint_offset_' + breakpoint_key;
+
+			// Column sizes
+			var column_size_value = this.get_object_meta_value(object, column_size_value_key, '', false);
+			if(column_size_value != '') {
+
+				column_size_value = parseInt(column_size_value, 10);
+
+				if(column_size_value == column_size_value_old) {
+
+					// Found a breakpoint column size that matches the previous value, so this meta should be deleted
+					object.meta[column_size_value_key] = '';
+				}
+
+				// Remember this value for next cycle
+				column_size_value_old = column_size_value;
+			}
+
+			// Offset
+			var offset_value = this.get_object_meta_value(object, offset_value_key, '', false);
+			if(offset_value != '') {
+
+				offset_value = parseInt(offset_value, 10);
+
+				if(offset_value == offset_value_old) {
+
+					// Found a breakpoint offset that matches the previous value, so this meta should be deleted
+					object.meta[offset_value_key] = '';
+				}
+
+				// Remember this value for next cycle
+				offset_value_old = offset_value;
+			}
+
+			breakpoint_index++;
+		}
+	}
+
+	// Footer - Breakpoint slider - Reset
+	$.WS_Form.prototype.breakpoint_reset = function() {
+
+		var framework = $.WS_Form.settings_plugin.framework;
+
+		// Get current group
+		var group_obj = $($('.wsf-group-tab.ui-tabs-active a').attr('href'));
+
+		// Sections
+		for(var object_id in this.section_data_cache) {
+
+			var object = this.section_data_cache[object_id];
+
+			// Optimize
+			$.WS_Form.this.breakpoint_reset_process(object);
+		};
+
+		// Fields
+		for(var object_id in this.field_data_cache) {
+
+			var object = this.field_data_cache[object_id];
+
+			// Optimize
+			$.WS_Form.this.breakpoint_reset_process(object);
+		};
+
+		// Form build
+		$.WS_Form.this.form_build();
+
+		// Loader on
+		$.WS_Form.this.loader_on();
+
+		// Call AJAX request
+		$.WS_Form.this.api_call('form/' + $.WS_Form.this.form_id + '/full/put/', 'POST', {'form': $.WS_Form.this.form, 'history_method': 'put_reset'}, function(response) {
+
+			// Loader off
+			$.WS_Form.this.loader_off();
+		});
+	}
+
+	// Footer - Breakpoint slider - Set
+	$.WS_Form.prototype.breakpoint_set = function(key) {
+
+		// Get framework
+		var framework = $.WS_Form.settings_plugin.framework;
+
+		// Get breakpoint ID
+		var form_data_breakpoint = $.WS_Form.frameworks.types[framework]['breakpoints'][key]['id'];
+
+		// Set new breakpoint
+		$.WS_Form.this.set_object_meta_value($.WS_Form.this.form, 'breakpoint', key);
+
+		// Set breakpoint ID in form data-breakpoint attribute
+		$('#' + $.WS_Form.this.form_obj_id).attr('data-breakpoint', form_data_breakpoint);
+	};
+
+	// Footer - Breakpoint slider - Button rendering
+	$.WS_Form.prototype.breakpoint_buttons = function() {
+
+		var can_reset = false;
+
+		// Get current group
+		var group_obj = $($('.wsf-group-tab.ui-tabs-active a').attr('href'));
+
+		// Sections
+		for(var object_id in this.section_data_cache) {
+
+			var object = this.section_data_cache[object_id];
+
+			can_reset = can_reset || $.WS_Form.this.breakpoint_can_reset(object, true);
+		};
+
+		// Fields
+		for(var object_id in this.field_data_cache) {
+
+			var object = this.field_data_cache[object_id];
+
+			can_reset = can_reset || $.WS_Form.this.breakpoint_can_reset(object, true);
+		};
+
+		// Set buttons
+		$('#wsf-breakpoints [data-action="wsf-reset"]').attr('disabled', !can_reset);
+	}
+
+	// Sidebar - Breakpoint sizes
+	$.WS_Form.prototype.sidebar_breakpoint_sizes = function(obj) {
+
+		// Init breakpoint sizes
+		$('.wsf-breakpoint-sizes:not(.wsf-breakpoint-sizes-initialized)', obj).each(function(i, e) {
+
+			$.WS_Form.this.sidebar_breakpoint_sizes_init($(this), e);
+		});
+	}
+
+	// Sidebar - Breakpoint sizes - Init
+	$.WS_Form.prototype.sidebar_breakpoint_sizes_init = function(obj, element) {
+
+		element.render = function() {
+
+			// Get object data
+			var object = obj.attr('data-object');
+			var object_id = obj.attr('data-id');
+			var meta_key = obj.attr('data-meta-key');
+
+			switch(object) {
+
+				case 'section' :
+
+					var object_obj = $('.wsf-section[data-id="' + object_id + '"]');
+					break;
+
+				case 'field' :
+
+					var object_obj = $('.wsf-field-wrapper[data-id="' + object_id + '"]');
+					break;
+			}
+
+			// Get object data from scratch
+			var object_data = $.WS_Form.this.get_object_data(object, object_id, true);
+			if(object_data === false) { $.WS_Form.this.error('error_object_data'); }
+
+			// Get current data grid data
+			var meta_value = $.WS_Form.this.get_object_meta_value(object_data, meta_key, false);
+			if(meta_value === false) { $.WS_Form.this.error('error_object_meta_value'); }
+
+			// Render HTML
+			obj.html($.WS_Form.this.sidebar_breakpoint_sizes_html(object_obj, meta_key, object_data));
+
+			// Column size selects
+			$('select[data-action="wsf-column"]', obj).on('change', function() {
+
+				// Get breakpoint
+				var breakpoint = $(this).attr('data-id');
+
+				// Get column size
+				var column_size = $(this).val();
+
+				// Get meta key
+				var meta_key = 'breakpoint_size_' + breakpoint;
+
+				if(!object_obj.length) { $.WS_Form.this.error('error_object'); } else {
+
+					// Remove old classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data, false);
+
+					// Update framework size meta
+					$.WS_Form.this.set_object_meta_value(object_data, meta_key, column_size);
+
+					// Add new classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data);
+				}
+
+				// Render
+				element.render();
+			});
+
+			// Offset selects
+			$('select[data-action="wsf-offset"]', obj).on('change', function() {
+
+				// Get breakpoint
+				var breakpoint = $(this).attr('data-id');
+
+				// Get offset
+				var offset = $(this).val();
+
+				// Get meta key
+				var meta_key = 'breakpoint_offset_' + breakpoint;
+
+				if(!object_obj.length) { $.WS_Form.this.error('error_object'); } else {
+
+					// Remove old classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data, false);
+
+					// Update framework size meta
+					$.WS_Form.this.set_object_meta_value(object_data, meta_key, offset);
+
+					// Add new classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data);
+				}
+
+				// Render
+				element.render();
+			});
+
+			// Reset
+			$('[data-action="wsf-reset"]', obj).on('click', function() {
+
+				var buttons = [
+
+					{label:$.WS_Form.this.language('cancel'), action:'wsf-cancel'},
+					{label:$.WS_Form.this.language('reset'), action:'wsf-confirm', class:'wsf-button-danger'}
+				];
+
+				$.WS_Form.this.popover($.WS_Form.this.language('confirm_breakpoint_reset'), buttons, $(this), function() {
+
+					// Remove old classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data, false);
+
+					// Reset
+					$.WS_Form.this.breakpoint_reset_process(object_data);
+
+					// Add new classes
+					$.WS_Form.this.column_classes_render(object_obj, object_data);
+
+					// Render
+					element.render();
+				});
+			});
+
+			// Set optimized button
+			var can_reset = $.WS_Form.this.breakpoint_can_reset(object_data, true);
+
+			// Render buttons
+			$('[data-action="wsf-reset"]', obj).attr('disabled', !can_reset);
+
+			// Mark as initialized
+			obj.addClass('wsf-breakpoint-sizes-initialized');
+		}
+
+		// Render
+		element.render();
+	}
+
+	// Sidebar - Breakpoint sizes - HTML
+	$.WS_Form.prototype.sidebar_breakpoint_sizes_html = function(object_obj, meta_key, object_data) {
+
+		var return_html = '';
+
+		// Get selected framework
+		var framework_id = $.WS_Form.settings_plugin.framework;
+
+		// Get framework from config
+		var framework = $.WS_Form.frameworks.types[framework_id];
+
+		// Get frame work column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get icons for use with breakpoint key (0, 25, 50, 75, 100, 125, 150)
+		var framework_icons = $.WS_Form.frameworks.icons;
+
+		var column_size_default = false;
+		var offset_default = false;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint name
+			var breakpoint_name = breakpoint.name;
+
+			if(breakpoint_index == 0) {
+
+				// Get breakpoint default column size
+				var column_size_default = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_default;
+
+				// Get breakpoint default offset size
+				var offset_default = 0;
+			}
+
+			// Get column size
+			var column_size_value_key = 'breakpoint_size_' + breakpoint_key;
+			var column_size_value = this.get_object_meta_value(object_data, column_size_value_key, '', false);
+			if(column_size_value != '') { column_size_value = parseInt(column_size_value, 10); var column_size_value_actual = column_size_value; } else { var column_size_value_actual = column_size_default; }
+
+			// Get offset
+			var offset_value_key = 'breakpoint_offset_' + breakpoint_key;
+			var offset_value = this.get_object_meta_value(object_data, offset_value_key, '', false);
+			if(offset_value != '') { offset_value = parseInt(offset_value, 10); var offset_value_actual = offset_value; } else { var offset_value_actual = offset_default; }
+
+			// Work out max width
+			var column_size_max = framework_column_count - offset_value;
+			var offset_max = framework_column_count - column_size_value_actual;
+
+			return_html += '<div>';
+
+			// Get breakpoint icon (SVG from config)
+			if(typeof(framework_icons[breakpoint_key]) === 'undefined') {
+
+				var breakpoint_icon = '';
+
+			} else {
+
+				var breakpoint_icon = framework_icons[breakpoint_key];
+			}
+
+			return_html += '<label class="wsf-label">' + breakpoint_icon + this.html_encode(breakpoint_name) + '</label>';
+
+			// Width / Offset group
+			return_html += '<div class="wsf-breakpoint-width-offset">';
+
+			// Columns
+			return_html += '<div>';
+			return_html += '<label class="wsf-label" for="' + column_size_value_key + '">' + this.language('breakpoint_offset_column_width') + '</label>';
+
+			return_html += '<select class="wsf-field wsf-column-size-select" id="' + column_size_value_key + '" data-id="' + breakpoint_key + '" data-action="wsf-column">';
+			return_html += '<option value=""' + ((column_size_value == '') ? ' selected' : '') + '>';
+
+			var column_size_default_description = '(' + this.language(((column_size_default == 1) ? 'breakpoint_option_column_default_singular' : 'breakpoint_option_column_default_plural'), column_size_default) + ')';
+
+			if(ws_form_settings.rtl && (column_size_default !== false)) { return_html += column_size_default_description + ' '; }
+
+			return_html += (breakpoint_index == 0 ? this.language('breakpoint_option_default') : this.language('breakpoint_option_inherit'));
+
+			if(!ws_form_settings.rtl && (column_size_default !== false)) { return_html += ' ' + column_size_default_description; }
+
+			return_html += '</option>';
+
+			for(var i=1; i<=column_size_max; i++) {
+
+				return_html += '<option value="' + i + '"' + ((column_size_value === i) ? ' selected' : '') + '>' + this.language(((i == 1) ? 'breakpoint_option_column_singular' : 'breakpoint_option_column_plural'), i) + '</option>';
+			}
+
+			return_html += '</select>';
+
+			return_html += '</div>';
+
+			// Offset
+			return_html += '<div>';
+			return_html += '<label class="wsf-label" for="' + offset_value_key + '">' + this.language('breakpoint_offset_column_offset') + '</label>';
+
+			return_html += '<select class="wsf-field wsf-offset-select" id="' + offset_value_key + '" data-id="' + breakpoint_key + '" data-action="wsf-offset">';
+			return_html += '<option value=""' + ((offset_value === '') ? ' selected' : '') + '>';
+
+			var offset_default_description = '(' + this.language(((offset_default == 1) ? 'breakpoint_option_offset_default_singular' : 'breakpoint_option_offset_default_plural'), offset_default) + ')';
+
+			if(ws_form_settings.rtl) { return_html += offset_default_description + ' '; }
+
+			return_html += (breakpoint_index == 0 ? this.language('breakpoint_option_default') : this.language('breakpoint_option_inherit'));
+
+			if(!ws_form_settings.rtl) { return_html += ' ' + offset_default_description; }
+
+			return_html += '</option>';
+
+			for(var i=0; i<=offset_max; i++) {
+
+				return_html += '<option value="' + i + '"' + ((offset_value === i) ? ' selected' : '') + '>' + this.language(((i == 1) ? 'breakpoint_option_offset_singular' : 'breakpoint_option_offset_plural'), i) + '</option>';
+			}
+
+			return_html += '</select>';
+
+			return_html += '</div>';
+
+			// /Column / Offset group
+			return_html += '</div>';
+
+			return_html += '</div>';
+
+			// Remember column size
+			if(column_size_value !== '') { column_size_default = column_size_value; }
+
+			// Remember offset
+			if(offset_value !== '') { offset_default = offset_value; }
+
+			breakpoint_index++;
+		}
+
+		// Buttons
+		return_html += '<ul class="wsf-list-inline">';
+		return_html += '<li><button class="wsf-button wsf-button-small" data-action="wsf-reset">' + this.svg('undo') + ' ' + this.language('breakpoint_reset') + '</button></li>';
+		return_html += '</ul>';
+
+		return return_html;
+	}
+
+	// Breakpoints - Can reset
+	$.WS_Form.prototype.breakpoint_can_reset = function(object) {
+
+		var can_reset = false;
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get current framework column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Go through breakpoints
+		var column_size_value_old = 0;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint default column size
+			if(breakpoint_index == 0) {
+
+				var column_size_value_old = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_value_old;
+				var offset_value_old;
+			}
+
+			// Get meta keys
+			var column_size_value_key = 'breakpoint_size_' + breakpoint_key;
+			var offset_value_key = 'breakpoint_offset_' + breakpoint_key;
+
+			// Column sizes
+			var column_size_value = this.get_object_meta_value(object, column_size_value_key, '', false);
+			if(column_size_value != '') {
+
+				column_size_value = parseInt(column_size_value, 10);
+
+				if(column_size_value != framework_column_count) {
+
+					can_reset = true;
+				}
+
+				// Remember this value for next cycle
+				column_size_value_old = column_size_value;
+			}
+
+			// Offset
+			var offset_value = this.get_object_meta_value(object, offset_value_key, '', false);
+			if(offset_value != '') {
+
+				offset_value = parseInt(offset_value, 10);
+
+				if(offset_value != 0) {
+
+					can_reset = true;
+				}
+
+				// Remember this value for next cycle
+				offset_value_old = offset_value;
+			}
+
+			breakpoint_index++;
+		}
+
+		return can_reset;
+	}
+
+	// Breakpoints - Reset
+	$.WS_Form.prototype.breakpoint_reset_process = function(object) {
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Go through breakpoints
+		for(var breakpoint_key in framework_breakpoints) {
+
+			// Delete object metas
+			object.meta['breakpoint_size_' + breakpoint_key] = '';
+			object.meta['breakpoint_offset_' + breakpoint_key] = '';
+		}
+	}
+
+
+	// Sidebar - Framework sizes
+	$.WS_Form.prototype.sidebar_orientation_breakpoint_sizes = function(obj) {
+
+		// Init data grids
+		$('.wsf-orientation-breakpoint-sizes:not(.wsf-orientation-breakpoint-sizes-initialized)', obj).each(function(i, e) {
+
+			$.WS_Form.this.sidebar_orientation_breakpoint_sizes_init($(this), e);
+		});
+	}
+
+	// Sidebar - Framework sizes - Init
+	$.WS_Form.prototype.sidebar_orientation_breakpoint_sizes_init = function(obj, element) {
+
+		element.render = function() {
+
+			// Get object data
+			var object = obj.attr('data-object');
+			var object_id = obj.attr('data-id');
+			var meta_key = obj.attr('data-meta-key');
+			var object_obj = $('.wsf-field-wrapper[data-id="' + object_id + '"]');
+
+			// Get object data from scratch
+			var object_data = $.WS_Form.this.get_object_data(object, object_id, true);
+			if(object_data === false) { $.WS_Form.this.error('error_object_data'); }
+
+			// Get current data grid data
+			var meta_value = $.WS_Form.this.get_object_meta_value(object_data, meta_key, false);
+			if(meta_value === false) { $.WS_Form.this.error('error_object_meta_value'); }
+
+			// Render HTML
+			obj.html($.WS_Form.this.sidebar_orientation_breakpoint_sizes_html(object_obj, meta_key, object_data));
+
+			// Column size selects
+			$('select[data-action="wsf-column"]', obj).on('change', function() {
+
+				// Get breakpoint
+				var breakpoint = $(this).attr('data-id');
+
+				// Get column size
+				var column_size = $(this).val();
+
+				// Get meta key
+				var meta_key = 'orientation_breakpoint_size_' + breakpoint;
+
+				if(!object_obj.length) { $.WS_Form.this.error('error_object'); } else {
+
+					// Update framework size meta
+					$.WS_Form.this.set_object_meta_value(object_data, meta_key, column_size);
+				}
+
+				// Render
+				element.render();
+			});
+
+			// Reset
+			$('[data-action="wsf-reset"]', obj).on('click', function() {
+
+				var buttons = [
+
+					{label:$.WS_Form.this.language('cancel'), action:'wsf-cancel'},
+					{label:$.WS_Form.this.language('reset'), action:'wsf-confirm', class:'wsf-button-danger'}
+				];
+
+				$.WS_Form.this.popover($.WS_Form.this.language('confirm_orientation_breakpoint_reset'), buttons, $(this), function() {
+
+					// Reset
+					$.WS_Form.this.orientation_breakpoint_reset_process(object_data);
+
+					// Render
+					element.render();
+				});
+			});
+
+			// Set optimized button
+			var can_reset = $.WS_Form.this.orientation_breakpoint_can_reset(object_data, true);
+
+			// Render buttons
+			$('[data-action="wsf-reset"]', obj).attr('disabled', !can_reset);
+
+			// Mark as initialized
+			obj.addClass('wsf-orientation-breakpoint-sizes-initialized');
+		}
+
+		// Render
+		element.render();
+	}
+
+	// Sidebar - Framework sizes - HTML
+	$.WS_Form.prototype.sidebar_orientation_breakpoint_sizes_html = function(object_obj, meta_key, object_data) {
+
+		var return_html = '';
+
+		// Get selected framework
+		var framework_id = $.WS_Form.settings_plugin.framework;
+
+		// Get framework from config
+		var framework = $.WS_Form.frameworks.types[framework_id];
+
+		// Get frame work column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get icons for use with breakpoint key (0, 25, 50, 75, 100, 125, 150)
+		var framework_icons = $.WS_Form.frameworks.icons;
+
+		var column_size_default = false;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint name
+			var breakpoint_name = breakpoint.name;
+
+			if(breakpoint_index == 0) {
+
+				// Get breakpoint default column size
+				var column_size_default = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_default;
+			}
+
+			// Get column size
+			var column_size_value_key = 'orientation_breakpoint_size_' + breakpoint_key;
+			var column_size_value = this.get_object_meta_value(object_data, column_size_value_key, '', false);
+			if(column_size_value != '') { column_size_value = parseInt(column_size_value, 10); var column_size_value_actual = column_size_value; } else { var column_size_value_actual = column_size_default; }
+
+			return_html += '<div>';
+
+			// Get breakpoint icon (SVG from config)
+			if(typeof(framework_icons[breakpoint_key]) === 'undefined') {
+
+				var breakpoint_icon = '';
+
+			} else {
+
+				var breakpoint_icon = framework_icons[breakpoint_key];
+			}
+
+			return_html += '<label class="wsf-label">' + breakpoint_icon + this.language('orientation_breakpoint_label_width', this.html_encode(breakpoint_name)) + '</label>';
+
+			return_html += '<select class="wsf-field wsf-column-size-select" id="' + column_size_value_key + '" data-id="' + breakpoint_key + '" data-action="wsf-column">';
+			return_html += '<option value=""' + ((column_size_value == '') ? ' selected' : '') + '>' + (breakpoint_index == 0 ? this.language('orientation_breakpoint_option_default') : this.language('orientation_breakpoint_option_inherit'));
+
+			if(column_size_default !== false) {
+
+				return_html += ' (' + this.orientation_column_width_description(column_size_default, framework_column_count) + ')'; 
+			}
+
+			return_html += '</option>';
+
+			for(var i=1; i<=framework_column_count; i++) {
+
+				if(
+					(i > (framework_column_count / 2)) &&
+					(i < framework_column_count)
+
+				) { continue; }
+
+				var orientation_column_width_description = this.orientation_column_width_description(i, framework_column_count);
+				if(orientation_column_width_description === false) { continue; }
+
+				return_html += '<option value="' + i + '"' + ((column_size_value === i) ? ' selected' : '') + '>' + orientation_column_width_description + '</option>';
+			}
+
+			return_html += '</select>';
+
+			return_html += '</div>';
+
+			// Remember column size
+			if(column_size_value !== '') { column_size_default = column_size_value; }
+
+			breakpoint_index++;
+		}
+
+		// Buttons
+		return_html += '<ul class="wsf-list-inline">';
+		return_html += '<li><button class="wsf-button wsf-button-small" data-action="wsf-reset">' + this.svg('undo') + ' ' + this.language('breakpoint_reset') + '</button></li>';
+		return_html += '</ul>';
+
+		return return_html;
+	}
+
+	// Breakpoints - Optimize
+	$.WS_Form.prototype.orientation_column_width_description = function(columns, columns_max) {
+
+		// Check modulus
+		if((columns_max % columns) !== 0) { return false; }
+
+		// Base description
+		var column_width_description = this.language(((columns == 1) ? 'orientation_breakpoint_option_column_singular' : 'orientation_breakpoint_option_column_plural'), columns);
+
+		// Extra description
+		switch(columns / columns_max) {
+
+			case (1) : column_width_description += this.language('orientation_breakpoint_width_full'); break;
+
+			case (1/2) : column_width_description += this.language('orientation_breakpoint_width', '&frac12;', false); break;
+
+			case (1/3) : column_width_description += this.language('orientation_breakpoint_width', '&frac13;', false); break;
+			case (2/3) : column_width_description += this.language('orientation_breakpoint_width', '&frac23;', false); break;
+
+			case (1/4) : column_width_description += this.language('orientation_breakpoint_width', '&frac14;', false); break;
+			case (3/4) : column_width_description += this.language('orientation_breakpoint_width', '&frac34;', false); break;
+
+			case (1/5) : column_width_description += this.language('orientation_breakpoint_width', '&frac15;', false); break;
+			case (2/5) : column_width_description += this.language('orientation_breakpoint_width', '&frac25;', false); break;
+			case (3/5) : column_width_description += this.language('orientation_breakpoint_width', '&frac35;', false); break;
+			case (4/5) : column_width_description += this.language('orientation_breakpoint_width', '&frac45;', false); break;
+
+			case (1/6) : column_width_description += this.language('orientation_breakpoint_width', '&frac16;', false); break;
+			case (5/6) : column_width_description += this.language('orientation_breakpoint_width', '&frac56;', false); break;
+		}
+
+		return column_width_description;
+	}
+
+	// Breakpoints - Optimize
+	$.WS_Form.prototype.orientation_breakpoint_optimize = function(object) {
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get current framework column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Go through breakpoints
+		var column_size_value_old = 0;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint default column size
+			if(breakpoint_index == 0) {
+
+				var column_size_value_old = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_value_old;
+			}
+
+			// Get meta keys
+			var column_size_value_key = 'orientation_breakpoint_size_' + breakpoint_key;
+
+			// Column sizes
+			var column_size_value = this.get_object_meta_value(object, column_size_value_key, '', false);
+			if(column_size_value != '') {
+
+				column_size_value = parseInt(column_size_value, 10);
+
+				if(column_size_value == column_size_value_old) {
+
+					// Found a breakpoint column size that matches the previous value, so this meta should be deleted
+					object.meta[column_size_value_key] = '';
+				}
+
+				// Remember this value for next cycle
+				column_size_value_old = column_size_value;
+			}
+
+			breakpoint_index++;
+		}
+	}
+
+	// Breakpoints - Can reset
+	$.WS_Form.prototype.orientation_breakpoint_can_reset = function(object) {
+
+		var can_reset = false;
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Get current framework column count
+		var framework_column_count = parseInt($.WS_Form.settings_plugin.framework_column_count, 10);
+
+		// Go through breakpoints
+		var column_size_value_old = 0;
+		var breakpoint_index = 0;
+		for(var breakpoint_key in framework_breakpoints) {
+
+			var breakpoint = framework_breakpoints[breakpoint_key];
+
+			// Get breakpoint default column size
+			if(breakpoint_index == 0) {
+
+				var column_size_value_old = (typeof(breakpoint.column_size_default) !== 'undefined') ? (breakpoint.column_size_default == 'column_count' ? framework_column_count : breakpoint.column_size_default) : column_size_value_old;
+			}
+
+			// Get meta keys
+			var column_size_value_key = 'orientation_breakpoint_size_' + breakpoint_key;
+
+			// Column sizes
+			var column_size_value = this.get_object_meta_value(object, column_size_value_key, '', false);
+			if(column_size_value != '') {
+
+				column_size_value = parseInt(column_size_value, 10);
+
+				if(column_size_value != framework_column_count) {
+
+					can_reset = true;
+				}
+
+				// Remember this value for next cycle
+				column_size_value_old = column_size_value;
+			}
+
+			breakpoint_index++;
+		}
+
+		return can_reset;
+	}
+
+	// Breakpoints - Reset
+	$.WS_Form.prototype.orientation_breakpoint_reset_process = function(object) {
+
+		// Run through each breakpoint and tidy up data (i.e. if breakpoint size matches previous breakpoint size, delete it)
+		var framework = $.WS_Form.frameworks.types[$.WS_Form.settings_plugin.framework];
+
+		// Get current framework breakpoints
+		var framework_breakpoints = framework.breakpoints;
+
+		// Go through breakpoints
+		for(var breakpoint_key in framework_breakpoints) {
+
+			// Delete object metas
+			object.meta['orientation_breakpoint_size_' + breakpoint_key] = '';
+		}
+	}
 
 	// Sidebar - Select2
 	$.WS_Form.prototype.sidebar_select2 = function(obj) {
@@ -6856,7 +7843,7 @@
 		var locale = ws_form_settings.locale;
 		var language = locale.substring(0, 2);
 
-		$('select[data-select2-wsf]', obj).each(function() {
+		$('select[data-wsf-select2]', obj).each(function() {
 
 			var config = {
 
@@ -6886,7 +7873,7 @@
 		// Get data meta keys
 		var data_meta_keys = [];
 		var data_select_ajax_ids = [];
-		$('select[data-select2-wsf]', obj).each(function() {
+		$('select[data-wsf-select2]', obj).each(function() {
 
 			// Get meta_value
 			var data_meta_key = $(this).attr('data-meta-key');
@@ -6956,7 +7943,7 @@
 		var language = locale.substring(0, 2);
 
 		// Init select2 AJAX
-		$('select[data-select2-wsf][data-meta-key="' + data_meta_key + '"]', obj).each(function() {
+		$('select[data-wsf-select2][data-meta-key="' + data_meta_key + '"]', obj).each(function() {
 
 			var select_ajax_method_search = $(this).attr('data-select-ajax-method-search');
 			var select_ajax_placeholder = $(this).attr('data-select-ajax-placeholder');
@@ -10912,6 +11899,9 @@
 
 		// Update undo / redo buttons
 		this.undo_redo_update();
+
+		// Breakpoint buttons
+		this.breakpoint_buttons();
 	}
 
 	// History - Pull
@@ -11463,9 +12453,22 @@
 
 					api_object_type = 'field';
 					api_params = {'field': object};
+
+					// Optimize orientation breakpoints
+					var field_type = (typeof(object.type) !== 'undefined') ? object.type : false;
+					switch(field_type) {
+
+						case 'checkbox' :
+						case 'radio' :
+
+							this.orientation_breakpoint_optimize(object);
+					}
 				}
 
 				if(api_object_type === false) { return false; }
+
+				// Optimize
+				this.breakpoint_optimize(object);
 
 				// Add history method
 				api_params['history_method'] = 'put_resize';
@@ -13838,7 +14841,7 @@
 			// Duration in days, hours, minutes
 			case 'duration' :
 
-				if(parseInt(submit[field]) === 0) { return ''; }
+				if(parseInt(submit[field], 10) === 0) { return ''; }
 				return_html += this.get_nice_duration(submit[field]);
 				break;
 

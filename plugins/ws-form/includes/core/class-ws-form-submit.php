@@ -116,7 +116,7 @@
 			self::db_create_token();
 
 			// Update hash
-			$sql = sprintf("UPDATE %s SET hash = '%s', token = '%s' WHERE id=%u LIMIT 1", $this->table_name, esc_sql($this->hash), esc_sql($this->token), $this->id);
+			$sql = sprintf("UPDATE %s SET hash = '%s', token = '%s' WHERE id = %u LIMIT 1", $this->table_name, esc_sql($this->hash), esc_sql($this->token), $this->id);
 			if($wpdb->query($sql) === false) { parent::db_wpdb_handle_error(__('Error updating submit', 'ws-form')); }
 
 			// Update form submit unread count statistic
@@ -450,7 +450,7 @@
 					$this->token_validated = $submit_object->token_validated = true;
 
 					// Update hash
-					$sql = sprintf("UPDATE %s SET token_validated = 1 WHERE id=%u LIMIT 1", $this->table_name, $this->id);
+					$sql = sprintf("UPDATE %s SET token_validated = 1, spam_level = 0 WHERE id = %u LIMIT 1", $this->table_name, $this->id);
 					if($wpdb->query($sql) === false) { parent::db_wpdb_handle_error(__('Error updating submit', 'ws-form')); }
 				}
 			}
@@ -516,12 +516,12 @@
 			global $wpdb;
 
 			// Date updated, count submit + 1
-			$sql = sprintf("UPDATE %s SET date_updated = '%s', count_submit = count_submit + 1, duration = %u WHERE id=%u LIMIT 1", $this->table_name, WS_Form_Common::get_mysql_date(), $this->duration, $this->id);
+			$sql = sprintf("UPDATE %s SET date_updated = '%s', count_submit = count_submit + 1, duration = %u WHERE id = %u LIMIT 1", $this->table_name, WS_Form_Common::get_mysql_date(), $this->duration, $this->id);
 			if($wpdb->query($sql) === false) { parent::db_wpdb_handle_error(__('Error updating submit date updated', 'ws-form')); }
 			$this->count_submit++;
 
 			// User ID
-			$sql = sprintf("UPDATE %s SET user_id = %u WHERE id=%u AND (user_id = 0 OR user_id IS NULL) LIMIT 1", $this->table_name, WS_Form_Common::get_user_id(false), $this->id);
+			$sql = sprintf("UPDATE %s SET user_id = %u WHERE id = %u AND (user_id = 0 OR user_id IS NULL) LIMIT 1", $this->table_name, WS_Form_Common::get_user_id(false), $this->id);
 			if($wpdb->query($sql) === false) { parent::db_wpdb_handle_error(__('Error updating submit user ID', 'ws-form')); }
 		}
 
@@ -1023,7 +1023,7 @@
 			global $wpdb;
 
 			// Set viewed true
-			$sql = sprintf("UPDATE %s SET viewed = %u WHERE id=%u LIMIT 1", $this->table_name, ($viewed ? 1 : 0), $this->id);
+			$sql = sprintf("UPDATE %s SET viewed = %u WHERE id = %u LIMIT 1", $this->table_name, ($viewed ? 1 : 0), $this->id);
 			if($wpdb->query($sql) === false) { parent::db_wpdb_handle_error(__('Error updating viewed status', 'ws-form')); }
 
 			// Update form submit unread count statistic
@@ -1250,7 +1250,7 @@
 				$where = '';
 			}
 
-			$where .= sprintf("(NOT status='trash') AND form_id=%u", $this->form_id);
+			$where .= sprintf("(NOT status='trash') AND form_id = %u", $this->form_id);
 
 			// Build WHERE - status
 			if($status == '') { $status == 'all'; }

@@ -200,10 +200,12 @@
 		this.form_obj_id = this.form_canvas_obj.attr('id');
 
 		// Form ID
-		this.form_id = atts.form_id;
+		this.form_id = parseInt(atts.form_id);
+		if(this.form_id === 0) { return; }
 
 		// Form instance
-		this.form_instance_id = this.form_canvas_obj.attr('data-instance-id');
+		this.form_instance_id = parseInt(this.form_canvas_obj.attr('data-instance-id'));
+		if(this.form_instance_id === 0) { return; }
 
 		// Form ID prefix
 		this.form_id_prefix = this.is_admin ? 'wsf-' : 'wsf-' + this.form_instance_id + '-';
@@ -1647,6 +1649,81 @@
 						// Process variable
 						var parsed_variable = '';
 						switch(parse_variable) {
+							case 'tab_label' :
+
+								if(isNaN(variable_attribute_array[0])) {
+
+									this.error('error_parse_variable_syntax_error_group_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_group_id', variable_attribute_array[0]));
+								}
+
+								var group_id = parseInt(variable_attribute_array[0], 10);
+
+								if(
+									(typeof(this.group_data_cache[group_id]) !== 'undefined') &&
+									(typeof(this.group_data_cache[group_id]).label !== 'undefined')
+								) {
+
+									parsed_variable = this.group_data_cache[group_id].label;
+	
+								} else {
+
+									this.error('error_parse_variable_syntax_error_group_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_group_id', variable_attribute_array[0]));
+								}
+
+								break;
+
+							case 'section_label' :
+
+								if(isNaN(variable_attribute_array[0])) {
+
+									this.error('error_parse_variable_syntax_error_section_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_section_id', variable_attribute_array[0]));
+								}
+
+								var section_id = parseInt(variable_attribute_array[0], 10);
+
+								if(
+									(typeof(this.section_data_cache[section_id]) !== 'undefined') &&
+									(typeof(this.section_data_cache[section_id]).label !== 'undefined')
+								) {
+
+									parsed_variable = this.section_data_cache[section_id].label;
+	
+								} else {
+
+									this.error('error_parse_variable_syntax_error_section_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_section_id', variable_attribute_array[0]));
+								}
+
+								break;
+
+							case 'field_label' :
+
+								if(isNaN(variable_attribute_array[0])) {
+
+									this.error('error_parse_variable_syntax_error_field_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_field_id', variable_attribute_array[0]));
+								}
+
+								var field_id = parseInt(variable_attribute_array[0], 10);
+
+								if(
+									(typeof(this.field_data_cache[field_id]) !== 'undefined') &&
+									(typeof(this.field_data_cache[field_id]).label !== 'undefined')
+								) {
+
+									parsed_variable = this.field_data_cache[field_id].label;
+	
+								} else {
+
+									this.error('error_parse_variable_syntax_error_field_id', variable_attribute_array[0], 'parse-variables');
+									return this.parse_variables_process_error(this.language('error_parse_variable_syntax_error_field_id', variable_attribute_array[0]));
+								}
+
+								break;
+
 							case 'field' :
 							case 'field_float' :
 							case 'ecommerce_field_price' :
@@ -3762,6 +3839,19 @@
 		// Field - Attributes - Orientation
 		var orientation = this.get_object_meta_value(field, 'orientation', false);
 
+		if(orientation == 'grid') {
+
+			// Get wrapper and row classes
+			var class_orientation_wrapper_array = this.get_field_value_fallback(field.type, label_position, 'class_orientation_wrapper', [], false, sub_type);
+			var class_orientation_row_array = this.get_field_value_fallback(field.type, label_position, 'class_orientation_row', [], false, sub_type);
+			var orientation_group_wrapper_class = class_orientation_wrapper_array.join(' ');
+
+			// Get class array
+			var orientation_class_array = this.column_class_array(field, 'orientation_breakpoint');
+			orientation_class_array = class_orientation_row_array.concat(orientation_class_array);
+			var orientation_row_class = orientation_class_array.join(' ');
+		}
+
 		// Field label - Attributes
 		mask_values_field_label['attributes'] = '';
 		var mask_field_label_attributes = ($.extend(true, [], this.get_field_value_fallback(field.type, label_position, 'mask_field_label_attributes', [], false, sub_type)));
@@ -3875,6 +3965,7 @@
 
 			// Value should be an array
 			if(has_value && (typeof(value) !== 'object')) { value = [value]; }
+
 			// Build mask lookup cache
 			var mask_row_lookup_array = [];
 
@@ -4205,6 +4296,15 @@
 							}
 						}
 
+						// Orientation
+						if(
+							(orientation == 'grid') &&
+							(orientation_row_class != '') 
+						) {
+
+							mask_values_row['attributes'] = this.attribute_modify(mask_values_row['attributes'], 'class', orientation_row_class, true);
+						}
+
 						// Row - Label - Attributes
 						var extra_values = $.extend(true, [], extra_values_default);
 
@@ -4318,6 +4418,15 @@
 						group : group
 					};
 
+					if(
+
+						(orientation == 'grid') &&
+						(orientation_group_wrapper_class != '')
+					) {
+
+						mask_values_group_wrapper['attributes'] = ' class="' + orientation_group_wrapper_class + '"';
+					}
+
 					group = this.mask_parse(mask_group_wrapper, mask_values_group_wrapper);
 				}
 
@@ -4415,6 +4524,12 @@
 		// Parse help mask append
 		mask_values_help['help_append_separator'] = (help != '') ? this.mask_parse(mask_help_append_separator, mask_values_help) : '';
 		if(mask_help_append != '') {
+
+			mask_values_help['text_clear'] = this.get_object_meta_value(field, 'text_clear', '');
+			if(mask_values_help['text_clear'] == '') { mask_values_help['text_clear'] = this.language('clear'); }
+
+			mask_values_help['text_reset'] = this.get_object_meta_value(field, 'text_reset', '');
+			if(mask_values_help['text_reset'] == '') { mask_values_help['text_reset'] = this.language('reset'); }
 
 			var help_append_parsed = this.mask_parse(mask_help_append, mask_values_help);
 
@@ -5819,11 +5934,22 @@
 				}
 		}
 
+		if(input_type_datetime !== 'time') {
+
+			// Check if date is in format of yyyy-mm-dd and does not have a time, if so add time so it is not localized to UTC
+			if(
+				(date.indexOf('-') === 4) &&
+				(date.indexOf(':') === -1)
+
+			) { date += ' 00:00:00'; }
+		}
+
 		switch(input_type_datetime) {
 
 			case 'date' :
 
 				date = new Date(date);
+
 				return this.date_format(date, format_date);
 
 			case 'month' :

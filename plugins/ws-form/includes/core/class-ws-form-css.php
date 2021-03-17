@@ -784,7 +784,8 @@ label.wsf-label {
 
 .wsf-input-group > .wsf-field,
 .wsf-input-group > select.wsf-field ~ .select2-container,
-.wsf-input-group > .dropzone {
+.wsf-input-group > input[type=text].wsf-field ~ .dropzone,
+.wsf-input-group > input[type=text].wsf-field ~ canvas {
 	flex: 1 1 auto;
 	min-width: 0;
 	position: relative;

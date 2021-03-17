@@ -1,16 +1,16 @@
 <?php
 	/**
-	 * WS Form
+	 * WS Form LITE
 	 *
 	 * @link              https://wsform.com/
 	 * @since             1.0.0
 	 * @package           WS_Form
 	 *
 	 * @wordpress-plugin
-	 * Plugin Name:       WS Form
+	 * Plugin Name:       WS Form LITE
 	 * Plugin URI:        https://wsform.com/
 	 * Description:       Build Better WordPress Forms
-	 * Version:           1.8.11
+	 * Version:           1.8.17
 	 * Author:            WS Form
 	 * Author URI:        https://wsform.com/
 	 * License:           GPL-2.0+
@@ -34,8 +34,8 @@
 
 		// Constants
 		define('WS_FORM_NAME', 'ws-form');
-		define('WS_FORM_VERSION', '1.8.11');
-		define('WS_FORM_NAME_PRESENTABLE', 'WS Form');
+		define('WS_FORM_VERSION', '1.8.17');
+		define('WS_FORM_NAME_PRESENTABLE', 'WS Form LITE');
 		define('WS_FORM_EDITION', 'basic');
 		define('WS_FORM_PLUGIN_BASENAME_COUNTERPART', 'ws-form-pro/ws-form.php');
 		define('WS_FORM_POST_NONCE_FIELD_NAME', 'wsf_nonce');

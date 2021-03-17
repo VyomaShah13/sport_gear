@@ -99,6 +99,9 @@
 				// Add meta data
 				update_post_meta($attachment_id, '_wsf_attachment_handler_' . $this->id, true);
 
+				// Remove as scratch
+				delete_post_meta($attachment_id, '_wsf_attachment_scratch');
+
 				// Get file path full
 				$file_path_full = get_attached_file($attachment_id);
 

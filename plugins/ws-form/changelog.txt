@@ -1,5 +1,33 @@
 == Changelog ==
 
+= 1.8.17 =
+* Added: Custom Email HTML template
+* Added: Email Validation template
+* Added: Spam level set to 0 on validated submissions
+
+= 1.8.16 =
+* Added: #section_rows_start(section_id) / #sections_row_end for email templates
+* Added: Public config script optimizations
+* Bug Fix: Media library uploads
+
+= 1.8.15 =
+* Bug Fix: Fixed hidden field validation for conditional logic validation
+
+= 1.8.14 =
+* Added: Improved checks on conditional logic object integrity
+* Added: Implemented workaround for select2 not behaving properly with dynamically disabled options
+
+= 1.8.13 =
+* Bug Fix: Conditional logic icons if condition deleted
+
+= 1.8.12 =
+* Added: Improved signature validation
+* Added: Server side #ecommerce_price function
+* Added: Signature 'Clear' link text setting
+* Added: Google Map 'Reset' link text setting
+* Added: Password strength and visibility toggle text settings
+* Added: Various Bootstrap and Foundation CSS improvements
+
 = 1.8.11 =
 * Added: WordPress 5.7 testing
 * Added: Support for tab conditional logic in Bootstrap and Foundation

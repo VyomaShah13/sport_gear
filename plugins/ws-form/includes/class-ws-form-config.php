@@ -14,6 +14,7 @@
 		public static $frameworks = array();
 		public static $parse_variables = array();
 		public static $parse_variables_repairable = array();
+		public static $parse_variables_secure = false;
 		public static $tracking = array();
 		public static $ecommerce = false;
 		public static $data_sources = false;
@@ -58,7 +59,6 @@
 				$config['settings_form'] = self::get_settings_form_public();
 				$config['frameworks'] = self::get_frameworks();
 				$config['parse_variables'] = self::get_parse_variables();
-				$config['external'] = self::get_external();
 			}
 
 			// Add generic settings (Shared between both admin and public, e.g. language)
@@ -268,6 +268,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -381,6 +387,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -491,6 +503,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -615,6 +633,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -738,6 +762,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -862,6 +892,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -990,6 +1026,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -1063,8 +1105,7 @@
 
 										array(
 											'label'		=>	__('Layout', 'ws-form'),
-											'meta_keys'	=>	array('orientation',
-											)
+											'meta_keys'	=>	array('orientation', 'orientation_breakpoint_sizes')
 										),
 
 										array(
@@ -1109,6 +1150,12 @@
 											'label'		=>	__('Validation', 'ws-form'),
 											'meta_keys'	=>	array('invalid_feedback_render', 'invalid_feedback')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -1185,8 +1232,7 @@
 
 										array(
 											'label'		=>	__('Layout', 'ws-form'),
-											'meta_keys'	=>	array('orientation',
-											)
+											'meta_keys'	=>	array('orientation', 'orientation_breakpoint_sizes')
 										),
 
 										array(
@@ -1231,6 +1277,12 @@
 											'label'		=>	__('Validation', 'ws-form'),
 											'meta_keys'	=>	array('invalid_feedback_render', 'invalid_feedback')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								),
 
@@ -1413,6 +1465,12 @@
 											'label'		=>	__('Restrictions', 'ws-form'),
 											'meta_keys'	=> array('field_user_status', 'field_user_roles', 'field_user_capabilities')
 										),										
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -1481,6 +1539,12 @@
 											'label'		=>	__('Restrictions', 'ws-form'),
 											'meta_keys'	=> array('field_user_status', 'field_user_roles', 'field_user_capabilities')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -1526,6 +1590,12 @@
 											'label'		=>	__('Restrictions', 'ws-form'),
 											'meta_keys'	=> array('field_user_status', 'field_user_roles', 'field_user_capabilities')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -1612,6 +1682,12 @@
 											'label'		=>	__('Custom Attributes', 'ws-form'),
 											'meta_keys'	=>	array('custom_attributes')
 										),
+
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -2233,6 +2309,15 @@
 									),
 									'default'	=>	'resize'
 								),
+
+								'helper_breakpoint_width'	=>	array(
+
+									'label'		=>	__('Breakpoint Widths', 'ws-form'),
+									'type'		=>	'checkbox',
+									'help'		=>	__('Resize the width of the form to the selected breakpoint.', 'ws-form'),
+									'default'	=>	true
+								),
+
 								'helper_compatibility' => array(
 
 									'label'		=>	__('HTML Compatibility Helpers', 'ws-form'),
@@ -3030,6 +3115,23 @@
 				),
 
 
+				// Breakpoint sizes grid
+				'breakpoint_sizes'		=> array(
+
+					'label'						=>	__('Breakpoint Sizes', 'ws-form'),
+					'type'						=>	'breakpoint_sizes',
+					'dummy'						=>	true,
+					'condition'					=>	array(
+
+						array(
+
+							'logic'			=>	'!=',
+							'meta_key'		=>	'recaptcha_recaptcha_type',
+							'meta_value'	=>	'invisible'
+						)
+					)
+				),
+
 				// Spam Protection - Honeypot
 				'honeypot'		=> array(
 
@@ -3571,8 +3673,92 @@
 
 						array('value' => '', 'text' => __('Vertical', 'ws-form')),
 						array('value' => 'horizontal', 'text' => __('Horizontal', 'ws-form')),
+						array('value' => 'grid', 'text' => __('Grid', 'ws-form'))
 					),
 					'key_legacy'				=>	'class_inline'
+				),
+
+				// Orientation
+				'file_preview_orientation'			=> array(
+
+					'label'						=>	__('Orientation', 'ws-form'),
+					'type'						=>	'select',
+					'default'					=>	'horizontal',
+					'options'					=>	array(
+
+						array('value' => '', 'text' => __('Vertical', 'ws-form')),
+						array('value' => 'horizontal', 'text' => __('Horizontal', 'ws-form')),
+						array('value' => 'grid', 'text' => __('Grid', 'ws-form'))
+					),
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'file_preview',
+							'meta_value'		=>	'on'
+						),
+
+						array(
+
+							'logic_previous'	=>	'||',
+							'logic'				=>	'==',
+							'meta_key'			=>	'sub_type',
+							'meta_value'		=>	'dropzonejs'
+						)
+					),
+					'key'						=>	'orientation'
+				),
+
+				// Orientation sizes grid
+				'orientation_breakpoint_sizes'		=> array(
+
+					'label'						=>	__('Grid Breakpoint Sizes', 'ws-form'),
+					'type'						=>	'orientation_breakpoint_sizes',
+					'dummy'						=>	true,
+					'condition'					=>	array(
+
+						array(
+
+							'logic'			=>	'==',
+							'meta_key'		=>	'orientation',
+							'meta_value'	=>	'grid'
+						)
+					)
+				),
+
+				// Orientation sizes grid
+				'file_preview_orientation_breakpoint_sizes'		=> array(
+
+					'label'						=>	__('Grid Breakpoint Sizes', 'ws-form'),
+					'type'						=>	'orientation_breakpoint_sizes',
+					'dummy'						=>	true,
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'file_preview',
+							'meta_value'		=>	'on'
+						),
+
+						array(
+
+							'logic_previous'	=>	'||',
+							'logic'				=>	'==',
+							'meta_key'			=>	'sub_type',
+							'meta_value'		=>	'dropzonejs'
+						),
+
+						array(
+
+							'logic_previous'	=>	'&&',
+							'logic'				=>	'==',
+							'meta_key'			=>	'orientation',
+							'meta_value'		=>	'grid'
+						)
+					),
+					'key'						=>	'orientation_breakpoint_sizes'
 				),
 
 				// Form label mask (Allows user to define custom mask)
@@ -3763,6 +3949,70 @@
 					'type'						=>	'checkbox',
 					'help'						=>	__('If checked, the form must validate before it will be saved.', 'ws-form'),
 					'default'					=>	''
+				),
+
+				'text_clear'			=> array(
+
+					'label'						=>	__('Clear', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Clear', 'ws-form')
+				),
+
+				'text_reset'			=> array(
+
+					'label'						=>	__('Reset', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Reset', 'ws-form')
+				),
+
+				'text_password_strength_short'			=> array(
+
+					'label'						=>	__('Very Weak', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Very Weak', 'ws-form')
+				),
+
+				'text_password_strength_bad'			=> array(
+
+					'label'						=>	__('Weak', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Weak', 'ws-form')
+				),
+
+				'text_password_strength_good'			=> array(
+
+					'label'						=>	__('Medium', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Medium', 'ws-form')
+				),
+
+				'text_password_strength_strong'			=> array(
+
+					'label'						=>	__('Strong', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Strong', 'ws-form')
+				),
+
+				'text_password_visibility_toggle_off'			=> array(
+
+					'label'						=>	__('Show password', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Show password', 'ws-form')
+				),
+
+				'text_password_visibility_toggle_on'			=> array(
+
+					'label'						=>	__('Hide password', 'ws-form'),
+					'type'						=>	'text',
+					'default'					=>	'',
+					'placeholder'				=>	__('Hide password', 'ws-form')
 				),
 
 				'invalid_feedback'			=> array(
@@ -6010,10 +6260,19 @@
 				include_once $framework_include_file_name;
 				$ws_form_config_framework = new $framework_class_name();
 				$frameworks['types'][$framework] = $ws_form_config_framework->get_framework_config();
+
+				// Run through framework and remove references to admin
+				foreach($frameworks['types'][$framework] as $meta_key => $meta_value) {
+
+					if(is_array($meta_value) && isset($meta_value['admin'])) {
+
+						unset($frameworks['types'][$framework][$meta_key]['admin']);
+					}
+				}
 			}
 
 			// Apply filter
-			$frameworks = apply_filters('wsf_config_frameworks', $frameworks);
+			$frameworks = apply_filters('wsf_config_frameworks', $frameworks, $framework, $public);
 
 			// Cache
 			self::$frameworks[$public] = $frameworks;
@@ -6063,6 +6322,36 @@
 			return $parse_variables_repairable;
 		}
 
+		// Parse variable
+		public static function get_parse_variables_secure() {
+
+			// Check cache
+			if(self::$parse_variables_secure !== false) { return self::$parse_variables_secure; }
+
+			$parse_variables_secure = array();
+
+			// Get admin variables
+			$parse_variables_config = self::get_parse_variables();
+
+			foreach($parse_variables_config as $parse_variable_group_id => $parse_variable_group) {
+
+				foreach($parse_variable_group['variables'] as $parse_variable_key => $parse_variables_config) {
+
+					if(
+						isset($parse_variables_config['secure']) &&
+						$parse_variables_config['secure']
+					) {
+						$parse_variables_secure[] = $parse_variable_key;
+					}
+				}
+			}
+
+			// Store to cache
+			self::$parse_variables_secure = $parse_variables_secure;
+
+			return $parse_variables_secure;
+		}
+
 		// Parse variables
 		public static function get_parse_variables($public = true) {
 
@@ -6093,9 +6382,9 @@
 						'blog_name'			=> array('label' => __('Name', 'ws-form'), 'value' => get_bloginfo('name')),
 						'blog_language'		=> array('label' => __('Language', 'ws-form'), 'value' => get_bloginfo('language')),
 						'blog_charset'		=> array('label' => __('Character Set', 'ws-form'), 'value' => get_bloginfo('charset')),
-						'blog_admin_email'	=> array('label' => __('Admin Email', 'ws-form')),
+						'blog_admin_email'	=> array('label' => __('Admin Email', 'ws-form'), 'secure' => true),
 
-						'blog_time' => array('label' => __('Current Time', 'ws-form'), 'value' => date(get_option('time_format'), current_time('timestamp')), 'description' => __('Returns the blog time in the format configured in WordPress.', 'ws-form')),
+						'blog_time' => array('label' => __('Current Time', 'ws-form'), 'value' => date(get_option('time_format'), current_time('timestamp')), 'description' => __('Returns the blog time in the format configured in WordPress.', 'ws-form'), 'secure' => true),
 
 						'blog_date_custom' => array(
 
@@ -6111,10 +6400,12 @@
 
 							'kb_slug' => 'date-formats',
 
-							'description' => __('Returns the blog date and time in a specified format (PHP date format).', 'ws-form')
+							'description' => __('Returns the blog date and time in a specified format (PHP date format).', 'ws-form'),
+
+							'secure' => true
 						),
 
-						'blog_date' => array('label' => __('Current Date', 'ws-form'), 'value' => date(get_option('date_format'), current_time('timestamp')), 'description' => __('Returns the blog date in the format configured in WordPress.', 'ws-form')),
+						'blog_date' => array('label' => __('Current Date', 'ws-form'), 'value' => date(get_option('date_format'), current_time('timestamp')), 'description' => __('Returns the blog date in the format configured in WordPress.', 'ws-form'), 'secure' => true),
 					)
 				),
 
@@ -6155,7 +6446,7 @@
 
 					'variables'	=> array(
 
-						'server_time' => array('label' => __('Current Time', 'ws-form'), 'value' => date(get_option('time_format')), 'description' => __('Returns the server time in the format configured in WordPress.', 'ws-form')),
+						'server_time' => array('label' => __('Current Time', 'ws-form'), 'value' => date(get_option('time_format')), 'description' => __('Returns the server time in the format configured in WordPress.', 'ws-form'), 'secure' => true),
 
 						'server_date_custom' => array(
 
@@ -6171,10 +6462,12 @@
 
 							'kb_slug' => 'date-formats',
 
-							'description' => __('Returns the server date and time in a specified format (PHP date format).', 'ws-form')
+							'description' => __('Returns the server date and time in a specified format (PHP date format).', 'ws-form'),
+
+							'secure' => true
 						),
 
-						'server_date' => array('label' => __('Current Date', 'ws-form'), 'value' => date(get_option('date_format')), 'description' => __('Returns the server date in the format configured in WordPress.', 'ws-form'))
+						'server_date' => array('label' => __('Current Date', 'ws-form'), 'value' => date(get_option('date_format')), 'description' => __('Returns the server date in the format configured in WordPress.', 'ws-form'), 'secure' => true)
 					)
  				),
 
@@ -6187,11 +6480,31 @@
 
 						'form_obj_id'		=>	array('label' => __('DOM Selector ID', 'ws-form')),
 						'form_label'		=>	array('label' => __('Label', 'ws-form')),
-						'form_hash'			=>	array('label' => __('Session ID', 'ws-form')),
 						'form_instance_id'	=>	array('label' => __('Instance ID', 'ws-form')),
 						'form_id'			=>	array('label' => __('ID', 'ws-form')),
 						'form_framework'	=>	array('label' => __('Framework', 'ws-form')),
-						'form_checksum'		=>	array('label' => __('Checksum', 'ws-form')),
+						'form_checksum'		=>	array('label' => __('Checksum', 'ws-form'), 'secure' => true),
+					)
+				),
+
+				// Tab
+				'tab' 	=> array(
+
+					'label'		=> __('Tab', 'ws-form'),
+
+					'variables'	=> array(
+
+						'tab_label' =>	array(
+
+							'label' => __('Tab Label', 'ws-form'),
+
+							'attributes' => array(
+
+								array('id' => 'id')
+							),
+
+							'description' => __('Returns the tab label by ID.', 'ws-form')
+						)
 					)
 				),
 
@@ -6202,15 +6515,15 @@
 
 					'variables'	=> array(
 
-						'submit_id'				=>	array('label' => __('ID', 'ws-form'), 'description' => __('Returns the numeric ID of the submission.', 'ws-form')),
-						'submit_hash'			=>	array('label' => __('Hash', 'ws-form'), 'description' => __('Returns the anonymized hash ID of the submission.', 'ws-form')),
-						'submit_user_id'		=>	array('label' => __('User ID', 'ws-form'), 'description' => __('Returns the ID of the user who completed the form.', 'ws-form')),
-						'submit_admin_url'		=>	array('label' => __('Admin URL', 'ws-form'), 'description' => __('URL to submission in WordPress admin.', 'ws-form')),
-						'submit_admin_link'		=>	array('label' => __('Admin Link', 'ws-form'), 'description' => __('Link to submission in WordPress admin.', 'ws-form')),
-						'submit_url'			=>	array('label' => __('URL', 'ws-form'), 'description' => __('URL to recall form with submission loaded. Used in conjunction with the \'Save\' button.', 'ws-form')),
-						'submit_link'			=>	array('label' => __('Link', 'ws-form'), 'description' => __('Link to recall form with submission loaded. Used in conjunction with the \'Save\' button.', 'ws-form')),
-						'submit_status'			=>	array('label' => __('Status', 'ws-form'), 'description' => __('draft = In Progress, publish = Submitted, error = Error, spam = Spam, trash = Trash.', 'ws-form')),
-						'submit_status_label'	=>	array('label' => __('Status Label', 'ws-form'), 'description' => __('Returns a nice version of the submission status.', 'ws-form'))
+						'submit_id'				=>	array('label' => __('ID', 'ws-form'), 'description' => __('Returns the numeric ID of the submission.', 'ws-form'), 'secure' => true),
+						'submit_hash'			=>	array('label' => __('Hash', 'ws-form'), 'description' => __('Returns the anonymized hash ID of the submission.', 'ws-form'), 'secure' => true),
+						'submit_user_id'		=>	array('label' => __('User ID', 'ws-form'), 'description' => __('Returns the ID of the user who completed the form.', 'ws-form'), 'secure' => true),
+						'submit_admin_url'		=>	array('label' => __('Admin URL', 'ws-form'), 'description' => __('URL to submission in WordPress admin.', 'ws-form'), 'secure' => true),
+						'submit_admin_link'		=>	array('label' => __('Admin Link', 'ws-form'), 'description' => __('Link to submission in WordPress admin.', 'ws-form'), 'secure' => true),
+						'submit_url'			=>	array('label' => __('URL', 'ws-form'), 'description' => __('URL to recall form with submission loaded. Used in conjunction with the \'Save\' button.', 'ws-form'), 'secure' => true),
+						'submit_link'			=>	array('label' => __('Link', 'ws-form'), 'description' => __('Link to recall form with submission loaded. Used in conjunction with the \'Save\' button.', 'ws-form'), 'secure' => true),
+						'submit_status'			=>	array('label' => __('Status', 'ws-form'), 'description' => __('draft = In Progress, publish = Submitted, error = Error, spam = Spam, trash = Trash.', 'ws-form'), 'secure' => true),
+						'submit_status_label'	=>	array('label' => __('Status Label', 'ws-form'), 'description' => __('Returns a nice version of the submission status.', 'ws-form'), 'secure' => true)
 					)
 				),
 
@@ -6245,7 +6558,7 @@
 						// Border
 						'skin_border_width'		=>	array('label' => __('Border - Width', 'ws-form'), 'kb_slug' => 'customize-appearance', 'value' => WS_Form_Common::option_get('skin_border_width')),
 						'skin_border_style'		=>	array('label' => __('Border - Style', 'ws-form'), 'kb_slug' => 'customize-appearance', 'value' => WS_Form_Common::option_get('skin_border_style')),
-						'skin_border_radius'		=>	array('label' => __('Border - Style', 'ws-form'), 'kb_slug' => 'customize-appearance', 'value' => WS_Form_Common::option_get('skin_border_radius'))
+						'skin_border_radius'		=>	array('label' => __('Border - Radius', 'ws-form'), 'kb_slug' => 'customize-appearance', 'value' => WS_Form_Common::option_get('skin_border_radius'))
 					)
 				),
 				// Section
@@ -6281,6 +6594,41 @@
 							'label' => __('Section Row Index', 'ws-form'),
 
 							'description' => __('This variable returns the row index in a repeatable section.', 'ws-form')
+						),
+
+						'section_rows_start' =>	array(
+
+							'label' => __('Start Rows Start', 'ws-form'),
+
+							'attributes' => array(
+
+								array('id' => 'id')
+							),
+
+							'description' => __('Define the start point for looping through repeatable section rows.', 'ws-form'),
+
+							'repair_group' => 'section'
+						),
+
+						'section_rows_end'			=>	array(
+
+							'label' => __('Section Rows End', 'ws-form'),
+
+							'description' => __('Define the end point for looping through repeatable section rows.', 'ws-form')
+						),
+
+						'section_label' =>	array(
+
+							'label' => __('Section Label', 'ws-form'),
+
+							'attributes' => array(
+
+								array('id' => 'id')
+							),
+
+							'description' => __('Returns the section label by ID.', 'ws-form'),
+
+							'repair_group' => 'section'
 						)
 					)
 				),
@@ -6492,6 +6840,20 @@
 
 					'variables'	=> array(
 
+						'field_label' =>	array(
+
+							'label' => __('Field Label', 'ws-form'),
+
+							'attributes' => array(
+
+								array('id' => 'id')
+							),
+
+							'description' => __('Returns the field label by ID.', 'ws-form'),
+
+							'repair_group' => 'field'
+						),
+
 						'field_float'			=>	array(
 
 							'label' => __('Field Value as Floating Point Number', 'ws-form'),
@@ -6700,9 +7062,11 @@
 
 							'limit' => __('in the Send Email action', 'ws-form'),
 
-							'description' => __('This variable outputs a list of the e-commerce transaction details such as total, transaction ID and status fields.', 'ws-form')
+							'description' => __('This variable outputs a list of the e-commerce transaction details such as total, transaction ID and status fields.', 'ws-form'),
+
+							'secure' => true
 						),
-						'email_tracking'		=>	array('label' => __('Tracking data', 'ws-form'), 'limit' => __('in the Send Email action', 'ws-form'), 'kb_slug' => 'send-email'),
+						'email_tracking'		=>	array('label' => __('Tracking data', 'ws-form'), 'limit' => __('in the Send Email action', 'ws-form'), 'kb_slug' => 'send-email', 'secure' => true),
 						'email_logo'			=>	array('label' => __('Logo', 'ws-form'), 'value' => $email_logo, 'limit' => __('in the Send Email action', 'ws-form'), 'kb_slug' => 'send-email'),
 						'email_pixel'			=>	array('label' => __('Pixel'), 'value' => '<img src="' . WS_FORM_PLUGIN_DIR_URL . 'public/images/email/p.gif" width="100%" height="5" />', 'description' => __('Outputs a transparent gif. We use this to avoid Mac Mail going into dark mode when viewing emails.', 'ws-form'))
 					)
@@ -6722,7 +7086,9 @@
 							'attributes' => array(
 
 								array('id' => 'variable')
-							)
+							),
+
+							'secure' => true
 						)
 					)
 				),
@@ -6741,7 +7107,9 @@
 							'attributes' => array(
 
 								array('id' => 'variable')
-							)
+							),
+
+							'secure' => true
 						)
 					)
 				),
@@ -6950,14 +7318,14 @@
 
 				'variables'	=> array(
 
-					'post_url_edit'		=>	array('label' => __('Admin URL', 'ws-form'), 'value' => !is_null($post) ? get_edit_post_link($post->ID) : ''),
+					'post_url_edit'		=>	array('label' => __('Admin URL', 'ws-form'), 'value' => !is_null($post) ? get_edit_post_link($post->ID) : '', 'secure' => true),
 					'post_url'			=>	array('label' => __('Public URL', 'ws-form'), 'value' => !is_null($post) ? get_permalink($post->ID) : ''),
 					'post_type'			=>	array('label' => __('Type', 'ws-form'), 'value' => !is_null($post) ? $post->post_type : ''),
 					'post_title'		=>	array('label' => __('Title', 'ws-form'), 'value' => !is_null($post) ? $post->post_title : ''),
 					'post_content'		=>	array('label' => __('Content', 'ws-form'), 'value' => !is_null($post) ? $post->post_content : ''),
 					'post_excerpt'		=>	array('label' => __('Excerpt', 'ws-form'), 'value' => !is_null($post) ? $post->post_excerpt : ''),
-					'post_time'			=>	array('label' => __('Time', 'ws-form'), 'value' => !is_null($post) ? date(get_option('time_format'), strtotime($post->post_date)) : ''),
-					'post_id'			=>	array('label' => __('ID', 'ws-form'), 'value' => !is_null($post) ? $post->ID : ''),
+					'post_time'			=>	array('label' => __('Time', 'ws-form'), 'value' => !is_null($post) ? date(get_option('time_format'), strtotime($post->post_date)) : '', 'secure' => true),
+					'post_id'			=>	array('label' => __('ID', 'ws-form'), 'value' => !is_null($post) ? $post->ID : '', 'secure' => true),
 
 					'post_date_custom'	=>	array(
 
@@ -6971,10 +7339,12 @@
 							array('id' => 'seconds_offset', 'required' => false, 'default' => '0')
 						),
 
-						'kb_slug' => 'date-formats'
+						'kb_slug' => 'date-formats',
+
+						'secure' => true
 					),
 
-					'post_date'			=>	array('label' => __('Date', 'ws-form'), 'value' => !is_null($post) ? date(get_option('date_format'), strtotime($post->post_date)) : ''),
+					'post_date'			=>	array('label' => __('Date', 'ws-form'), 'value' => !is_null($post) ? date(get_option('date_format'), strtotime($post->post_date)) : '', 'secure' => true),
 
 					'post_meta'			=>	array(
 
@@ -6987,7 +7357,9 @@
 
 						'description' => __('Returns the post meta value for the key specified.', 'ws-form'),
 
-						'scope' => array('form_parse')
+						'scope' => array('form_parse'),
+
+						'secure' => true
 					)
 				)
 			);
@@ -7000,12 +7372,12 @@
 
 				'variables'	=> array(
 
-					'author_id'				=>	array('label' => __('ID', 'ws-form'), 'value' => $post_author_id),
-					'author_display_name'	=>	array('label' => __('Display Name', 'ws-form'), 'value' => get_the_author_meta('display_name', $post_author_id)),
-					'author_first_name'		=>	array('label' => __('First Name', 'ws-form'), 'value' => get_the_author_meta('first_name', $post_author_id)),
-					'author_last_name'		=>	array('label' => __('Last Name', 'ws-form'), 'value' => get_the_author_meta('last_name', $post_author_id)),
-					'author_nickname'		=>	array('label' => __('Nickname', 'ws-form'), 'value' => get_the_author_meta('nickname', $post_author_id)),
-					'author_email'			=>	array('label' => __('Email', 'ws-form')),
+					'author_id'				=>	array('label' => __('ID', 'ws-form'), 'value' => $post_author_id, 'secure' => true),
+					'author_display_name'	=>	array('label' => __('Display Name', 'ws-form'), 'value' => get_the_author_meta('display_name', $post_author_id), 'secure' => true),
+					'author_first_name'		=>	array('label' => __('First Name', 'ws-form'), 'value' => get_the_author_meta('first_name', $post_author_id), 'secure' => true),
+					'author_last_name'		=>	array('label' => __('Last Name', 'ws-form'), 'value' => get_the_author_meta('last_name', $post_author_id), 'secure' => true),
+					'author_nickname'		=>	array('label' => __('Nickname', 'ws-form'), 'value' => get_the_author_meta('nickname', $post_author_id), 'secure' => true),
+					'author_email'			=>	array('label' => __('Email', 'ws-form'), 'secure' => true),
 				)
 			);
 
@@ -7016,10 +7388,10 @@
 
 				'variables'	=> array(
 
-					'url_login'				=>	array('label' => __('Login', 'ws-form'), 'value' => wp_login_url()),
-					'url_logout'			=>	array('label' => __('Logout', 'ws-form'), 'value' => wp_logout_url()),
-					'url_lost_password'				=>	array('label' => __('Login', 'ws-form'), 'value' => wp_lostpassword_url()),
-					'url_register'				=>	array('label' => __('Register', 'ws-form'), 'value' => wp_registration_url()),
+					'url_login'				=>	array('label' => __('Login', 'ws-form'), 'value' => wp_login_url(), 'secure' => true),
+					'url_logout'			=>	array('label' => __('Logout', 'ws-form'), 'value' => wp_logout_url(), 'secure' => true),
+					'url_lost_password'				=>	array('label' => __('Lost Password', 'ws-form'), 'value' => wp_lostpassword_url(), 'secure' => true),
+					'url_register'				=>	array('label' => __('Register', 'ws-form'), 'value' => wp_registration_url(), 'secure' => true),
 				)
 			);
 
@@ -7044,7 +7416,9 @@
 
 							'description' => __('Used to obtain an ACF repeater field. You can separate parent_fields with commas to access deep variables.', 'ws-form'),
 
-							'scope' => array('form_parse')
+							'scope' => array('form_parse'),
+
+							'secure' => true
 						),
 					)
 				);
@@ -7073,15 +7447,19 @@
 					'user_bio'			=>	array('label' => __('Bio', 'ws-form'), 'value' => ($user_id > 0) ? get_user_meta($user_id, 'description', true) : '', 'limit' => __('if a user is currently signed in', 'ws-form')),
 					'user_nickname' 	=>	array('label' => __('Nickname', 'ws-form'), 'value' => ($user_id > 0) ? get_user_meta($user_id, 'nickname', true) : '', 'limit' => __('if a user is currently signed in', 'ws-form')),
 					'user_admin_color' 	=>	array('label' => __('Admin Color', 'ws-form'), 'value' => ($user_id > 0) ? get_user_meta($user_id, 'admin_color', true) : '', 'limit' => __('if a user is currently signed in', 'ws-form')),
-					'user_lost_password_key' => array('label' => __('Lost Password Key', 'ws-form'), 'value' => ($user_id > 0) ? $user->lost_password_key : '', 'limit' => __('if a user is currently signed in', 'ws-form')),
+					'user_lost_password_key' => array('label' => __('Lost Password Key', 'ws-form'), 'value' => ($user_id > 0) ? $user->lost_password_key : '', 'limit' => __('if a user is currently signed in', 'ws-form'), 'secure' => true),
 					'user_lost_password_url' => array(
 
 						'label'			=> __('Lost Password URL', 'ws-form'),
+
 						'attributes'	=> array(
 
 							array('id' => 'path', 'required' => false, 'default' => '')
 						),
-						'limit' => __('if a user is currently signed in', 'ws-form')
+
+						'limit' => __('if a user is currently signed in', 'ws-form'),
+
+						'secure' => true
 					),
 					'user_meta'			=>	array(
 
@@ -7094,7 +7472,9 @@
 
 						'description' => __('Returns the user meta value for the key specified.', 'ws-form'),
 
-						'scope' => array('form_parse')
+						'scope' => array('form_parse'),
+
+						'secure' => true
 					)
 				)
 			);

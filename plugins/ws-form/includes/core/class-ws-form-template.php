@@ -178,6 +178,13 @@
 							continue;
 						}
 
+						// Pro required
+						$pro_required = (isset($template->pro_required) ? $template->pro_required : false);
+						if($pro_required) {
+
+							unset($config_object->template_categories[$template_category_index]->templates[$template_index]);
+							continue;
+						}
 						// Indexes (used by delete)
 						$config_object->template_categories[$template_category_index]->templates[$template_index]->category_index = $template_category_index;
 						$config_object->template_categories[$template_category_index]->templates[$template_index]->index = $template_index;
@@ -244,7 +251,7 @@
 						$form_object = null;
 
 						// Pro required
-						$config_object->template_categories[$template_category_index]->templates[$template_index]->pro_required = !WS_Form_Common::is_edition((isset($template->pro_required) ? $template->pro_required : false) ? 'pro' : 'basic');
+						$config_object->template_categories[$template_category_index]->templates[$template_index]->pro_required = !WS_Form_Common::is_edition($pro_required ? 'pro' : 'basic');
 
 						// Preview URL
 						$preview_url = isset($template->preview_url) ? $template->preview_url : false;

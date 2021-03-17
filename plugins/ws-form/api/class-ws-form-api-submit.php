@@ -166,6 +166,9 @@
 					break;
 			}
 
+			// Do action
+			do_action('wsf_submit_post_complete', $this->ws_form_submit);
+
 			// Send response
 			self::api_json_response_submit($json_response);
 		}

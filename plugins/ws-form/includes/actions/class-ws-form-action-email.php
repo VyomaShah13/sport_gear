@@ -92,7 +92,7 @@
 					if($to_full !== false) { $email_to[] = $to_full; }
 				}
 			}
-			if(count($email_to) == 0) { self::error(__("Invalid 'to' email address(es)", 'ws-form')); }
+			if(count($email_to) == 0) { self::error(__("Invalid 'To' email address(es)", 'ws-form')); }
 
 			// Build subject
 			$email_subject = WS_Form_Common::parse_variables_process(trim($this->subject), $form, $submit_parse, 'text/plain');

@@ -318,6 +318,11 @@
 												'disabled_section'
 											)
 										),
+										array(
+											'label'		=>	__('Breakpoints', 'ws-form'),
+											'meta_keys'	=> array('breakpoint_sizes'),
+											'class'		=>	array('wsf-fieldset-panel')
+										)
 									)
 								)
 							)
@@ -551,6 +556,8 @@
 					'confirm_conditional_delete'		=>	__('Are you sure you want to delete this condition?', 'ws-form'),
 					'confirm_action_delete'				=>	__('Are you sure you want to delete this action?', 'ws-form'),
 					'confirm_action_repost'				=>	__('Are you sure you want to re-run this action?', 'ws-form'),
+					'confirm_breakpoint_reset'			=>	__('Are you sure you want to reset the widths and offsets?', 'ws-form'),
+					'confirm_orientation_breakpoint_reset'	=>	__('Are you sure you want to reset the widths?', 'ws-form'),
 					'confirm_submit_delete'				=>	__('Are you sure you want to trash this submission', 'ws-form'),
 					'confirm_data_grid_group_delete'	=>	__('Are you sure you want to delete this group?', 'ws-form'),
 					'confirm_data_grid_column_delete'	=>	__('Are you sure you want to delete this column?', 'ws-form'),
@@ -655,6 +662,8 @@
 					'repeater_row_add'						=>	__('Add Row', 'ws-form'),
 					'repeater_row_delete'					=>	__('Delete Row', 'ws-form'),
 
+					// Breakpoint size
+					'breakpoint_reset'						=>	__('Reset', 'ws-form'),
 
 					// Sidebar titles
 					'sidebar_title_form'					=>	__('Form', 'ws-form'),
@@ -679,6 +688,30 @@
 
 					// Actions
 					'action_label_default'					=>	__('New Action', 'ws-form'),
+					// Breakpoint options
+					'breakpoint_offset_column_width'			=>	__('Width - Columns', 'ws-form'),
+					'breakpoint_offset_column_offset'			=>	__('Offset - Columns', 'ws-form'),
+					'breakpoint_option_default'					=>	__('Default ', 'ws-form'),
+					'breakpoint_option_inherit'					=>	__('Inherit', 'ws-form'),
+					'breakpoint_option_column_default_singular'	=>	'%s',
+					'breakpoint_option_column_default_plural'	=>	'%s',
+					'breakpoint_option_offset_default_singular'	=>	'%s',
+					'breakpoint_option_offset_default_plural'	=>	'%s',
+					'breakpoint_option_column_singular'			=>	'%s',
+					'breakpoint_option_column_plural'			=>	'%s',
+					'breakpoint_option_offset_singular'			=>	'%s',
+					'breakpoint_option_offset_plural'			=>	'%s',
+
+					// Orientation Breakpoint options
+					'orientation_breakpoint_label_width'					=>	__('%s Width', 'ws-form'),
+					'orientation_breakpoint_width'							=>	__(' = %s width', 'ws-form'),
+					'orientation_breakpoint_width_full'						=>	__(' = Full width', 'ws-form'),
+					'orientation_breakpoint_option_default'					=>	__('Default ', 'ws-form'),
+					'orientation_breakpoint_option_inherit'					=>	__('Inherit', 'ws-form'),
+					'orientation_breakpoint_option_column_default_singular'	=>	'%s column',
+					'orientation_breakpoint_option_column_default_plural'	=>	'%s columns',
+					'orientation_breakpoint_option_column_singular'			=>	'%s column',
+					'orientation_breakpoint_option_column_plural'			=>	'%s columns',
 
 					'column_size_change'						=>	__('Change column size', 'ws-form'),
 					'offset_change'								=>	__('Change offset', 'ws-form'),
