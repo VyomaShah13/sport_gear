@@ -21,9 +21,15 @@ get_header();
 		if ( have_posts() ) :
 
 			if ( is_home() && ! is_front_page() ) :
+					$page_for_posts = get_option( 'page_for_posts' );
 				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+				<header class="entry-header" style="background-image:url(<?php echo get_the_post_thumbnail_url($page_for_posts); ?>)">
+					<h1 class="page-title"><?php single_post_title(); ?></h1>
+					<?php
+						if ( function_exists('yoast_breadcrumb') ) {
+							yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+						}
+					?>
 				</header>
 				<?php
 			endif;

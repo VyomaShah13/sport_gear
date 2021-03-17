@@ -36,7 +36,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="site-info">
-						© 2021 <a href="#">SportGear</a>. All Rights Reserved. 
+						&copy; <?php echo gmdate('Y'); ?> <a href="#">SportGear</a>. All Rights Reserved. 
 					</div><!-- .site-info -->
 				</div>
 				<div class="col-lg-6">
