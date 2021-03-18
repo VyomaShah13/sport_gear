@@ -13,8 +13,7 @@ get_header();
 	<main id="primary" class="site-main">
 
 		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
+			<header class="page-header entry-header" style="background-image:url('/wp-content/uploads/2021/02/hero-banner.jpg')">
 				<?php
 				the_archive_title( '<h1 class="page-title">', '</h1>' );
 				the_archive_description( '<div class="archive-description">', '</div>' );
@@ -35,7 +34,11 @@ get_header();
 
 			endwhile;
 
-			the_posts_navigation();
+			the_posts_navigation([
+				'prev_text'          => '← Older Posts',
+				'next_text'          => 'Newer Posts →',
+				'class' => 'container',
+			]);
 
 		else :
 

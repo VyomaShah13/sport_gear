@@ -47,7 +47,11 @@ get_header();
 
 			endwhile;
 
-			the_posts_navigation();
+			the_posts_navigation([
+				'prev_text'          => '← Older Posts',
+				'next_text'          => 'Newer Posts →',
+				'class' => 'container',
+			]);
 
 		else :
 

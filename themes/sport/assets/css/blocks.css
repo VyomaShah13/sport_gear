@@ -187,7 +187,9 @@
     color: #f9ba48;
     cursor: pointer;
 } 
-.entry-header{
+main > .entry-header, article > .entry-header{
+    background-size: cover;
+    background-repeat: no-repeat;
     padding: 40px 50px;
     color: #fff;
     text-align: center;
