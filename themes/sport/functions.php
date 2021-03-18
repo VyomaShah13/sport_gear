@@ -274,6 +274,11 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/woocommerce.php';
 
 /**
+ * Custom post type template.
+ */
+require get_template_directory() . '/inc/post-types.php';
+
+/**
  * Enqueuing block editor assets
  */
 function sport_enqueue_block_editor_assets(){
