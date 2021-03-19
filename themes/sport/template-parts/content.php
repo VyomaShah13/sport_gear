@@ -16,19 +16,22 @@
 		</div>
 		<div class="post-detail">
 			<div class="entry-content">
-				<div class="entry-header">
-					<?php
-						if ( is_singular() ) :
-							the_title( '<h1 class="entry-title">', '</h1>' );
-						else :
-							the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-						endif;
+				<?php if( !empty(get_the_title())) { ?>
+					<div class="entry-header">
+						<?php
+							if ( is_singular() ) :
+								the_title( '<h1 class="entry-title">', '</h1>' );
+							else :
+								the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+							endif;
 
-						if ( 'post' === get_post_type() ) :
-							?>
-					<?php endif; ?>
+							if ( 'post' === get_post_type() ) :
+								?>
+						<?php endif; ?>
 					
-				</div><!-- .entry-header -->
+					</div><!-- .entry-header -->
+				<?php } ?>
+				
 				<?php
 					// the_content(
 					// 	sprintf(

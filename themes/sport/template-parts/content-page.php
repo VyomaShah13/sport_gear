@@ -10,14 +10,16 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header" style="background-image:url(<?php echo get_the_post_thumbnail_url(); ?>)">
-				<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-				<?php
-		if ( function_exists('yoast_breadcrumb') ) {
-		yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
-		}
-	?>
-			</header><!-- .entry-header -->
+	<?php if( !empty(get_the_title())) { ?>
+		<header class="entry-header" style="background-image:url(<?php echo get_the_post_thumbnail_url(); ?>)">
+					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+					<?php
+			if ( function_exists('yoast_breadcrumb') ) {
+			yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+			}
+		?>
+		</header><!-- .entry-header -->
+	<?php } ?>
 
 	<?php //sport_post_thumbnail(); ?>
 	<div class="container">
