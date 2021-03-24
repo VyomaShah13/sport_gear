@@ -14,7 +14,7 @@ get_header();
 
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
+			<header class="entry-header"   style="background-image:url('/wp-content/uploads/2021/02/hero-banner.jpg')">
 				<h1 class="page-title">
 					<?php
 					/* translators: %s: search query. */
