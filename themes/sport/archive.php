@@ -13,11 +13,17 @@ get_header();
 	<main id="primary" class="site-main">
 
 		<?php if ( have_posts() ) : ?>
+
+
 			<header class="page-header entry-header" style="background-image:url('/wp-content/uploads/2021/02/hero-banner.jpg')">
 				<?php
 				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
 				?>
+				<?php
+						if ( function_exists('yoast_breadcrumb') ) {
+							yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+						}
+					?>
 			</header><!-- .page-header -->
 
 			<?php

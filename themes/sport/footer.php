@@ -10,7 +10,7 @@
  */
 
 ?>
-
+	
 	<div class="newsletter">
 		<div class="container">
 			<div class="row">
@@ -31,22 +31,7 @@
 			</div>
 		</div>
 	</div>
-	<?php
-		$brand_args = array(
-			'post_type' => 'sport_brand',
-			'posts_per_page' => 3,
-		);
-		$brand_query = new WP_Query($brand_args);
-
-		if( $brand_query -> have_posts()){
-			while( $brand_query -> have_posts() ){
-				$brand_query -> have_post();
-				?>
-				<h2><?php the_title(); ?></h2>
-				<?php
-			}
-		}
-	?>
+	
 	<footer id="colophon" class="site-footer has-secondary-background-color has-white-color has-regular-font-size">
 		<div class="container">
 			<div class="row">

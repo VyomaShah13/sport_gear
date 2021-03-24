@@ -44,8 +44,8 @@ function sport_init() {
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
+        'menu_icon'          => 'dashicons-shield',
         'supports'           => array( 'title', 'editor', 'author', 'thumbnail' ),
-        'taxonomies'         => array( 'category', 'post_tag' ),
         'show_in_rest'       => true,
     );
     
