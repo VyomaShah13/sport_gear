@@ -103,3 +103,8 @@ function sport_customize_preview_js() {
 	wp_enqueue_script( 'sport-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
 }
 add_action( 'customize_preview_init', 'sport_customize_preview_js' );
+
+// excerpt length set to 40
+add_filter( 'excerpt_length', function($length) {
+    return 40;
+} );

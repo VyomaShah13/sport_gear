@@ -843,3 +843,27 @@ button:focus, input:focus, textarea:focus{
 .archive .entry-meta time:hover, .archive .entry-meta .author a:hover{
     color: #f9ba48;
 }
+
+/* brand blogs */
+
+.brand-img img{
+    max-height: 230px;
+    width: 100%;
+}
+
+.brand-post .read-more-link{
+    background-color: #f9ba48;
+    color: #333;
+    border-radius: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 5px 15px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.brand-post .read-more-link:hover{
+    background-color: #212529;
+    color: #fff;
+}

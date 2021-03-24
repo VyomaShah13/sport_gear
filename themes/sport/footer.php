@@ -10,7 +10,37 @@
  */
 
 ?>
-	
+	<div class="brand-post">
+		<div class="container">
+			<div class="row">
+				<h1 class="main-title">Latest Brands</h1>
+				<?php
+					$brand_args = array(
+						'post_type' => 'sport_brand',
+						'posts_per_page' => 3,
+					);
+					$brand_query = new WP_Query($brand_args);
+
+					if( $brand_query -> have_posts()){
+						while( $brand_query -> have_posts() ){
+							
+							$brand_query -> the_post();
+							?>
+							<div class="col-lg-4">
+								<div class="brand-img">
+									<?php sport_post_thumbnail(); ?>
+								</div>
+								<h2><?php the_title('<h2 class="brand-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>'); ?></h2>
+								<?php the_excerpt(); ?>
+								<?php echo '<a href="' . esc_url( get_permalink() ) . '" class="read-more-link">Read more </a>'?> 
+							</div>
+							<?php
+						}
+					}
+				?>
+			</div>
+		</div>
+	</div>
 	<div class="newsletter">
 		<div class="container">
 			<div class="row">

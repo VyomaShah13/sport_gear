@@ -173,7 +173,7 @@
 
 /* Post title */
 
-.wp-block-latest-posts a {
+.wp-block-latest-posts a, .brand-title a{
     margin-top: 20px;
     display: block;
     color: #333;
@@ -183,7 +183,7 @@
     white-space: nowrap;
     font-size: 24px;
 }
-.wp-block-latest-posts a:hover{
+.wp-block-latest-posts a:hover, .brand-title a:hover{
     color: #f9ba48;
     cursor: pointer;
 } 
@@ -195,9 +195,10 @@ main > .entry-header, article > .entry-header{
     text-align: center;
     margin-bottom: 60px;
 }
-.wp-block-latest-posts__post-excerpt{
+.wp-block-latest-posts__post-excerpt, .brand-post p{
     color: #717171;
     text-align: justify;
+    line-height: 1.4;
 }
 
 /* Breadcrumb */
