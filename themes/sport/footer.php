@@ -70,12 +70,12 @@
 	<footer id="colophon" class="site-footer has-secondary-background-color has-white-color has-regular-font-size">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-6 col-md-6">
 					<div class="site-info">
 						&copy; <?php echo gmdate('Y'); ?> <a href="#">SportGear</a>. All Rights Reserved. 
 					</div><!-- .site-info -->
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-6 col-md-6">
 					<div class="social-links">
 						
 						<ul class="text-right">
@@ -91,6 +91,14 @@
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
-
+<!-- script for responsive menu -->
+<script>
+	jQuery('.menu-toggle').on( 'click', function() {
+		if( jQuery(window).width() < 992 ){
+			jQuery('#primary-menu').slideToggle();
+			jQuery('.main-navigation').toggleClass('toggled');
+		}
+	});
+</script>
 </body>
 </html>

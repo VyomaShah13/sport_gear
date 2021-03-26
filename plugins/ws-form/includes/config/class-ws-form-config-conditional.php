@@ -6,7 +6,7 @@
 		public static function get_settings_conditional() {
 
 			// Conditional
-			return array(
+			$conditional =  array(
 
 				// Objects
 				'objects' => array(
@@ -429,6 +429,38 @@
 							'token_validated_not'	=> array('text' => __('Email Not validated', 'ws-form'), 'values' => false, 'event' => 'wsf-rendered', 'group' => 'validate')
 						),
 						'action' => array()
+					),
+
+					// User
+					'user' => array(
+
+						'text' 		=> __('User', 'ws-form'),
+						'logic' => array(
+
+							'user_logged_in'		=> array('text' => __('Logged In', 'ws-form'), 'values' => false, 'event' => 'wsf-rendered', 'group' => 'status'),
+							'user_logged_in_not'	=> array('text' => __('Logged Out', 'ws-form'), 'values' => false, 'event' => 'wsf-rendered', 'group' => 'status'),
+							'user_role'	=> array('text' => __('Has Role', 'ws-form'), 'values' => array(
+
+								array('value' => '', 'text' => __('Select...', 'ws-form')),
+
+							), 'event' => 'wsf-rendered', 'group' => 'status'),
+							'user_role_not'	=> array('text' => __('Does Not Have Role', 'ws-form'), 'values' => array(
+
+								array('value' => '', 'text' => __('Select...', 'ws-form')),
+
+							), 'event' => 'wsf-rendered', 'group' => 'status'),
+							'user_capability'	=> array('text' => __('Has Capability', 'ws-form'), 'values' => array(
+
+								array('value' => '', 'text' => __('Select...', 'ws-form')),
+
+							), 'event' => 'wsf-rendered', 'group' => 'status'),
+							'user_capability_not'	=> array('text' => __('Does Not Have Capability', 'ws-form'), 'values' => array(
+
+								array('value' => '', 'text' => __('Select...', 'ws-form')),
+
+							), 'event' => 'wsf-rendered', 'group' => 'status'),
+						),
+						'action' => array()
 					)
 				),
 
@@ -444,9 +476,40 @@
 
 					'event' 	=> array('label' => __('Event', 'ws-form'), 'auto_else_disabled' => true),
 					'rs' 		=> array('label' => __('Repeatable Section', 'ws-form')),
-					'validate' 	=> array('label' => __('Validation', 'ws-form')),
 					'value' 	=> array('label' => __('Value', 'ws-form')),
+					'validate' 	=> array('label' => __('Validation', 'ws-form')),
+					'status' 	=> array('label' => __('Status', 'ws-form')),
 				)
 			);
+
+			// User roles
+			$capabilities = array();
+			if (!function_exists('get_editable_roles')) {
+
+				require_once(ABSPATH . '/wp-admin/includes/user.php');
+			}
+			$roles = get_editable_roles();
+			uasort($roles, function($role_a, $role_b) {
+
+				return ($role_a['name'] == $role_b['name']) ? 0 : (($role_a['name'] < $role_b['name']) ? -1 : 1);
+			});
+			foreach ($roles as $role => $role_config) {
+
+				$conditional['objects']['user']['logic']['user_role']['values'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
+				$conditional['objects']['user']['logic']['user_role_not']['values'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
+
+				$capabilities = array_merge($capabilities, array_keys($role_config['capabilities']));
+			}
+
+			// User capabilities
+			$capabilities = array_unique($capabilities);
+			sort($capabilities);
+			foreach ($capabilities as $capability) {
+
+				$conditional['objects']['user']['logic']['user_capability']['values'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
+				$conditional['objects']['user']['logic']['user_capability_not']['values'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
+			}
+
+			return $conditional;
 		}
 	}

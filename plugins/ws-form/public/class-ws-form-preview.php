@@ -149,9 +149,9 @@
 				// Look for reference to loading content
 				if(
 					(strpos($template_html, 'the_content(') !== false) ||
-					(strpos($template_html, 'content\'', (strpos($template_html, 'get_template_part') !== false)) !== false)
+					(strpos($template_html, 'content\'', strpos($template_html, 'get_template_part(')) !== false) ||
+					(strpos($template_html, 'content/', strpos($template_html, 'get_template_part(')) !== false)
 				) {
-
 					return $template_file;
 				}
 			}

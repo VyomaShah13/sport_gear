@@ -30,17 +30,17 @@
 		<div class="top-nav has-secondary-background-color has-white-color has-small-font-size">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-2">
+					<div class="col-md-3 col-sm-12">
 						<div class="top-nav-left">
 							<a href="#">
 								<i class="fa fa-envelope-o"></i> info@sportgear.com
 							</a>
 						</div>
 					</div>
-					<div class="col-md-8 text-center">
+					<div class="col-md-6 col-sm-12 text-center">
 						<div class="top-nav-center">Free Shipping on All orders Over $50!</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3 col-sm-12">
 						<div class="top-nav-right">
 							<ul class="top-nav-menu">
 								<li class="account">
@@ -62,7 +62,7 @@
 		<div class="main-nav">
 			<div class="container">
 				<div class="row">
-					<div class="col-3">
+					<div class="col-md-3 col-sm-12">
 						<div class="site-branding">
 							<?php
 							the_custom_logo();
@@ -82,9 +82,9 @@
 							<?php endif; ?>
 						</div><!-- .site-branding -->
 					</div>
-					<div class="col-6">
+					<div class="col-md-6 col-sm-6 mb-navigation">
 						<nav id="site-navigation" class="main-navigation">
-							<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'sport' ); ?></button>
+							<button class="menu-toggle primary-btn has-primary-background-color has-grayish-black-color"><i class="fa fa-bars" aria-hidden="true"></i><?php esc_html_e( 'Menu', 'sport' ); ?></button>
 							<?php
 							wp_nav_menu(
 								array(
@@ -95,12 +95,16 @@
 							?>
 						</nav><!-- #site-navigation -->
 					</div>
-					<div class="col-3">
+					<div class="col-md-3 col-sm-6 mb-search">
 					<ul class="navbar-user">
 						<li>
 							<?php get_search_form(); ?>
 						</li>
-						<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') );?>"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+						<li>
+							<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') );?>">
+								<i class="fa fa-user" aria-hidden="true"></i>
+							</a>
+						</li>
 						<li class="cart">
 							<a class="cart-container" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
 								<i class="fa fa-shopping-cart" aria-hidden="true"></i>

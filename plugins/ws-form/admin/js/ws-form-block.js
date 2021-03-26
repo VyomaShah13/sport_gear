@@ -8,7 +8,7 @@
 	const { Fragment, RawHTML } = element;
 	const { Button, Panel, PanelBody, PanelRow, Placeholder, SelectControl, TextControl } = components;
 
-	// Buld icon
+	// Build icon
  	const icon = el(
 
 		'svg',
@@ -18,20 +18,6 @@
 			{ fill: '#002E5D', d: 'M0 0v20h20V0zm8.785 13.555h-.829l-1.11-4.966c-.01-.036-.018-.075-.026-.115l-.233-1.297h-.014l-.104.574-.17.838-1.147 4.966h-.836L2.57 6.224h.703l.999 4.27.466 2.23h.044q.133-.966.43-2.243l.998-4.257h.74l1.006 4.27q.119.48.422 2.23h.044q.022-.223.219-1.121t1.254-5.379h.695zm5.645-.389a2.105 2.105 0 0 1-1.54.524 3.26 3.26 0 0 1-.961-.129 2.463 2.463 0 0 1-.644-.283l.309-.534a1.274 1.274 0 0 0 .416.186 2.78 2.78 0 0 0 .925.152 1.287 1.287 0 0 0 .977-.372 1.377 1.377 0 0 0 .355-.993 1.313 1.313 0 0 0-.255-.821 3.509 3.509 0 0 0-.973-.76 6.51 6.51 0 0 1-1.121-.757 2.121 2.121 0 0 1-.466-.635 1.94 1.94 0 0 1-.167-.838A1.67 1.67 0 0 1 11.87 6.6a2.161 2.161 0 0 1 1.487-.517 2.76 2.76 0 0 1 1.567.446l-.31.534a2.425 2.425 0 0 0-1.287-.372 1.422 1.422 0 0 0-.991.334 1.132 1.132 0 0 0-.37.882 1.298 1.298 0 0 0 .252.814 3.792 3.792 0 0 0 1.065.794 6.594 6.594 0 0 1 1.095.767 1.896 1.896 0 0 1 .44.635 2.076 2.076 0 0 1 .144.8 1.94 1.94 0 0 1-.532 1.45zm2.375.598a.671.671 0 1 1 .672-.671.671.671 0 0 1-.672.67zm0-3.242a.671.671 0 1 1 .672-.671.671.671 0 0 1-.672.67zm0-3.284a.671.671 0 1 1 .672-.672.671.671 0 0 1-.672.672z' }
 		)
 	);
-
- 	const loader = el(
-
- 		'svg',
- 		{ width: 64, height: 64, viewBox: '0 0 91.3 91.1', className: 'wsf-block-loader' },
-		el(
-			'circle',
-			{ fill: '#a3a3a3', cx: '45.7', cy: '45.7', r: '45.7' },
-		),
-		el(
-			'circle',
-			{ fill: '#fff', cx: '45.7', cy: '24.4', r: '12.5' }
-		)
- 	);
 
 	registerBlockType('wsf-block/form-add', {
 
@@ -131,72 +117,50 @@
 
 			function fragment_rendered(props) {
 
-				var ws_props = props;
+				var block_wrapper_obj = $('#block-' + props.clientId);
 
-				// Show loader, hide form, delete any messages
-				$('.block-editor [data-type="wsf-block/form-add"').each(function() {
+				if(
+					!block_wrapper_obj.length ||
+					!$('form.wsf-form', block_wrapper_obj).length
+				) {
 
-					$('svg.wsf-block-loader', $(this)).show();
-					$('form', $(this)).hide();
-					$('[data-wsf-message]', $(this)).remove();
-				});
+					setTimeout(function() {
 
-				// Hate using setTimeout, but apparently no way of firing this after the block is fully re-rendered
-				setTimeout(function() {
+						fragment_rendered(props);
 
-					// Set data-id
-					var id = 'block-' + props.clientId;
-					var block_wrapper_obj = $('#' + id);
-					$('form.wsf-form', block_wrapper_obj).attr('data-id', form_id);
+					}, 50, props);
 
-					// Reset each form
-					var instance_id = 1;
-					$('.wsf-form').each(function() {
+				} else {
 
-						$(this).html('').attr('data-instance-id', instance_id).attr('id', 'ws-form-' + instance_id).attr('data-visual-builder', '');
-						instance_id++;
-					});
+					// Remove messages
+					$('[data-wsf-message]', block_wrapper_obj).remove();
 
-					// Render each form
-					$('.wsf-form').each(function() {
+					// Read props
+					var form_id = props.attributes.form_id;
+					var form_element_id = props.attributes.form_element_id;
 
-						// Reset events and HTML
-						$(this).off().html('');
+					// Get block wrapper
+					var block_wrapper_obj = $('#block-' + props.clientId);
 
-						// Set ID
-						if(form_element_id) {
+					// Get form object
+					var form_obj = $('form.wsf-form', block_wrapper_obj);
 
-							$(this).attr('id', form_element_id);
-						}
+					// Set up this form
+					form_obj.off().html('').attr('data-id', form_id).removeAttr('data-instance-id');
 
-						// Get attributes
-						var id = $(this).attr('id');
-						var form_id = $(this).attr('data-id');
-						var instance_id = $(this).attr('data-instance-id');
+					// Custom element ID
+					if(form_element_id) {
 
-						if(id && form_id && instance_id) {
+						form_obj.attr('id', form_element_id).attr('data-wsf-custom-id', '');
 
-							// Render form
-							var ws_form = new $.WS_Form();
-							window.wsf_form_instances[instance_id] = ws_form;
+					} else {
 
-							ws_form.render({
+						form_obj.removeAttr('data-wsf-custom-id');
+					}
 
-								'obj' : 		'#' + id,
-								'form_id':		form_id
-							});
-						}
-					});
-
-					// Hide loader, show form
-					$('.block-editor [data-type="wsf-block/form-add"').each(function() {
-
-						$('svg.wsf-block-loader', $(this)).hide();
-						$('form', $(this)).show();
-					});
-
-
-				}, 200);
+					// Init forms
+					wsf_form_init();
+				}
 			}
 
 			return (
@@ -283,9 +247,7 @@
 							className: 'wsf-form wsf-form-canvas',
 							method: 'POST'
 
-						}),
-
-						loader
+						}, fragment_rendered(props))
 
 					// If form ID not set
 					) : el(Placeholder, {
@@ -296,9 +258,7 @@
 						label: wsf_settings_block.form_add.label,
 
 						instructions: wsf_settings_block.form_add.form_not_selected
-					}),
-
-					fragment_rendered(props)
+					})
 				)
 			);
 		},

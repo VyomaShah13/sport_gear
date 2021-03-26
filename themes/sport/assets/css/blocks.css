@@ -169,6 +169,7 @@
     font-weight: 700;
     font-size: 18px;
     text-transform: uppercase;
+    min-width: 25%;
 }
 
 /* Post title */

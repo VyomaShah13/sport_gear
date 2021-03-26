@@ -268,7 +268,19 @@
 								'advanced'		=> array(
 
 									'label'		=>	__('Advanced', 'ws-form'),
-									'meta_keys'	=>	array('class_group_wrapper')
+
+									'fieldsets'	=>	array(
+
+										array(
+											'label'		=>	__('Classes', 'ws-form'),
+											'meta_keys'	=>	array('class_group_wrapper')
+										),
+
+										array(
+											'label'		=>	__('Restrictions', 'ws-form'),
+											'meta_keys'	=>	array('group_user_status', 'group_user_roles', 'group_user_capabilities')
+										)
+									)
 								)
 							)
 						)
@@ -313,10 +325,7 @@
 
 										array(
 											'label'			=>	__('Restrictions', 'ws-form'),
-											'meta_keys'	=> array(
-
-												'disabled_section'
-											)
+											'meta_keys'	=> array('disabled_section', 'section_user_status', 'section_user_roles', 'section_user_capabilities')
 										),
 										array(
 											'label'		=>	__('Breakpoints', 'ws-form'),
@@ -486,6 +495,7 @@
 					'action'			=>	__('Action', 'ws-form'),
 					'actions'			=>	__('Actions', 'ws-form'),
 					'submission'		=>	__('Submission', 'ws-form'),
+					'user'				=>	__('User', 'ws-form'),
 					'conditional'		=>	__('Conditional Logic', 'ws-form'),
 					'id'				=>	__('ID', 'ws-form'),
 					'unknown'			=>	__('Unknown', 'ws-form'),

@@ -3,7 +3,7 @@ Contributors: westguard
 Tags: form, contact form, form builder, forms, custom form, accessible form, wsform, wsforms, ws form, ws forms, responsive form, gutenberg form, contact button, contact me, custom contact form, form manager, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, dotmailer, dotmailer form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, salesforce, stripe, stripe form, drip, drip form, slack, slack form, getresponse, getresponse form, constant contact, constant contact form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, data encryption
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 1.8.17
+Stable tag: 1.8.25
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,7 +38,7 @@ Add contact forms to your pages or posts using the Gutenberg block or simply cli
 * [Gutenberg Block](https://wsform.com/knowledgebase/adding-forms-to-your-website/?utm_source=wp_plugins&utm_medium=readme)
 * [Mobile Friendly](https://wsform.com/knowledgebase/responsive-forms/?utm_source=wp_plugins&utm_medium=readme)
 * [Multiple Tab Forms](https://wsform.com/knowledgebase/tabs/?utm_source=wp_plugins&utm_medium=readme)
-* [Page Builder Support](https://wsform.com/knowledgebase_category/publishing-forms/?utm_source=wp_plugins&utm_medium=readme) (Beaver Builder, Divi and Elementor)
+* [Page Builder Support](https://wsform.com/knowledgebase_category/publishing-forms/?utm_source=wp_plugins&utm_medium=readme) (Beaver Builder, Divi, Elementor & Oxygen)
 * [Responsive Forms](https://wsform.com/knowledgebase/responsive-forms/?utm_source=wp_plugins&utm_medium=readme)
 * [Section Library](https://wsform.com/knowledgebase/section-library/?utm_source=wp_plugins&utm_medium=readme)
 * [Send Unlimited Emails](https://wsform.com/knowledgebase/send-email/?utm_source=wp_plugins&utm_medium=readme)
@@ -64,6 +64,7 @@ The PRO edition comes with unrivaled features:
 * [Signatures](https://wsform.com/knowledgebase/signature/?utm_source=wp_plugins&utm_medium=readme)
 * [Statistics](https://wsform.com/knowledgebase/statistics/?utm_source=wp_plugins&utm_medium=readme)
 * [Track Visitors](https://wsform.com/knowledgebase/tracking/?utm_source=wp_plugins&utm_medium=readme)
+* [WooCommerce Integration](https://woocommerce.com/products/ws-form-pro-product-add-ons/)
 
 ... [and more](https://wsform.com/knowledgebase/?utm_source=wp_plugins&utm_medium=readme)!
 
@@ -125,10 +126,49 @@ For help installing WS Form, please see our [Installation](https://wsform.com/kn
 
 == Changelog ==
 
+= 1.8.25 =
+* Added: Improved preview template auto detection
+* Added: Improved support for performance optimization plugins
+
+= 1.8.24 =
+* Added: Improved Gutenberg block rendering
+
+= 1.8.23 =
+* Added: Debug console now removes existing instances if wsf_form_init called
+
+= 1.8.22 =
+* Added: Ability to use step of 'any' on number fields
+* Bug Fix: Elementor modals
+
+= 1.8.21 =
+* Added: WS Form Oxygen element
+* Added: Improvements to JavaScript ws_form_init() function (Reinitializes all forms)
+* Added: Improved Beaver Builder, Elementor form initialization
+* Added: Improved Gutenberg block functionality
+* Added: Note that field deduplication does not work with encryption
+* Bug Fix: #calc on multiple select
+* Bug Fix: Gutenberg block SVG
+
+= 1.8.20 =
+* Added: Client side #section_rows_start(section_id) / #section_rows_end
+
+= 1.8.19 =
+* Changed: Removed 'Read more' link from visual editor in admin
+* Bug Fix: Visual editor link dialog flashed in Chrome if sidebar was minimized (Known Chrome issue)
+* Bug Fix: Military format for time in date field
+
+= 1.8.18 =
+* Added: #text(field_id) variable (Allows you to duplicate field values in other fields)
+* Added: User status options for tabs (Logged in, logged out, user role, user capability)
+* Added: User status options for sections (Logged in, logged out, user role, user capability)
+* Added: User logged in, logged out, role and capability conditional logic IF conditions
+* Bug Fix: Encryption during WooCommerce checkout
+
 = 1.8.17 =
 * Added: Custom Email HTML template
 * Added: Email Validation template
 * Added: Spam level set to 0 on validated submissions
+* Bug Fix: Validation of european date formats using periods
 
 = 1.8.16 =
 * Added: #section_rows_start(section_id) / #sections_row_end for email templates

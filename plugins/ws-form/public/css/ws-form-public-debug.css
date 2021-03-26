@@ -164,11 +164,16 @@
   height: 19px;
 }
 
+#wsf-debug tr.wsf-audit-text td,
+#wsf-debug tr.wsf-audit-calc td,
 #wsf-debug tr.wsf-audit-conditional td {
   background-color: var(--background-color-warning);
   color: var(--color-warning);
 }
 
+#wsf-debug tr.wsf-audit-analytics td,
+#wsf-debug tr.wsf-audit-payment td,
+#wsf-debug tr.wsf-audit-ecommerce td,
 #wsf-debug tr.wsf-audit-duplicate-protect td,
 #wsf-debug tr.wsf-audit-spam-protect td,
 #wsf-debug tr.wsf-audit-action td {
@@ -183,10 +188,6 @@
 #wsf-debug tr.wsf-audit-parse-variables td {
   background-color: var(--background-color-danger);
   color: var(--color-danger);
-}
-
-#wsf-debug tr.wsf-audit-calc td {
-  background-color: var(--background-color-success);
 }
 
 #wsf-debug th, #wsf-debug td {

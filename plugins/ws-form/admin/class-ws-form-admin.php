@@ -1138,7 +1138,7 @@
 			// Get SVG
 			$ws_form_template = new WS_Form_Template();
 			$ws_form_template->id = 'contact-us';
-			$ws_form_template->read();
+			$ws_form_template->read(false, true);
 			$svg = str_replace('#label', $ws_form_template->label, $ws_form_template->svg);
 
 			// Localize block JavaScript
@@ -1377,7 +1377,7 @@
 						case 'wsf-settings-update' :
 
 							// Get options
-							$options = WS_Form_Config::get_options();
+							$options = WS_Form_Config::get_options(false);
 
 							// Get current tab
 							$tabCurrent = WS_Form_Common::get_query_var_nonce('tab', 'appearance');

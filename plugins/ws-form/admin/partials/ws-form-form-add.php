@@ -69,7 +69,7 @@
 	// Loop through templates
 	foreach ($template_categories as $template_category)  {
 
-		if(count($template_category->templates) == 0) { continue; }
+		if(isset($template_category->templates) && (count($template_category->templates) == 0)) { continue; }
 
 		$action_id = isset($template_category->action_id) ? $template_category->action_id : false;
 
@@ -93,7 +93,7 @@
 	// Loop through templates
 	foreach ($template_categories as $template_category)  {
 
-		if(count($template_category->templates) == 0) { continue; }
+		if(isset($template_category->templates) && (count($template_category->templates) == 0)) { continue; }
 ?>
 <!-- Tab Content: <?php echo esc_html($template_category->label); ?> -->
 <div id="<?php echo esc_attr(sprintf('wsf_template_category_%s', $template_category->id)); ?>"<?php if(isset($template_category->action_id)) { ?> data-action-id="<?php echo esc_attr($template_category->action_id); ?>"<?php } ?><?php if(isset($template_category->action_list_sub_modal_label)) { ?> data-action-list-sub-modal-label="<?php echo esc_html($template_category->action_list_sub_modal_label); ?>"<?php } ?> style="display: none;">

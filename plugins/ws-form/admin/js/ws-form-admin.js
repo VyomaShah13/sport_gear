@@ -6486,7 +6486,7 @@
 
 					wpautop: 			true,
 					plugins: 			'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview', 
-					toolbar1: 			'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker | fullscreen | wp_adv',
+					toolbar1: 			'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | spellchecker | fullscreen | wp_adv',
 					toolbar2: 			'strikethrough hr forecolor pastetext removeformat charmap outdent indent undo redo',
 					height: 			'200px', 
 
@@ -14258,7 +14258,7 @@
 						fieldset_html += '</div>'
 
 						// Mark submit meta as processed
-						if(typeof(submit['meta'][field_name]) !== 'undefined') {
+						if(typeof(submit['meta'][field_name]) === 'object') {
 
 							submit['meta'][field_name]['processed'] = true;
 						}

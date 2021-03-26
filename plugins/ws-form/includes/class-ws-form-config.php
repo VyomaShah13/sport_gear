@@ -175,6 +175,8 @@
 							'submit_edit'		=>	true,
 							'calc_in'			=>	true,
 							'calc_out'			=>	true,
+							'text_in'			=>	true,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'label_inside'		=>	true,
@@ -303,6 +305,8 @@
 							'submit_edit'		=>	true,
 							'calc_in'			=>	true,
 							'calc_out'			=>	true,
+							'text_in'			=>	true,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'label_inside'		=>	true,
 							'mappable'			=>	true,
@@ -409,6 +413,8 @@
 							'submit_edit'		=>	true,
 							'calc_in'			=>	true,
 							'calc_out'			=>	true,
+							'text_in'			=>	true,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'label_inside'		=>	true,
@@ -539,6 +545,8 @@
 							'submit_edit'		=>	true,
 							'calc_in'			=>	true,
 							'calc_out'			=>	false,
+							'text_in'			=>	true,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'label_inside'		=>	true,
@@ -669,6 +677,8 @@
 							'submit_edit'			=>	true,
 							'calc_in'				=>	true,
 							'calc_out'				=>	false,
+							'text_in'				=>	true,
+							'text_out'				=>	true,
 							'value_out'				=>	true,
 							'mappable'				=>	true,
 							'label_inside'			=>	true,
@@ -798,6 +808,8 @@
 							'submit_edit'		=>	true,
 							'calc_in'			=>	false,
 							'calc_out'			=>	false,
+							'text_in'			=>	true,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'label_inside'		=>	true,
@@ -936,6 +948,8 @@
 							'submit_array'		=>	true,
 							'calc_in'			=>	false,
 							'calc_out'			=>	true,
+							'text_in'			=>	false,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'label_inside'		=>	true,
@@ -1063,6 +1077,8 @@
 							'submit_array'		=>	true,
 							'calc_in'			=>	false,
 							'calc_out'			=>	true,
+							'text_in'			=>	false,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'keyword'			=>	__('buttons toggle switches colors images', 'ws-form'),
@@ -1187,6 +1203,8 @@
 							'submit_array'		=>	true,
 							'calc_in'			=>	false,
 							'calc_out'			=>	true,
+							'text_in'			=>	false,
+							'text_out'			=>	true,
 							'value_out'			=>	true,
 							'mappable'			=>	true,
 							'keyword'			=>	__('buttons toggle switches colors images', 'ws-form'),
@@ -1423,6 +1441,8 @@
 							'static'				=>	'text_editor',
 							'calc_in'				=>	true,
 							'calc_out'				=>	false,
+							'text_in'				=>	true,
+							'text_out'				=>	false,
 							'value_out'				=>	false,
 							'mappable'				=>	false,
 							'keyword'				=>	__('visual tinymce', 'ws-form'),
@@ -1495,6 +1515,8 @@
 							'submit_edit'			=>	false,
 							'calc_in'				=>	false,
 							'calc_out'				=>	false,
+							'text_in'				=>	false,
+							'text_out'				=>	false,
 							'value_out'				=>	false,
 							'mappable'				=>	false,
 							'static'				=>	true,
@@ -1561,6 +1583,8 @@
 							'submit_edit'		=>	false,
 							'calc_in'			=>	false,
 							'calc_out'			=>	false,
+							'text_in'			=>	false,
+							'text_out'			=>	false,
 							'value_out'			=>	false,
 							'mappable'			=>	false,
 							'label_disabled'	=>	true,
@@ -1630,6 +1654,8 @@
 							'submit_edit'					=>	false,
 							'calc_in'						=>	true,
 							'calc_out'						=>	false,
+							'text_in'						=>	true,
+							'text_out'						=>	false,
 							'value_out'						=>	false,
 							'mappable'						=>	false,
 							'events'	=>	array(
@@ -2244,9 +2270,9 @@
 		}
 
 		// Configuration - Options
-		public static function get_options() {
+		public static function get_options($process_options = true) {
 
-			$options_v_1_0_0 = array(
+			$options = array(
 
 				// Basic
 				'basic'		=> array(
@@ -2685,7 +2711,15 @@
 					)
 				)
 			);
-			$options = $options_v_1_0_0;
+
+			// Don't run the rest of this function to improve client side performance
+			if(!$process_options) {
+
+				// Apply filter
+				$options = apply_filters('wsf_config_options', $options);
+
+				return $options;
+			}
 
 			// Frameworks
 			$frameworks = self::get_frameworks(false);
@@ -2811,7 +2845,7 @@
 			$settings_plugin = [];
 
 			// Plugin options
-			$options = self::get_options();
+			$options = self::get_options(false);
 
 			// Set up options with default values
 			foreach($options as $tab => $data) {
@@ -4340,6 +4374,36 @@
 					)
 				),
 
+				'group_user_status'	=> array(
+
+					'label'						=>	__('User Status', 'ws-form'),
+					'type'						=>	'select',
+					'default'					=>	'',
+					'options'					=>	array(
+
+						array('value' => '', 'text' => __('Any', 'ws-form')),
+						array('value' => 'on', 'text' => __('Is Logged In', 'ws-form')),
+						array('value' => 'out', 'text' => __('Is Logged Out', 'ws-form')),
+						array('value' => 'role_capability', 'text' => __('Has User Role or Capability', 'ws-form'))
+					),
+					'help'						=>	__('Only show the tab under certain user conditions.', 'ws-form')
+				),
+
+				'section_user_status'	=> array(
+
+					'label'						=>	__('User Status', 'ws-form'),
+					'type'						=>	'select',
+					'default'					=>	'',
+					'options'					=>	array(
+
+						array('value' => '', 'text' => __('Any', 'ws-form')),
+						array('value' => 'on', 'text' => __('Is Logged In', 'ws-form')),
+						array('value' => 'out', 'text' => __('Is Logged Out', 'ws-form')),
+						array('value' => 'role_capability', 'text' => __('Has User Role or Capability', 'ws-form'))
+					),
+					'help'						=>	__('Only show the section under certain user conditions.', 'ws-form')
+				),
+
 				'field_user_status'	=> array(
 
 					'label'						=>	__('User Status', 'ws-form'),
@@ -4370,6 +4434,46 @@
 
 							'logic'				=>	'==',
 							'meta_key'			=>	'user_limit_logged_in',
+							'meta_value'		=>	'role_capability'
+						)
+					)
+				),
+
+				'group_user_roles'			=> array(
+
+					'label'						=>	__('User Role', 'ws-form'),
+					'type'						=>	'select',
+					'select2'					=>	true,
+					'multiple'					=>	true,
+					'placeholder'				=>	__('Select...'),
+					'help'						=>	__('Only show this tab if logged in user has one of these roles.', 'ws-form'),
+					'options'					=>	array(),
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'group_user_status',
+							'meta_value'		=>	'role_capability'
+						)
+					)
+				),
+
+				'section_user_roles'			=> array(
+
+					'label'						=>	__('User Role', 'ws-form'),
+					'type'						=>	'select',
+					'select2'					=>	true,
+					'multiple'					=>	true,
+					'placeholder'				=>	__('Select...'),
+					'help'						=>	__('Only show this section if logged in user has one of these roles.', 'ws-form'),
+					'options'					=>	array(),
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'section_user_status',
 							'meta_value'		=>	'role_capability'
 						)
 					)
@@ -4410,6 +4514,46 @@
 
 							'logic'				=>	'==',
 							'meta_key'			=>	'user_limit_logged_in',
+							'meta_value'		=>	'role_capability'
+						)
+					)
+				),
+
+				'group_user_capabilities'	=> array(
+
+					'label'						=>	__('User Capability', 'ws-form'),
+					'type'						=>	'select',
+					'select2'					=>	true,
+					'multiple'					=>	true,
+					'placeholder'				=>	__('Select...'),
+					'help'						=>	__('Only show this tab if logged in user has one of these capabilities.', 'ws-form'),
+					'options'					=>	array(),
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'group_user_status',
+							'meta_value'		=>	'role_capability'
+						)
+					)
+				),
+
+				'section_user_capabilities'	=> array(
+
+					'label'						=>	__('User Capability', 'ws-form'),
+					'type'						=>	'select',
+					'select2'					=>	true,
+					'multiple'					=>	true,
+					'placeholder'				=>	__('Select...'),
+					'help'						=>	__('Only show this section if logged in user has one of these capabilities.', 'ws-form'),
+					'options'					=>	array(),
+					'condition'					=>	array(
+
+						array(
+
+							'logic'				=>	'==',
+							'meta_key'			=>	'section_user_status',
 							'meta_value'		=>	'role_capability'
 						)
 					)
@@ -4529,7 +4673,7 @@
 					'help'						=>	__('Short hint that describes the expected value of the input field.', 'ws-form'),
 					'compatibility_id'			=>	'input-placeholder',
 					'select_list'				=>	true,
-					'calc_type'					=>	'field_placeholder'
+					'field_part'				=>	'field_placeholder'
 				),
 
 				'placeholder_dropzonejs'	=> array(
@@ -4836,9 +4980,9 @@
 					'mask'						=>	'step="#value"',
 					'mask_disregard_on_empty'	=>	true,
 					'mask_disregard_on_zero'	=>	false,
-					'type'						=>	'number',
+					'type'						=>	'text',
 					'placeholder'				=>	'1',
-					'help'						=>	__('Increment/decrement by this value.', 'ws-form')
+					'help'						=>	__("Increment/decrement by this value. Use 'any' to allow any number of decimals.", 'ws-form')
 				),
 
 				// Fields - Sidebars
@@ -5823,7 +5967,7 @@
 
 					'label'						=>	__('No Submission Duplicates', 'ws-form'),
 					'type'						=>	'checkbox',
-					'help'						=>	__('If checked, WS Form will check for duplicates in existing submissions.', 'ws-form')
+					'help'						=>	__('If checked, WS Form will check for duplicates in existing submissions. This feature is not available if you are encrypting submission data.', 'ws-form')
 				),
 
 				// No duplicates - Period
@@ -5976,6 +6120,8 @@
 			foreach ($roles as $role => $role_config) {
 
 				$meta_keys['form_user_roles']['options'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
+				$meta_keys['group_user_roles']['options'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
+				$meta_keys['section_user_roles']['options'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
 				$meta_keys['field_user_roles']['options'][] = array('value' => esc_attr($role), 'text' => esc_html(translate_user_role($role_config['name'])));
 
 				$capabilities = array_merge($capabilities, array_keys($role_config['capabilities']));
@@ -5987,6 +6133,8 @@
 			foreach ($capabilities as $capability) {
 
 				$meta_keys['form_user_capabilities']['options'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
+				$meta_keys['group_user_capabilities']['options'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
+				$meta_keys['section_user_capabilities']['options'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
 				$meta_keys['field_user_capabilities']['options'][] = array('value' => esc_attr($capability), 'text' => esc_html($capability));
 			}
 
@@ -6026,7 +6174,7 @@
 			// Public parsing (To cut down on only output needed to render form
 			if($public) {
 
-				$public_attributes_public = array('key' => 'k', 'mask' => 'm', 'mask_disregard_on_empty' => 'e', 'mask_disregard_on_zero' => 'z', 'mask_placeholder' => 'p', 'html_encode' => 'h', 'price' => 'pr', 'default' => 'd', 'calc_type' => 'c');
+				$public_attributes_public = array('key' => 'k', 'mask' => 'm', 'mask_disregard_on_empty' => 'e', 'mask_disregard_on_zero' => 'z', 'mask_placeholder' => 'p', 'html_encode' => 'h', 'price' => 'pr', 'default' => 'd', 'field_part' => 'c');
 
 				foreach($meta_keys as $key => $meta_key) {
 
@@ -6561,6 +6709,38 @@
 						'skin_border_radius'		=>	array('label' => __('Border - Radius', 'ws-form'), 'kb_slug' => 'customize-appearance', 'value' => WS_Form_Common::option_get('skin_border_radius'))
 					)
 				),
+				// Section Rows
+				'section_rows' 	=> array(
+
+					'label'		=> __('Section Rows', 'ws-form'),
+
+					'variables'	=> array(
+
+						'section_rows_start' =>	array(
+
+							'label' => __('Start Rows Start', 'ws-form'),
+
+							'attributes' => array(
+
+								array('id' => 'id')
+							),
+
+							'description' => __('Define the start point for looping through repeatable section rows.', 'ws-form'),
+
+							'repair_group' => 'section'
+						),
+
+						'section_rows_end'			=>	array(
+
+							'label' => __('Section Rows End', 'ws-form'),
+
+							'description' => __('Define the end point for looping through repeatable section rows.', 'ws-form')
+						)
+					),
+
+					'priority' => 125
+				),
+
 				// Section
 				'section' 	=> array(
 
@@ -6594,27 +6774,6 @@
 							'label' => __('Section Row Index', 'ws-form'),
 
 							'description' => __('This variable returns the row index in a repeatable section.', 'ws-form')
-						),
-
-						'section_rows_start' =>	array(
-
-							'label' => __('Start Rows Start', 'ws-form'),
-
-							'attributes' => array(
-
-								array('id' => 'id')
-							),
-
-							'description' => __('Define the start point for looping through repeatable section rows.', 'ws-form'),
-
-							'repair_group' => 'section'
-						),
-
-						'section_rows_end'			=>	array(
-
-							'label' => __('Section Rows End', 'ws-form'),
-
-							'description' => __('Define the end point for looping through repeatable section rows.', 'ws-form')
 						),
 
 						'section_label' =>	array(

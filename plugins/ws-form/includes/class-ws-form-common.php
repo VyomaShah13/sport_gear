@@ -708,6 +708,88 @@
 			return $debug_enabled;
 		}
 
+		// Check to see if object should show
+		public static function object_show($object, $object_prefix, $current_user, $user_roles) {
+
+			// Object user status
+			$object_user_status = WS_Form_Common::get_object_meta_value($object, $object_prefix . '_user_status', '');
+			$object_user_roles = WS_Form_Common::get_object_meta_value($object, $object_prefix . '_user_roles', false);
+			$object_user_capabilities = WS_Form_Common::get_object_meta_value($object, $object_prefix . '_user_capabilities', false);
+
+			if($object_user_status) {
+
+				$object_show = false;
+
+				switch($object_user_status) {
+
+					// Must be logged in
+					case 'on' :
+
+						if($current_user->ID > 0) { $object_show = true; }
+						break;
+
+					// Must be logged out
+					case 'out' :
+
+						if($current_user->ID == 0) { $object_show = true; }
+						break;
+
+					// Must have user role or capability
+					case 'role_capability' :
+
+						if(is_array($object_user_roles) && (count($object_user_roles) > 0)) {
+
+							$user_role_ok = false;
+
+							if(is_user_logged_in()) {
+
+								foreach($object_user_roles as $object_user_role) {
+
+									if(in_array($object_user_role, $user_roles)) {
+
+										$user_role_ok = true;
+									}
+								}
+							}
+
+						} else {
+
+							$user_role_ok = true;
+						}
+
+						if(is_array($object_user_capabilities) && (count($object_user_capabilities) > 0)) {
+
+							$user_capability_ok = false;
+
+							if(is_user_logged_in()) {
+
+								foreach($object_user_capabilities as $object_user_capability) {
+
+									if(WS_Form_Common::can_user($object_user_capability)) {
+
+										$user_capability_ok = true;
+									}
+								}
+							}
+
+						} else {
+
+							$user_capability_ok = true;
+						}
+
+						if($user_role_ok && $user_capability_ok) { $object_show = true; }
+
+						break;
+				}
+
+			} else {
+
+				return true;
+			}
+
+			return $object_show;
+		}
+
 		// Get all fields from form
 		public static function get_fields_from_form($form_object, $no_cache = false, $filter_group_ids = false, $filter_section_ids = false) {
 
@@ -3117,6 +3199,12 @@
 					// Convert / to - so that strtotime works with d/m/Y format
 					$date = str_replace('/', '-', $date);
 					break;
+
+				case 'd.m.Y' :
+
+					// Convert / to - so that strtotime works with d/m/Y format
+					$date = str_replace('.', '-', $date);
+					break;
 			}
 
 			if($format_output === false) {
@@ -3677,7 +3765,7 @@
 			// Build form list
 			$ws_form_form = new WS_Form_Form();
 			$forms = $ws_form_form->db_read_all('', "NOT (status = 'trash')", 'label ASC', '', '', false);
-			$form_array = array('0' => __('Select form...', 'ws-form'));
+			$form_array = array('' => __('Select form...', 'ws-form'));
 
 			if($forms) {
 

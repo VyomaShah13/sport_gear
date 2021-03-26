@@ -1710,7 +1710,7 @@
 						var destination_repeatable_index = ((typeof($(this).attr('data-repeatable-index')) !== 'undefined') ? $(this).attr('data-repeatable-index') : false);
 
 						// Get value parsed
-						var destination_value = (typeof(action_single['value']) === 'undefined') ? false : ws_this.parse_variables_process(action_single['value'], destination_repeatable_index, false, false, false, false).output;
+						var destination_value = (typeof(action_single['value']) === 'undefined') ? false : ws_this.parse_variables_process(action_single['value'], destination_repeatable_index, false, false, false, false, false).output;
 
 						// Process action
 						var conditional_process_action_return = ws_this.conditional_process_action(action_then_else, destination_action, $(this), $(this), destination_object, destination_object_id, destination_object_row_id, destination_value, destination_repeatable_index);
@@ -1761,7 +1761,7 @@
 						var field_to = (typeof(ws_this.field_data_cache[destination_object_id]) !== 'undefined') ? ws_this.field_data_cache[destination_object_id] : false;
 
 						// Get value parsed
-						var destination_value = (typeof(action_single['value']) === 'undefined') ? false : ws_this.parse_variables_process(action_single['value'], destination_repeatable_index, false, field_to, false, false).output;
+						var destination_value = (typeof(action_single['value']) === 'undefined') ? false : ws_this.parse_variables_process(action_single['value'], destination_repeatable_index, false, false, field_to, false, false).output;
 
 						// Process action
 						var conditional_process_action_return = ws_this.conditional_process_action(action_then_else, destination_action, $(this), destination_obj, destination_object, destination_object_id, destination_object_row_id, destination_value, destination_repeatable_index);
@@ -4278,36 +4278,59 @@
 	// Initialize forms function
 	window.wsf_form_instances = [];
 
-	window.wsf_form_init = function(instance_id_set) {
+	window.wsf_form_init = function(force_reload) {
 
-		if(typeof(instance_id_set) === 'undefined') { instance_id_set = true; }
+		if(typeof(force_reload) === 'undefined') { force_reload = false; }
 
-		if(instance_id_set) {
+		if(!$('.wsf-form').length) { return; }
 
-			// Next next instance ID
-			var set_instance_id = 0;
-			$('.wsf-form').each(function() {
+		// Get highest instance ID
+		var set_instance_id = 0;
+		var instance_id_array = [];
+		$('.wsf-form').each(function() {
 
-				var instance_id_single = parseInt($(this).attr('data-instance-id'));
+			if(typeof($(this).attr('data-instance-id')) === 'undefined') { return; }
+
+			// Get instance ID
+			var instance_id_single = parseInt($(this).attr('data-instance-id'));
+
+			// Check for duplicate instance ID
+			if(instance_id_array.indexOf(instance_id_single) !== -1) {
+
+				// If duplicate, remove the data-instance-id so it is reset
+				$(this).removeAttr('data-instance-id');
+
+			} else {
+
+				// Check if this is the highest instance ID
 				if(instance_id_single > set_instance_id) { set_instance_id = instance_id_single; }
-			});
-			set_instance_id++;
-		}
+			}
+
+			instance_id_array.push(instance_id_single);
+		});
+
+		// Increment to next instance ID
+		set_instance_id++;
 
 		// Render each form
 		$('.wsf-form').each(function() {
 
 			// Skip forms already initialized
-			if($(this).html() !== '') { return; }
+			if(!force_reload && $(this).html() !== '') { return; }
 
 			// Set instance ID
-			if(instance_id_set) {
+			if(typeof($(this).attr('data-instance-id')) === 'undefined') {
 
-				// Set ID
-				$(this).attr('id', 'ws-form-' + set_instance_id);
+				// Set ID (Only if custom ID not set)
+				if(typeof($(this).attr('data-wsf-custom-id')) === 'undefined') {
+
+					$(this).attr('id', 'ws-form-' + set_instance_id);
+				}
 
 				// Set instance ID
 				$(this).attr('data-instance-id', set_instance_id);
+
+				set_instance_id++;
 			}
 
 			// Get attributes
@@ -4315,19 +4338,26 @@
 			var form_id = $(this).attr('data-id');
 			var instance_id = $(this).attr('data-instance-id');
 
-			var ws_form = new $.WS_Form();
-			window.wsf_form_instances[instance_id] = ws_form;
+			if(id && form_id && instance_id) {
 
-			ws_form.render({
+				// Initiate new WS Form object
+				var ws_form = new $.WS_Form();
 
-				'obj' :			'#' + id,
-				'form_id':		form_id
-			});
+				// Save to wsf_form_instances array
+				window.wsf_form_instances[instance_id] = ws_form;
+
+				// Render
+				ws_form.render({
+
+					'obj' :			'#' + id,
+					'form_id':		form_id
+				});
+			}
 		});
 	}
 
 	// On load
-	$(function() { wsf_form_init(false); });
+	$(function() { wsf_form_init(); });
 
 })(jQuery);
 

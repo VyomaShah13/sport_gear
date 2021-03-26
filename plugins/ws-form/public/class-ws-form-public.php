@@ -175,7 +175,7 @@
 		public function init() {
 
 			// Preview engine
-			$plugin_preview = new WS_Form_Preview();
+			new WS_Form_Preview();
 		}
 
 		public function wp() {
@@ -317,21 +317,18 @@
 
 			// Embed config data (Avoids an API call)
 			$json_config = wp_json_encode(WS_Form_Config::get_config(false, $this->field_types));
-			echo sprintf("var wsf_form_json_config = %s;\n", $json_config);	// phpcs:ignore
+			echo sprintf("window.wsf_form_json_config = %s;\n", $json_config);	// phpcs:ignore
 			$json_config = null;
 
 			// Init form data
-			echo ("var wsf_form_json = [];\n");
-			echo ("var wsf_form_json_populate = [];\n");
+			echo ("window.wsf_form_json = [];\n");
+			echo ("window.wsf_form_json_populate = [];\n");
 
 			// Footer JS
 			echo $this->footer_js;	// phpcs:ignore
 			$this->footer_js = null;
 
 			echo "/* ]]> */\n</script>\n\n";
-
-			// Enqueue debug
-//			self::wp_scripts_debug();
 		}
 
 		// Footer scripts - Pre-Process
@@ -353,135 +350,212 @@
 				$this->enqueue_css_debug = true;
 			}
 
-			// Field types
-			$field_types = WS_Form_Config::get_field_types_flat();
-
- 			// Get form fields
-			$fields = WS_Form_Common::get_fields_from_form($form_object);
-
 			// Get user roles
 			$current_user = wp_get_current_user();
 			$user_roles = $current_user->roles;
 
-			// Process fields
-			foreach($fields as $field) {
+			// Read conditional
+			$conditional = WS_Form_Common::get_object_meta_value($form_object, 'conditional');
 
-				if(!isset($field->type)) { continue; }
+			// Data integrity check
+			if(
+				isset($conditional->groups) &&
+				isset($conditional->groups[0]) &&
+				isset($conditional->groups[0]->rows)
+			) {
 
-				// Get field type
-				$field_type = $field->type;
+				// Run through each conditional (data grid rows)
+				$rows = $conditional->groups[0]->rows;
 
-				// Add field type to array (This is used later on to filter the field configs rendered on the page)
-				$this->field_types[] = $field_type;
+				foreach($rows as $row_index => $row) {
 
-				// Check to see if an input_mask is set
-				if(!$this->enqueue_js_input_mask) {
+					// Data integrity check
+					if(!isset($row->data)) { continue; }
+					if(!isset($row->data[1])) { continue; }
 
-					$input_mask = WS_Form_Common::get_object_meta_value($field, 'input_mask', '');
-					if($input_mask !== '') { $this->enqueue_js_input_mask = true; }
+					// Keep row
+					$keep_row = false;
 
-				}
+					$data = $row->data[1];
 
-				// Field user status
-				$field_user_status = WS_Form_Common::get_object_meta_value($field, 'field_user_status', '');
-				$field_user_roles = WS_Form_Common::get_object_meta_value($field, 'field_user_roles', false);
-				$field_user_capabilities = WS_Form_Common::get_object_meta_value($field, 'field_user_capabilities', false);
+					// Data integrity check
+					if(gettype($data) !== 'string') { continue; }
+					if($data == '') { continue; }
 
-				if($field_user_status) {
+					// Converts conditional JSON string to object
+					$conditional_json_decode = json_decode($data);
+					if(is_null($conditional_json_decode)) { continue; }
 
-					$field_show = false;
+					// Process IF conditions
+					$if = $conditional_json_decode->if;
 
-					switch($field_user_status) {
+					// Run through each group in $if
+					foreach($if as $key_if => $group) {
 
-						// Must be logged in
-						case 'on' :
+						$conditions = $group->conditions;
 
-							if($current_user->ID > 0) { $field_show = true; }
-							break;
+						// Run through each condition
+						foreach($conditions as $key_condition => $condition) {
 
-						// Must be logged out
-						case 'out' :
+							$force_result = null;
 
-							if($current_user->ID == 0) { $field_show = true; }
-							break;
-
-						// Must have user role or capability
-						case 'role_capability' :
-
-							if(is_array($field_user_roles) && (count($field_user_roles) > 0)) {
-
-								$user_role_ok = false;
-
-								if(is_user_logged_in()) {
-
-									foreach($field_user_roles as $field_user_role) {
-
-										if(in_array($field_user_role, $user_roles)) {
-
-											$user_role_ok = true;
-										}
-									}
-								}
-
-							} else {
-
-								$user_role_ok = true;
+							if(
+								!isset($condition->object) ||
+								($condition->object !== 'user') ||
+								!isset($condition->logic)
+							) {
+								continue;
 							}
 
-							if(is_array($field_user_capabilities) && (count($field_user_capabilities) > 0)) {
+							switch($condition->logic) {
 
-								$user_capability_ok = false;
+								case 'user_logged_in' :
 
-								if(is_user_logged_in()) {
+									$force_result = is_user_logged_in();
+									break;
 
-									foreach($field_user_capabilities as $field_user_capability) {
+								case 'user_logged_in_not' :
 
-										if(WS_Form_Common::can_user($field_user_capability)) {
+									$force_result = !is_user_logged_in();
+									break;
 
-											$user_capability_ok = true;
-										}
-									}
-								}
+								case 'user_role' :
 
-							} else {
+									$value = isset($condition->value) ? $condition->value : '';
+									$force_result = in_array($value, $user_roles);
+									break;
 
-								$user_capability_ok = true;
+								case 'user_role_not' :
+
+									$value = isset($condition->value) ? $condition->value : '';
+									$force_result = !in_array($value, $user_roles);
+									break;
+
+								case 'user_capability' :
+
+									$value = isset($condition->value) ? $condition->value : '';
+									$force_result = WS_Form_Common::can_user($value);
+									break;
+
+								case 'user_capability_not' :
+
+									$value = isset($condition->value) ? $condition->value : '';
+									$force_result = !WS_Form_Common::can_user($value);
+									break;
 							}
 
-							if($user_role_ok && $user_capability_ok) { $field_show = true; }
+							if(!is_null($force_result)) {
 
-							break;
-					}
+								$conditional_json_decode->if[$key_if]->conditions[$key_condition]->force_result = $force_result;
 
-					if(!$field_show) {
-
-						unset($form_object->groups[$field->group_key]->sections[$field->section_key]->fields[$field->field_key]);
+								$form_object->meta->conditional->groups[0]->rows[$row_index]->data[1] = json_encode($conditional_json_decode);
+							}
+						}
 					}
 				}
-
-				// Check by field type
-				switch($field_type) {
-
-					// Check to see if a textarea field is using wp_editor or wp_html_editor
-					case 'textarea' :
-
-						$input_type_textarea = WS_Form_Common::get_object_meta_value($field, 'input_type_textarea', '');
-						if($input_type_textarea == 'tinymce') { $this->enqueue_js_wp_editor = true; }
-						if($input_type_textarea == 'html') { $this->enqueue_js_wp_html_editor = true; }
-						break;
-				}
-
-				do_action('wsf_form_pre_process_field', $field);
-
-				$field = null;
 			}
 
-			// Run enqueues
+			// Field types
+			$field_types = WS_Form_Config::get_field_types_flat();
+
+ 			// Get form fields
+//			$fields = WS_Form_Common::get_fields_from_form($form_object);
+
+			$groups = isset($form_object->groups) ? $form_object->groups : array();
+
+			foreach($groups as $group_key => $group) {
+
+				// Determine if group should show
+				if(!WS_Form_Common::object_show($group, 'group', $current_user, $user_roles)) {
+
+					unset($form_object->groups[$group_key]);
+					continue;
+				}
+
+				$sections = isset($group->sections) ? $group->sections : array();
+
+				foreach($sections as $section_key => $section) {
+
+					// Determine if section should show
+					if(!WS_Form_Common::object_show($section, 'section', $current_user, $user_roles)) {
+
+						unset($form_object->groups[$group_key]->sections[$section_key]);
+						continue;
+					}
+
+					$fields = isset($section->fields) ? $section->fields : array();
+
+					// Process fields
+					foreach($fields as $field_key => $field) {
+
+						// Determine if field should show
+						if(!WS_Form_Common::object_show($field, 'field', $current_user, $user_roles)) {
+
+							unset($form_object->groups[$group_key]->sections[$section_key]->fields[$field_key]);
+							continue;
+						}
+
+						// Get field type
+						if(!isset($field->type)) { continue; }
+						$field_type = $field->type;
+
+						// Check field type
+						if(!isset($field_types[$field_type])) { continue; }
+
+						// Add field type to array (This is used later on to filter the field configs rendered on the page)
+						$this->field_types[] = $field_type;
+
+						// Check to see if an input_mask is set
+						if(!$this->enqueue_js_input_mask) {
+
+							$input_mask = WS_Form_Common::get_object_meta_value($field, 'input_mask', '');
+							if($input_mask !== '') { $this->enqueue_js_input_mask = true; }
+
+						}
+
+						// Check by field type
+						switch($field_type) {
+
+							// Check to see if a textarea field is using wp_editor or wp_html_editor
+							case 'textarea' :
+
+								$input_type_textarea = WS_Form_Common::get_object_meta_value($field, 'input_type_textarea', '');
+								if($input_type_textarea == 'tinymce') { $this->enqueue_js_wp_editor = true; }
+								if($input_type_textarea == 'html') { $this->enqueue_js_wp_html_editor = true; }
+								break;
+						}
+
+						do_action('wsf_form_pre_process_field', $field);
+
+						$field = null;
+					}
+				}
+			}
+
 			self::enqueue();
 		}
 
 		// Enqueue
 		public function enqueue() {
+
+			if(apply_filters('wsf_public_enqueue', true)) {
+
+				if(apply_filters('wsf_public_enqueue_external', true)) {
+
+					self::enqueue_external();
+				}
+
+				if(apply_filters('wsf_public_enqueue_internal', true)) {
+
+					self::enqueue_internal();
+				}
+			}
+
+			do_action('wsf_enqueue');
+		}
+
+		// Enqueue - External
+		public function enqueue_external() {
 
 			// Minified scripts?
 			$min = SCRIPT_DEBUG ? '' : '.min';
@@ -527,6 +601,18 @@
 
 				$this->enqueued_js_wp_html_editor = true;
 			}
+
+			do_action('wsf_enqueue_external');
+		}
+
+		// Enqueue - Internal
+		public function enqueue_internal() {
+
+			// Minified scripts?
+			$min = SCRIPT_DEBUG ? '' : '.min';
+
+			// Enqueue in footer?
+			$jquery_footer = (WS_Form_Common::option_get('jquery_footer', '') == 'on');
 
 			// JS - Common
 			if(!$this->enqueued_js_form_common && apply_filters('wsf_enqueue_js_form_common', $this->enqueue_js_form_common)) {
@@ -603,7 +689,7 @@
 				$this->enqueued_css_skin = true;
 			}
 
-			do_action('wsf_enqueue');
+			do_action('wsf_enqueue_internal');
 		}
 
 		// WP print scripts
@@ -667,9 +753,6 @@
 			// Get form ID
 			$form_id = $form_object->id;
 
-			// Get element ID
-			if($element_id === false) { $element_id = 'ws-form-' . $form_instance; }
-
 			// Do not render if draft or trash
 			switch($form_object->status) {
 
@@ -714,17 +797,27 @@
 			$form_method = 'POST';
 			$form_method = apply_filters('wsf_shortcode_form_method', $form_method);
 
+			// Form attribute - id
+			$form_attr_id = ($element_id === false) ? 'ws-form-' . $form_instance : $element_id;
+
+			// Form attribute - data-wsf-custom-id
+			$form_attr_data_custom_id = ($element_id === false) ? '' : ' data-wsf-custom-id';
+
+			// Form attribute - data-instance-id
+			if($visual_builder) { $form_instance = false; }
+			$form_attr_data_instance_id = ($form_instance !== false) ? sprintf(' data-instance-id="%u"', esc_attr($form_instance)) : '';
+
 			// Form wrapper
 			switch($element) {
 
 				case 'form' :
 
-					$return_value = sprintf('<form action="%s" class="wsf-form wsf-form-canvas" id="%s" data-id="%u" data-instance-id="%u" method="%s"%s></form>', esc_attr($form_action), esc_attr($element_id), esc_attr($form_id), esc_attr($form_instance), esc_attr($form_method), $form_attributes);
+					$return_value = sprintf('<form action="%s" class="wsf-form wsf-form-canvas" id="%s"%s data-id="%u"%s method="%s"%s></form>', esc_attr($form_action), esc_attr($form_attr_id), $form_attr_data_custom_id, esc_attr($form_id), $form_attr_data_instance_id, esc_attr($form_method), $form_attributes);
 					break;
 
 				default :
 
-					$return_value = sprintf('<%1$s class="wsf-form wsf-form-canvas" id="%2$s" data-id="%3$u" data-instance-id="%4$u"%5$s></%1$s>', $element, esc_attr($element_id), esc_attr($form_id), esc_attr($form_instance), $form_attributes);
+					$return_value = sprintf('<%1$s class="wsf-form wsf-form-canvas" id="%2$s"%3$s data-id="%4$u"%5$s%6$s></%1$s>', $element, esc_attr($form_attr_id), $form_attr_data_custom_id, esc_attr($form_id), $form_attr_data_instance_id, $form_attributes);
 					break;
 			}
 

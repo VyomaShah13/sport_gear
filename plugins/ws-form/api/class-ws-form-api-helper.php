@@ -159,7 +159,7 @@
 			WS_Form_Common::option_set('mode', $mode);
 
 			// Configure settings according to mode selected
-			$options = WS_Form_Config::get_options();
+			$options = WS_Form_Config::get_options(false);
 			foreach($options as $tab => $data) {
 
 				if(isset($data['fields'])) {
@@ -649,6 +649,11 @@
 					'button_url'	=> WS_Form_Common::get_plugin_website_url('/knowledgebase/sections/')
 				],
 
+				[
+					'hint' 			=> __('<strong>Breakpoint Selector</strong><br />You can create unique form layouts for each screen width. To choose a different screen width, drag the breakpoint selector left or right. If you change a section or field width it will apply to that one breakpoint and all those above it.', 'ws-form'),
+					'element' 		=> '#wsf-breakpoints span',
+					'button_url'	=> WS_Form_Common::get_plugin_website_url('/knowledgebase/responsive-forms/')
+				],
 			];
 
 			WS_Form_Common::option_set('intro', false);

@@ -794,7 +794,9 @@ button:focus, input:focus, textarea:focus{
     margin: 0;
     padding: 20px;
 }
-
+.post-detail .entry-title a{
+    color: #212529;
+}
 .post-detail .entry-title a:hover{
     color: #333;
 }
@@ -875,4 +877,124 @@ button:focus, input:focus, textarea:focus{
 
 .no-results .page-content{
     margin-bottom: 50px;
+}
+
+/* Responsive */
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 320px) and (max-width: 767px){
+    .home div#n2-ss-2 .n2-ss-button-container a div {
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+    div#n2-ss-2 .n2-font-76eb17b835da7c38537932326ff9b9f6-hover{
+        text-align: center;
+    }
+
+    .wp-block-cover, .wp-block-cover-image{
+        min-height: 350px;
+        margin-bottom: 20px;
+    }
+    .brand-img img{
+        max-height: none;
+    }
+
+    .brand-post .col-lg-4{
+        margin-bottom: 30px;
+    }
+    .woocommerce-account .woocommerce-MyAccount-navigation, .woocommerce-account .woocommerce-MyAccount-content{
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .top-nav{
+        height: auto;
+        text-align: center;
+    }
+
+    .top-nav-menu{
+        display: none;
+    }
+
+    .mb-navigation, .mb-search{
+        width: 50%;
+    }
+
+    .site-branding{
+        text-align: center;
+    }
+
+    .site-branding img{
+        max-width: 240px;
+        margin-bottom: 30px;
+    }
+
+    .menu-toggle i{
+        margin-right: 10px;
+    }
+
+    .navbar-user li{
+        padding: 0 5px;
+    }
+
+    #primary-menu {
+        position: absolute;
+        background: #dddddd;
+        width: 92%;
+        padding: 10px;
+        z-index: 999;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) and (max-width: 991px) {
+
+    .site-branding img{
+        max-width: 120px;
+    }
+    .account-selection li a{
+        font-size: 12px;
+    }
+    .main-nav li{
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+    .navbar-user li{
+        padding: 3px 5px;
+    }
+    .navbar-user li a{
+        width: 30px;
+        height: 30px;
+    }
+
+    .brand-img img{
+        max-height: none;
+    }
+
+    .brand-post .col-lg-4{
+        margin-bottom: 40px;
+    }
+
+    .about-container{
+        max-width: 80%;
+    }
+
+    .woocommerce-account .woocommerce-MyAccount-content{
+        float: right;
+    }
+
+    .woocommerce-account .woocommerce-MyAccount-navigation{
+        float: left;
+    }
+}
+
+/* Small Devices, Tablets landscape */
+@media only screen and (min-width : 991px) and (max-width: 1024px) {
+    .site-branding img{
+        max-width: 180px;
+    }
+
+    .primary-btn{
+        min-width: 140px;
+    }
 }

@@ -1,9 +1,48 @@
 == Changelog ==
 
+= 1.8.25 =
+* Added: Improved preview template auto detection
+* Added: Improved support for performance optimization plugins
+
+= 1.8.24 =
+* Added: Improved Gutenberg block rendering
+
+= 1.8.23 =
+* Added: Debug console now removes existing instances if wsf_form_init called
+
+= 1.8.22 =
+* Added: Ability to use step of 'any' on number fields
+* Bug Fix: Elementor modals
+
+= 1.8.21 =
+* Added: WS Form Oxygen element
+* Added: Improvements to JavaScript ws_form_init() function (Reinitializes all forms)
+* Added: Improved Beaver Builder, Elementor form initialization
+* Added: Improved Gutenberg block functionality
+* Added: Note that field deduplication does not work with encryption
+* Bug Fix: #calc on multiple select
+* Bug Fix: Gutenberg block SVG
+
+= 1.8.20 =
+* Added: Client side #section_rows_start(section_id) / #section_rows_end
+
+= 1.8.19 =
+* Changed: Removed 'Read more' link from visual editor in admin
+* Bug Fix: Visual editor link dialog flashed in Chrome if sidebar was minimized (Known Chrome issue)
+* Bug Fix: Military format for time in date field
+
+= 1.8.18 =
+* Added: #text(field_id) variable (Allows you to duplicate field values in other fields)
+* Added: User status options for tabs (Logged in, logged out, user role, user capability)
+* Added: User status options for sections (Logged in, logged out, user role, user capability)
+* Added: User logged in, logged out, role and capability conditional logic IF conditions
+* Bug Fix: Encryption during WooCommerce checkout
+
 = 1.8.17 =
 * Added: Custom Email HTML template
 * Added: Email Validation template
 * Added: Spam level set to 0 on validated submissions
+* Bug Fix: Validation of european date formats using periods
 
 = 1.8.16 =
 * Added: #section_rows_start(section_id) / #sections_row_end for email templates

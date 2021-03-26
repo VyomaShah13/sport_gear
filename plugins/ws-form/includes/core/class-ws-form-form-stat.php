@@ -500,7 +500,7 @@
 				$add_view_php_error_message = __("wp-load.php", 'ws-form');
 			}
 
-			if(!$add_view_php_error && function_exists('curl_version')) {
+			if(!$add_view_php_error && is_admin() && function_exists('curl_version')) {
 
 				// Create a cURL handle
 				$curl_handle = curl_init(sprintf('%spublic/add-view.php', WS_FORM_PLUGIN_DIR_URL));

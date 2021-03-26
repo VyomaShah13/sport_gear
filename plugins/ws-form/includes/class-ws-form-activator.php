@@ -7,7 +7,7 @@
 
 			// These are set here to avoid problems if someone has both plugins installed and migrates from basic to PRO without de-activating the basic edition first. This ensures the PRO options are set up.
 			$ws_form_edition = 'basic';
-			$ws_form_version = '1.8.17';
+			$ws_form_version = '1.8.25';
 
 			$run_version_check = true;
 
@@ -278,7 +278,7 @@
 			$mode = WS_Form_Common::option_get('mode', 'basic', true);
 
 			// Default options
-			$options = WS_Form_Config::get_options();
+			$options = WS_Form_Config::get_options(false);
 
 			// Set up options with default values
 			foreach($options as $tab => $attributes) {

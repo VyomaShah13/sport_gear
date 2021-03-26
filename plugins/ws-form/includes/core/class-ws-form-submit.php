@@ -1840,7 +1840,7 @@
 		}
 
 
-		// Clera hidden meta values
+		// Clear hidden meta values
 		public function clear_hidden_meta_values($submit_object = false, $bypass_user_capability_check = true) {
 
 			if($submit_object === false) {

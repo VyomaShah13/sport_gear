@@ -1289,6 +1289,15 @@ body.ws-form_page_ws-form-upgrade .error {
   margin: 0 0 12px;
 }
 
+body.admin_page_ws-form-edit div.wp-link-input input {
+  width: 189px;
+}
+
+body.admin_page_ws-form-edit #update-nag,
+body.admin_page_ws-form-edit .update-nag {
+  display: none;
+}
+
 body.admin_page_ws-form-edit.mobile .wsf-group-header > .wsf-settings,
 body.admin_page_ws-form-edit.mobile .wsf-section:hover > .wsf-settings,
 body.admin_page_ws-form-edit.mobile .wsf-field-wrapper:hover > .wsf-settings {
@@ -2561,10 +2570,6 @@ body.admin_page_ws-form-edit.mobile .wsf-offset {
   display: block;
 }
 
-.ui-draggable-dragging {
-  z-index: 200;
-}
-
 .wsf-field-selector {
   flex-grow: 1;
 }
@@ -2898,7 +2903,6 @@ body.admin_page_ws-form-edit.mobile .wsf-offset {
   transition: opacity 200ms ease-in-out;
   position: absolute;
   right: 23px;
-  z-index: 10;
 }
 
 .wsf-settings li {
@@ -7088,6 +7092,7 @@ body.ws-form_page_ws-form-submit #wsf-submissions td img {
     margin-bottom: 12px;
   }
   body.ws-form_page_ws-form-submit #wsf-sidebar-submit h3 {
+    background: none;
     border-bottom: none;
     font-size: 24px;
     font-weight: 600;
@@ -7098,14 +7103,11 @@ body.ws-form_page_ws-form-submit #wsf-submissions td img {
     overflow-x: visible;
     position: initial;
   }
-  body.ws-form_page_ws-form-submit .wsf-fieldset {
-    margin-bottom: 12px;
-  }
   body.ws-form_page_ws-form-submit .wsf-fieldset legend {
-    float: none;
     font-size: 20px;
     margin-bottom: 12px;
     padding: 0;
+    width: 100%;
   }
   body.ws-form_page_ws-form-submit .wsf-fieldset + .wsf-fieldset {
     border-top: none;
