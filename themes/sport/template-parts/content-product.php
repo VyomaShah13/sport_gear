@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying posts
+ * Template part for displaying products
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
@@ -12,12 +12,12 @@
 <article class="post-block" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php if( !empty(get_the_title())) { ?>	
 		<header class="entry-header" style="background-image:url('/wp-content/uploads/2021/02/hero-banner.jpg')">
-					<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-					<?php
-			if ( function_exists('yoast_breadcrumb') ) {
-			yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
-			}
-		?>
+			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+			<?php
+				if ( function_exists('yoast_breadcrumb') ) {
+					yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+				}
+			?>
 		</header><!-- .entry-header -->
 	<?php } ?>
 	<div class="container">	

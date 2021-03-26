@@ -26,6 +26,7 @@
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'sport' ); ?></a>
 
 	<header id="masthead" class="site-header has-white-background-color">
+		<!-- Top nav -->
 		<div class="top-nav has-secondary-background-color has-white-color has-small-font-size">
 			<div class="container">
 				<div class="row">
@@ -47,8 +48,8 @@
 									My Account <i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="account-selection has-white-background-color">
-										<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-										<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+										<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') );?>"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+										<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') );?>"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -57,6 +58,7 @@
 				</div>	
 			</div>	
 		</div>
+		<!-- main navigation -->
 		<div class="main-nav">
 			<div class="container">
 				<div class="row">
@@ -98,7 +100,7 @@
 						<li>
 							<?php get_search_form(); ?>
 						</li>
-						<li><a href="/my-account"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+						<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') );?>"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 						<li class="cart">
 							<a class="cart-container" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
 								<i class="fa fa-shopping-cart" aria-hidden="true"></i>

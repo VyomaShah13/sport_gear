@@ -18,7 +18,6 @@
 		<div class="container">	
 			<?php
 			if ( is_home() && current_user_can( 'publish_posts' ) ) :
-
 				printf(
 					'<p>' . wp_kses(
 						/* translators: 1: link to WP admin new post page. */

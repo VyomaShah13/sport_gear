@@ -24,14 +24,13 @@
 							else :
 								the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 							endif;
-
 							if ( 'post' === get_post_type() ) :
-								?>
+						?>
 						<?php endif; ?>
-					
 					</div><!-- .entry-header -->
 				<?php } ?>
 				<?php
+				// description
 				the_excerpt();
 				wp_link_pages(
 					array(
@@ -45,6 +44,5 @@
 				</div><!-- .entry-footer -->	
 			</div><!-- .entry-content -->
 		</div>
-	
 	</div>
 </article><!-- #post-<?php the_ID(); ?> -->

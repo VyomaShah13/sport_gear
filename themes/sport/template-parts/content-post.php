@@ -18,22 +18,18 @@
 				the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 			endif;
 
+		?>
+		<div class="entry-meta">
+			<?php
+			sport_posted_on();
+			sport_posted_by();
 			?>
-				<div class="entry-meta">
-					<?php
-					sport_posted_on();
-					sport_posted_by();
-					?>
-				</div><!-- .entry-meta -->
-		
+		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 	<div class="container">	
-	
-	
-	<?php sport_post_thumbnail(); ?>
-	
-	<div class="entry-content">
-		<div class="container">
+		<?php sport_post_thumbnail(); ?>
+		
+		<div class="entry-content">
 			<?php
 			the_content(
 				sprintf(
@@ -50,7 +46,6 @@
 				)
 			);
 			
-
 			wp_link_pages(
 				array(
 					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'sport' ),
@@ -58,10 +53,9 @@
 				)
 			);
 			?>
-		</div>
-	</div><!-- .entry-content -->
-
-	<footer class="entry-footer">
-		<?php sport_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+		</div><!-- .entry-content -->
+		<footer class="entry-footer">
+			<?php sport_entry_footer(); ?>
+		</footer><!-- .entry-footer -->
+	</div>
 </article><!-- #post-<?php the_ID(); ?> -->

@@ -51,7 +51,7 @@ a:visited, a:hover{
 .top-nav-left a i{
     margin-right: 5px;
 }
-
+/* account */
 .account{
     position: relative;
     text-align: right;
@@ -214,7 +214,6 @@ li.cart a {
 .home .entry-content{
     margin: 0;
 }
-
 
 /* newsletter */
 
@@ -508,7 +507,6 @@ li.cart a {
 
 /* next product link */
 
-
 .site-main .post-navigation {
     max-width: 1320px;
     margin: 50px auto 0;
@@ -677,6 +675,7 @@ em {
     background-color: #000;
 }
 
+/* Contact page */
 .wsf-form {
     margin-top: 20px;
 }
@@ -695,9 +694,11 @@ input[type=email].wsf-field, input[type=number].wsf-field, input[type=tel].wsf-f
 .wsf-field:focus{
     border: 1px solid #212529;
 }
+
 .wsf-help{
     display: none;
 }
+
 .contact-container {
     margin-top: 60px;
 }
@@ -707,7 +708,9 @@ input[type=email].wsf-field, input[type=number].wsf-field, input[type=tel].wsf-f
 button:focus, input:focus, textarea:focus{
     outline: none;
 }
+
 /* About */
+
 .about-title {
     margin-bottom: 40px;
 }

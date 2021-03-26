@@ -10,6 +10,7 @@
  */
 
 ?>
+	<!-- Custom post type blogs -->
 	<div class="brand-post">
 		<div class="container">
 			<div class="row">
@@ -23,7 +24,6 @@
 
 					if( $brand_query -> have_posts()){
 						while( $brand_query -> have_posts() ){
-							
 							$brand_query -> the_post();
 							?>
 							<div class="col-lg-4">
@@ -34,7 +34,6 @@
 										</div>
 									<?php }
 								?>
-								
 								<h2><?php the_title('<h2 class="brand-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>'); ?></h2>
 								<?php the_excerpt(); ?>
 								<?php echo '<a href="' . esc_url( get_permalink() ) . '" class="read-more-link">Read more </a>'?> 
@@ -46,6 +45,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- Newsletter block -->
 	<div class="newsletter">
 		<div class="container">
 			<div class="row">
@@ -66,7 +66,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- Copyright block -->
 	<footer id="colophon" class="site-footer has-secondary-background-color has-white-color has-regular-font-size">
 		<div class="container">
 			<div class="row">
