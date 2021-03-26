@@ -867,3 +867,9 @@ button:focus, input:focus, textarea:focus{
     background-color: #212529;
     color: #fff;
 }
+
+/* No serach result */
+
+.no-results .page-content{
+    margin-bottom: 50px;
+}

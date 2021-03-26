@@ -49,7 +49,6 @@
 									<ul class="account-selection has-white-background-color">
 										<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
 										<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-										<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i>My Favourite</a></li>
 									</ul>
 								</li>
 							</ul>

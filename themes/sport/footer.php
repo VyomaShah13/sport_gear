@@ -27,9 +27,14 @@
 							$brand_query -> the_post();
 							?>
 							<div class="col-lg-4">
-								<div class="brand-img">
-									<?php sport_post_thumbnail(); ?>
-								</div>
+								<?php 
+									if(has_post_thumbnail()){ ?>
+										<div class="brand-img">
+											<?php sport_post_thumbnail(); ?>
+										</div>
+									<?php }
+								?>
+								
 								<h2><?php the_title('<h2 class="brand-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>'); ?></h2>
 								<?php the_excerpt(); ?>
 								<?php echo '<a href="' . esc_url( get_permalink() ) . '" class="read-more-link">Read more </a>'?> 

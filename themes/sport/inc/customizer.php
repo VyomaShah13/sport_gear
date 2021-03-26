@@ -30,7 +30,7 @@ function sport_customize_register( $wp_customize ) {
 			)
 		);
 	}
-
+	// Add control for social media
 	$wp_customize->add_section(
 		'social_media', 
 		array(
@@ -47,7 +47,7 @@ function sport_customize_register( $wp_customize ) {
 			'label' => 'Facebook URL',
 			'section' => 'social_media',
 			'setting' => 'facebook_url',
- 		)
+		)
 	);
 
 	$wp_customize->add_setting(
@@ -60,7 +60,7 @@ function sport_customize_register( $wp_customize ) {
 			'label' => 'Twitter URL',
 			'section' => 'social_media',
 			'setting' => 'twitter_url',
- 		)
+		)
 	);
 
 	$wp_customize->add_setting(
@@ -73,7 +73,7 @@ function sport_customize_register( $wp_customize ) {
 			'label' => 'Instagram URL',
 			'section' => 'social_media',
 			'setting' => 'insta_url',
- 		)
+		)
 	);
 }
 add_action( 'customize_register', 'sport_customize_register' );
